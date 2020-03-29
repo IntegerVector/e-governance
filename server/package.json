@@ -1,0 +1,22 @@
+{
+  "name": "fkeeper_server",
+  "version": "1.0.0",
+  "description": "server for fkeeper project",
+  "main": "./target/index.js",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "node ./target/index.js"
+  },
+  "author": "Andrew Ryban",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@types/express": "^4.17.3",
+    "@types/node": "^13.9.1",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "@types/mysql": "^2.15.9"
+  }
+}
