@@ -69,7 +69,7 @@ class Logger {
 
     private getDataToLog(type: LogTypes, ...msgs: string[]): string {
         const date = new Date();
-        const template = `: ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}] => ${msgs.join(' ')}`;
+        const template = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}] => ${msgs.join(' ')}`;
         switch(type) {
             case LogTypes.Info:
                 return `[INFO: ${template}`;
