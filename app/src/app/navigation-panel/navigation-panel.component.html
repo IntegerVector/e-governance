@@ -1,0 +1,37 @@
+<nav *ngIf="panelOptions"
+     class="navpanel">
+    <div class="navpanel-left">
+        <div class="navpanel-container">
+            <ul>
+                <li class="navpanel-element">
+                    <a></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="navpanel-center">
+        <div class="navpanel-container">
+            <a>
+                <img class="navpanel-logo" src="" alt="">
+                <span class="navpanel-title"></span>
+            </a>
+        </div>
+    </div>
+    <div class="navpanel-right">
+        <div class="navpanel-container">
+            <ul>
+                <li class="navpanel-element"></li>
+            </ul>
+            <div class="navpanel-usersection">
+                <a>
+                    <img class="navpanel-usersection-avatar" src="" alt="">
+                    <div class="navpanel-usersection-data">
+                        <span class="navpanel-usersection-data-main"></span>
+                        <span class="navpanel-usersection-data-sub"></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <span>{{ panelOptions | json }}</span>
+</nav>
