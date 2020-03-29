@@ -1,4 +1,4 @@
-import { RequestTypes } from "./enums/request-type.enum";
+import { RequestTypes } from './enums/request-type.enum';
 
 export type BaseRequest<T> = {
     type: RequestTypes;
