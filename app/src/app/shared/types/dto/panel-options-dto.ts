@@ -1,4 +1,8 @@
-export interface PanelOptionsDTO {
+import { BaseRequest } from '../base-request';
+
+export type PanelOptionsDTO = BaseRequest<PanelOptions>;
+
+export type PanelOptions = {
     left: Section[];
     center: {
       iconUrl: string;
@@ -13,9 +17,9 @@ export interface PanelOptionsDTO {
         subLabel: string;
       }
     };
-}
+};
 
-export interface Section {
+export type Section = {
     title: string;
     url: string;
-}
+};

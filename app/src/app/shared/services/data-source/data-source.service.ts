@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { PanelOptionsDTO } from '../../types/panel-options-dto';
+import { PanelOptionsDTO, PanelOptions } from '../../types/dto/panel-options-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ export class DataSourceService {
   private userTocken = '0';
 
   // To delete:
-  private panelOptionsMock: PanelOptionsDTO = {
+  private panelOptionsMock: PanelOptions = {
     left: [
       {
         title: 'Test',
