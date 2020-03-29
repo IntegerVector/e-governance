@@ -1,4 +1,4 @@
-import express from 'express';
+import * as express from 'express';
 import * as fs from 'fs';
 import { resolve } from 'path';
 import { ROUTES_FILE_PATH, CLIENT_ROOT, MAIN_PAGE } from '../constants/constants';

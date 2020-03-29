@@ -1,4 +1,4 @@
-import express from 'express';
+import * as express from 'express';
 import { resolve } from 'path';
 import { loadConfigs, checkConfigs } from './load-configs';
 import { Router } from './router';
@@ -10,7 +10,7 @@ const logger = LoggerSingleton.getInstance();
 const sql = SQLManagerSingleton.getInstance();
 
 export class Server {
-    private server: express.Application = express();
+    private server = (<any>express)();
     private listen: any = null;
     private configs: Configs;
     private router = new Router(this.server);
