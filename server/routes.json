@@ -1,0 +1,7 @@
+[
+    {
+        "type": "get",
+        "url": "/index.html",
+        "action": "GetFile"
+    }
+]

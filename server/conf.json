@@ -1,0 +1,7 @@
+{
+    "port": 8080,
+    "withAdmins": true,
+    "sqlLogin": "",
+    "sqlPass": "",
+    "dataBase": ""
+}
