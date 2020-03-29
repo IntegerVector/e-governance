@@ -28,9 +28,6 @@ class SQLManager {
     
                 logger.info("SQL DB Connected");
                 this.query(`use ${database};`);
-                this.checkUserId('0').then(r => {
-                    console.log(r);
-                });
                 resolve();
             });
         });
