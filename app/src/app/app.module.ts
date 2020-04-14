@@ -2,19 +2,19 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
+import { PageComponentsModule } from './page-components/page-components.module';
+import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
-import { NavigationPanelComponent } from './navigation-panel/navigation-panel.component';
-import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    NavigationPanelComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    PageComponentsModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]
