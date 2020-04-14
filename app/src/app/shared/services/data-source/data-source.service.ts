@@ -7,7 +7,8 @@ import { PanelOptionsDTO, PanelOptions } from '../../types/dto/panel-options-dto
   providedIn: 'root'
 })
 export class DataSourceService {
-  private userTocken = '0';
+  private userId: string = null;
+  private userTocken: string = null;
 
   // To delete:
   private panelOptionsMock: PanelOptions = {
@@ -38,6 +39,18 @@ export class DataSourceService {
   };
 
   constructor(private http: HttpClient) { }
+
+  public isUserIdValid(userId: string): boolean {
+    if (!this.userId) {
+      return false;
+    }
+
+    return userId === this.userId ? true : false;
+  }
+
+  public getTokenById(userId: string): string {
+    return userId === this.userId ? this.userTocken : null;
+  }
 
   public getPanelOptions(): Observable<any> {
     return of(this.panelOptionsMock);
