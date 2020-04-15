@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { ErrorObjectInterface } from './types/error-object.interface';
+import { unknownErrorTip, unknownErrorMsg, goToMainPageButtonLabel, goToMainPageButtonTitle } from './error.constants';
 
 @Component({
     selector: 'app-error',
@@ -10,6 +11,8 @@ import { ErrorObjectInterface } from './types/error-object.interface';
 })
 export class ErrorComponent implements OnInit {
     @Input() error: ErrorObjectInterface;
+    public buttonLabel = goToMainPageButtonLabel;
+    public buttonTitle = goToMainPageButtonTitle;
 
     constructor(
         private router: Router,
@@ -19,9 +22,9 @@ export class ErrorComponent implements OnInit {
     public ngOnInit(): void {
         this.route.data.subscribe(data => {
             this.error = {
-                errCode: data.errCode,
-                errMsg: data.errMsg,
-                errTip: data.errTip
+                errCode: data.errCode || null,
+                errMsg: data.errMsg || unknownErrorMsg,
+                errTip: data.errTip || unknownErrorTip
             };
         });
     }

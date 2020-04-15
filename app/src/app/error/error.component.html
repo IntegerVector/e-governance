@@ -1,1 +1,10 @@
-<h1>Error Page works!</h1>
+<section *ngIf="error">
+    <h1 *ngIf="error.errCode">{{ error.errCode }}</h1>
+    <p *ngIf="error.errMsg">{{ error.errMsg }}</p>
+    <span *ngIf="error.errTip">{{ error.errTip }}</span>
+    <button
+        autofocus
+        type="button"
+        title="{{ buttonTitle || 'go to main page' }}"
+        (click)="navigateToMainPage()">{{ buttonLabel || "Main Page" }}</button>
+</section>
