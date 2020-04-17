@@ -5,17 +5,21 @@ import { HttpClientModule } from '@angular/common/http';
 import { DataSourceService } from './services/data-source/data-source.service';
 import { UrlParamsResolverService } from './services/url-params-resolver/url-params-resolver.service';
 import { DataSaverService } from './services/data-saver/data-saver.service';
+import { TextHandlerService } from './services/text-handler/text-handler.service';
+import { TextHandlerPipe } from './services/text-handler/text-handler.pipe';
 
 @NgModule({
-  declarations: [],
+  declarations: [TextHandlerPipe],
   imports: [
     BrowserModule,
     HttpClientModule
   ],
+  exports: [TextHandlerPipe],
   providers: [
     DataSourceService,
     UrlParamsResolverService,
-    DataSaverService
+    DataSaverService,
+    TextHandlerService
   ],
 })
 export class SharedModule { }
