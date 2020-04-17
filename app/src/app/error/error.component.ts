@@ -20,11 +20,11 @@ export class ErrorComponent implements OnInit {
     ) {}
 
     public ngOnInit(): void {
-        this.route.data.subscribe(data => {
+        this.route.data.subscribe(({ urlParams }) => {
             this.error = {
-                errCode: data.errCode || null,
-                errMsg: data.errMsg || unknownErrorMsg,
-                errTip: data.errTip || unknownErrorTip
+                errCode: urlParams.error.errCode || null,
+                errMsg: urlParams.error.errMsg || unknownErrorMsg,
+                errTip: urlParams.error.errTip || unknownErrorTip
             };
         });
     }
