@@ -14,7 +14,7 @@ class Logger {
     constructor(private logFilePath: string) {}
 
     public log(...msgs: string[]) {
-        const text = this.getDataToLog(LogTypes.Info, ...msgs);
+        const text = this.getDataToLog(LogTypes.Log, ...msgs);
         console.log(text);
         this.save(LogTypes.Log, text);
         return text;
@@ -28,14 +28,14 @@ class Logger {
     }
 
     public warning(...msgs: string[]) {
-        const text = this.getDataToLog(LogTypes.Info, ...msgs);
+        const text = this.getDataToLog(LogTypes.Warning, ...msgs);
         console.warn(text);
         this.save(LogTypes.Warning, text);
         return text;
     }
 
     public error(...msgs: string[]) {
-        const text = this.getDataToLog(LogTypes.Info, ...msgs);
+        const text = this.getDataToLog(LogTypes.Error, ...msgs);
         console.error(text);
         this.save(LogTypes.Error, text);
         return text;
