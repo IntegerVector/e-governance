@@ -20,6 +20,10 @@ export class Router {
             res.redirect(MAIN_PAGE);
         });
 
+        this.server.get(MAIN_PAGE + '/*', (req, res) => {
+            res.sendFile(resolve(CLIENT_ROOT + MAIN_PAGE));
+        });
+
         this.server.get(/.+\.(html)|(js)|(js\.map)|(ico)/, (req, res) => {
             logger.info('File request:', CLIENT_ROOT + req.url);
             res.sendFile(resolve(CLIENT_ROOT + req.url));

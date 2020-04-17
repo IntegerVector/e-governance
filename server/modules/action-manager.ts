@@ -1,5 +1,5 @@
 import { RequestTypes } from "../types/enums/request-type.enum";
-import { getFile } from "../actions/files-action";
+import { getUserById, userLogIn, userRegister, userUpdate, getUserPermissions } from '../actions/users-actions';
 
 export class Actions {
     private static actions: any = {};
@@ -15,15 +15,19 @@ export class Actions {
         this.actions[actionName] = null;
     }
 
-    public static async execute(
+    public static execute(
         actionName: string,
         type: RequestTypes,
         req: any,
         res: any
-    ): Promise<void> {
-        await this.actions[actionName](type, req, res);
+    ): void {
+        this.actions[actionName](type, req, res);
     }
 }
 
 /** Actions: */
-Actions.add("GetFile", getFile);
+Actions.add('GetUserById', getUserById);
+Actions.add('UserLogIn', userLogIn);
+Actions.add('UserRegister', userRegister);
+Actions.add('UserUpdate', userUpdate);
+Actions.add('GetUserPermissions', getUserPermissions);

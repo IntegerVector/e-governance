@@ -1,7 +1,27 @@
 [
     {
         "type": "get",
-        "url": "/index.html",
-        "action": "GetFile"
+        "url": "/get-user-by-id",
+        "action": "GetUserById"
+    },
+    {
+        "type": "get",
+        "url": "/user-log-in",
+        "action": "UserLogIn"
+    },
+    {
+        "type": "post",
+        "url": "user-register",
+        "action": "UserRegister"
+    },
+    {
+        "type": "post",
+        "url": "/user-update",
+        "action": "UserUpdate"
+    },
+    {
+        "type": "get",
+        "url": "/get-user-permissions",
+        "action": "GetUserPermissions"
     }
 ]
