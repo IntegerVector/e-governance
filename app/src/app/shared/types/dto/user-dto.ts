@@ -2,7 +2,7 @@ import { BaseRequest } from '../base-request';
 
 export type UserDTO = BaseRequest<User>;
 
-type User = {
+export type User = {
     userId?: number;
     userToken?: number;
     userFirstName: string;

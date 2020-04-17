@@ -16,8 +16,7 @@ import { DEFAULT_USER_TOKEN, DEFAULT_USER_ID } from '../../shared.constants';
 })
 export class UrlParamsResolverService implements Resolve<UrlParamsInterface> {
     private defaultParams: UrlParamsInterface = {
-        userId: DEFAULT_USER_ID,
-        userToken: DEFAULT_USER_TOKEN
+        userId: DEFAULT_USER_ID
     };
 
     constructor(private dataSourceService: DataSourceService) {}
@@ -34,7 +33,6 @@ export class UrlParamsResolverService implements Resolve<UrlParamsInterface> {
     private getParamsObservable(route: ActivatedRouteSnapshot): Observable<UrlParamsInterface> {
         return of({
             userId: route.queryParams.userId,
-            userToken: this.dataSourceService.getTokenById(route.queryParams.userId),
             error: {
                 errCode: route.queryParams.errCode || null,
                 errMsg: route.queryParams.errMsg || null,
