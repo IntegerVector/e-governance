@@ -2,7 +2,7 @@ import { BaseRequest } from "../base-request";
 
 export type UserTypePermissionsDTO = BaseRequest<UserTypePermissions>;
 
-type UserTypePermissions = {
+export type UserTypePermissions = {
     id: number;
     userTypeId: number;
     permissionId: number;

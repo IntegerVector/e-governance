@@ -5,17 +5,12 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 CREATE DATABASE IF NOT EXISTS `egovernance` DEFAULT CHARACTER SET cp1251 COLLATE cp1251_general_ci;
 USE `egovernance`;
 
 DROP TABLE IF EXISTS `Permissions`;
 CREATE TABLE `Permissions` (
-  `permissionId` int(11) NOT NULL,
+  `permissionId` int PRIMARY KEY AUTO_INCREMENT,
   `permission` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
 
@@ -36,7 +31,7 @@ INSERT INTO `Permissions` (`permissionId`, `permission`) VALUES
 
 DROP TABLE IF EXISTS `UserType`;
 CREATE TABLE `UserType` (
-  `userTypeId` int(11) NOT NULL,
+  `userTypeId` int PRIMARY KEY AUTO_INCREMENT,
   `type` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
 
@@ -50,7 +45,7 @@ INSERT INTO `UserType` (`userTypeId`, `type`) VALUES
 
 DROP TABLE IF EXISTS `UserStatus`;
 CREATE TABLE `UserStatus` (
-  `userStatusId` int(11) NOT NULL,
+  `userStatusId` int PRIMARY KEY AUTO_INCREMENT,
   `status` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
 
@@ -65,7 +60,7 @@ INSERT INTO `UserStatus` (`userStatusId`, `status`) VALUES
 
 DROP TABLE IF EXISTS `UserTypePermissions`;
 CREATE TABLE `UserTypePermissions` (
-  `id` int(11) NOT NULL,
+  `id` int PRIMARY KEY AUTO_INCREMENT,
   `userTypeId` int(11) NOT NULL,
   `permissionId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
@@ -90,7 +85,7 @@ INSERT INTO `UserTypePermissions` (`id`, `userTypeId`, `permissionId`) VALUES
 
 DROP TABLE IF EXISTS `User`;
 CREATE TABLE `User` (
-  `userId` int(11) NOT NULL,
+  `userId` int PRIMARY KEY AUTO_INCREMENT,
   `userToken` varchar(64) NOT NULL,
   `userFirstName` varchar(50) NOT NULL,
   `userLastName` varchar(50) NOT NULL,
@@ -110,20 +105,20 @@ CREATE TABLE `User` (
   `sys_DeletedDate` date,
   `validFrom` date NOT NULL,
   `validTo` date,
-  `documentDataId` int(11)
+  `userDataId` int(11)
 ) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
 
 
 TRUNCATE TABLE `User`;
 
-INSERT INTO `User` (`userId`, `userToken`, `userFirstName`, `userLastName`, `userPatronymic`, `userPhoneNumber`, `userSPhoneNumber`, `userEmail`, `userSEmail`, `userBirthDate`, `userTypeId`, `userStatusId`, `sys_AddedBy`, `sys_AddedDate`, `sys_UpdatedDate`, `sys_UpdatedBy`, `sys_DeletedBy`, `sys_DeletedDate`, `validFrom`, `validTo`, `documentDataId`) VALUES
+INSERT INTO `User` (`userId`, `userToken`, `userFirstName`, `userLastName`, `userPatronymic`, `userPhoneNumber`, `userSPhoneNumber`, `userEmail`, `userSEmail`, `userBirthDate`, `userTypeId`, `userStatusId`, `sys_AddedBy`, `sys_AddedDate`, `sys_UpdatedDate`, `sys_UpdatedBy`, `sys_DeletedBy`, `sys_DeletedDate`, `validFrom`, `validTo`, `userDataId`) VALUES
 (0, 'MzQ1MDk4MzQ1MTIzNjc4OTg3MzQ1MTIzNTY3NjU0MDk4MTIzNTY3MTIzNTY3ODkw', 'Андрій', 'Рубан', 'Миколайович', '123123123', NULL, 'andrii.ruban@nure.ua', NULL, '1998-12-25', 2, 1, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-01', NULL, 0);
 
 -- --------------------------------------------------------
 
 DROP TABLE IF EXISTS `UserData`;
 CREATE TABLE `UserData` (
-  `userDataId` int(11) NOT NULL,
+  `userDataId` int PRIMARY KEY AUTO_INCREMENT,
   `login` varchar(32) NOT NULL,
   `pass` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
@@ -133,12 +128,12 @@ INSERT INTO `UserData` (`userDataId`, `login`, `pass`) VALUES
 
 -- Adding Primary keys:
 
-ALTER TABLE `Permissions` ADD PRIMARY KEY (`permissionId`);
-ALTER TABLE `UserType` ADD PRIMARY KEY (`userTypeId`);
-ALTER TABLE `UserStatus` ADD PRIMARY KEY (`userStatusId`);
-ALTER TABLE `UserTypePermissions` ADD PRIMARY KEY (`id`);
-ALTER TABLE `User` ADD PRIMARY KEY (`userId`);
-ALTER TABLE `UserData` ADD PRIMARY KEY (`userDataId`);
+ALTER TABLE `Permissions` AUTO_INCREMENT=10;
+ALTER TABLE `UserType` AUTO_INCREMENT=10;
+ALTER TABLE `UserStatus` AUTO_INCREMENT=10;
+ALTER TABLE `UserTypePermissions` AUTO_INCREMENT=20;
+ALTER TABLE `User` AUTO_INCREMENT=10;
+ALTER TABLE `UserData` AUTO_INCREMENT=10;
 
 -- Adding Foreign keys:
 
