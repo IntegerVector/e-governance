@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { UserDataInterface } from './types/user-data.interface';
-import { DEFAULT_USER_ID, DEFAULT_USER_TOKEN } from '../../shared.constants';
+import { DEFAULT_USER_ID, DEFAULT_USER_TOKEN } from '../../constants/shared.constants';
 
 @Injectable({
     providedIn: 'root'
@@ -20,27 +20,28 @@ export class DataSaverService {
 
     public clearUserData(): void {
         try {
-          this.localStorage.removeItem(this.itemToSave);
+            this.localStorage.removeItem(this.itemToSave);
         } catch (e) {
-          // will just ignore it
+            // will just ignore it
         }
-      }
+    }
 
-      public saveUserData(userData: UserDataInterface): void {
+    public saveUserData(userData: UserDataInterface): void {
         try {
-          const dataToSave = JSON.stringify(userData);
-          this.localStorage.setItem(this.itemToSave, dataToSave);
+            const oldData = this.getUserData();
+            const dataToSave = oldData ? { ...oldData, ...userData } : userData;
+            this.localStorage.setItem(this.itemToSave, JSON.stringify(dataToSave));
         } catch (e) {
-          // will just ignore it
+            // will just ignore it
         }
-      }
+    }
 
-      public getUserData(): UserDataInterface {
+    public getUserData(): UserDataInterface {
         try {
-          const userData = this.localStorage.getItem(this.itemToSave);
-          return JSON.parse(userData);
+            const userData = this.localStorage.getItem(this.itemToSave);
+            return JSON.parse(userData);
         } catch (e) {
-          return this.defaultUserData;
+            return this.defaultUserData;
         }
-      }
+    }
 }
