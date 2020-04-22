@@ -7,14 +7,21 @@ import { UrlParamsResolverService } from './services/url-params-resolver/url-par
 import { DataSaverService } from './services/data-saver/data-saver.service';
 import { TextHandlerService } from './services/text-handler/text-handler.service';
 import { TextHandlerPipe } from './services/text-handler/text-handler.pipe';
+import { ProfilePictureComponent } from './components/profile-picture/profile-picture.component';
 
 @NgModule({
-    declarations: [TextHandlerPipe],
+    declarations: [
+        TextHandlerPipe,
+        ProfilePictureComponent
+    ],
     imports: [
         BrowserModule,
         HttpClientModule
     ],
-    exports: [TextHandlerPipe],
+    exports: [
+        TextHandlerPipe,
+        ProfilePictureComponent
+    ],
     providers: [
         DataSourceService,
         UrlParamsResolverService,
