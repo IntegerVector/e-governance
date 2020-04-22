@@ -9,7 +9,7 @@ import { Observable, of } from 'rxjs';
 import { UrlParamsInterface } from './types/url-params.interface';
 import { DataSourceService } from '../data-source/data-source.service';
 import { ErrorHandlerService } from 'src/app/error/services/error-handler.service';
-import { DEFAULT_USER_TOKEN, DEFAULT_USER_ID } from '../../shared.constants';
+import { DEFAULT_USER_TOKEN, DEFAULT_USER_ID } from '../../constants/shared.constants';
 
 @Injectable({
     providedIn: 'root'

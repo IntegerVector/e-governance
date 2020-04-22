@@ -5,9 +5,9 @@ import { ErrorHandlerService } from '../error/services/error-handler.service';
 import { ErrorComponent } from './error.component';
 
 @NgModule({
-  declarations: [ErrorComponent],
-  imports: [BrowserModule],
-  exports: [ErrorComponent],
-  providers: [ErrorHandlerService],
+    declarations: [ErrorComponent],
+    imports: [BrowserModule],
+    exports: [ErrorComponent],
+    providers: [ErrorHandlerService],
 })
 export class ErrorModule { }

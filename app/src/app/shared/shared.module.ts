@@ -9,17 +9,17 @@ import { TextHandlerService } from './services/text-handler/text-handler.service
 import { TextHandlerPipe } from './services/text-handler/text-handler.pipe';
 
 @NgModule({
-  declarations: [TextHandlerPipe],
-  imports: [
-    BrowserModule,
-    HttpClientModule
-  ],
-  exports: [TextHandlerPipe],
-  providers: [
-    DataSourceService,
-    UrlParamsResolverService,
-    DataSaverService,
-    TextHandlerService
-  ],
+    declarations: [TextHandlerPipe],
+    imports: [
+        BrowserModule,
+        HttpClientModule
+    ],
+    exports: [TextHandlerPipe],
+    providers: [
+        DataSourceService,
+        UrlParamsResolverService,
+        DataSaverService,
+        TextHandlerService
+    ],
 })
 export class SharedModule { }
