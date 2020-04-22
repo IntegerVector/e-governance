@@ -1,9 +1,9 @@
 import * as fs from 'fs';
 import { LOG_FILE_PATH } from '../constants/constants';
-import { LogTypes } from '../types/enums/log-types.enum';
-import { Logs } from '../types/interfaces/logs.interface';
+import { LogTypesEnum } from '../types/enums/log-types.enum';
+import { LogsInterface } from '../types/interfaces/logs.interface';
 
-const defaultLogs: Logs = {
+const defaultLogs: LogsInterface = {
     logs: [],
     infos: [],
     warnings: [],
@@ -14,45 +14,45 @@ class Logger {
     constructor(private logFilePath: string) {}
 
     public log(...msgs: string[]) {
-        const text = this.getDataToLog(LogTypes.Log, ...msgs);
+        const text = this.getDataToLog(LogTypesEnum.Log, ...msgs);
         console.log(text);
-        this.save(LogTypes.Log, text);
+        this.save(LogTypesEnum.Log, text);
         return text;
     }
 
     public info(...msgs: string[]) {
-        const text = this.getDataToLog(LogTypes.Info, ...msgs);
+        const text = this.getDataToLog(LogTypesEnum.Info, ...msgs);
         console.info(text);
-        this.save(LogTypes.Info, text);
+        this.save(LogTypesEnum.Info, text);
         return text;
     }
 
     public warning(...msgs: string[]) {
-        const text = this.getDataToLog(LogTypes.Warning, ...msgs);
+        const text = this.getDataToLog(LogTypesEnum.Warning, ...msgs);
         console.warn(text);
-        this.save(LogTypes.Warning, text);
+        this.save(LogTypesEnum.Warning, text);
         return text;
     }
 
     public error(...msgs: string[]) {
-        const text = this.getDataToLog(LogTypes.Error, ...msgs);
+        const text = this.getDataToLog(LogTypesEnum.Error, ...msgs);
         console.error(text);
-        this.save(LogTypes.Error, text);
+        this.save(LogTypesEnum.Error, text);
         return text;
     }
 
-    private async save(type: LogTypes, text: string): Promise<void> {
+    private async save(type: LogTypesEnum, text: string): Promise<void> {
         try {
             const logs = this.readLogs();
             logs[type] = [...logs[type], text];
             this.writeLogs(logs);
         }
         catch (err) {
-            throw "Logs saving failed";
+            throw "LogsInterface saving failed";
         }
     }
 
-    private readLogs(): Logs {
+    private readLogs(): LogsInterface {
         try {
             const data = fs.readFileSync(this.logFilePath);
             const logs = JSON.parse(data.toString());
@@ -63,21 +63,21 @@ class Logger {
         }
     }
 
-    private writeLogs(logs: Logs): void {
+    private writeLogs(logs: LogsInterface): void {
         fs.writeFileSync(this.logFilePath, JSON.stringify(logs, null, 4));
     }
 
-    private getDataToLog(type: LogTypes, ...msgs: string[]): string {
+    private getDataToLog(type: LogTypesEnum, ...msgs: string[]): string {
         const date = new Date();
         const template = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}] => ${msgs.join(' ')}`;
         switch(type) {
-            case LogTypes.Info:
+            case LogTypesEnum.Info:
                 return `[INFO: ${template}`;
-            case LogTypes.Log:
+            case LogTypesEnum.Log:
                 return `[LOG: ${template}`;
-            case LogTypes.Warning:
+            case LogTypesEnum.Warning:
                 return `[WARNING: ${template}`;
-            case LogTypes.Error:
+            case LogTypesEnum.Error:
                 return `[ERROR: ${template}`;
         }
     }

@@ -1,7 +1,7 @@
-import { RequestTypes } from '../types/enums/request-type.enum';
+import { RequestTypesEnum } from '../types/enums/request-type.enum';
 import { NOT_FOUND_CODE, CLIENT_INVALID_USER_ID, CLIENT_NOT_AUTHORIZED_TIP, CLIENT_INVALID_TOKEN, CLIENT_UNEXPECTED_ERROR, CLIENT_UNEXPECTED_ERROR_TIP, CLIENT_INVALID_PERMISSION } from '../constants/errors';
 
-export async function sendError(type: RequestTypes, req: any, res: any) {
+export async function sendError(type: RequestTypesEnum, req: any, res: any) {
     const body = {
         type,
         error: req.body.error,
@@ -13,7 +13,7 @@ export async function sendError(type: RequestTypes, req: any, res: any) {
     res.send(body);
 }
 
-export async function sendUnexpectedError(type: RequestTypes, req: any, res: any) {
+export async function sendUnexpectedError(type: RequestTypesEnum, req: any, res: any) {
     req.body.error = {
         errCode: "",
         errMsg: CLIENT_UNEXPECTED_ERROR,
@@ -23,7 +23,7 @@ export async function sendUnexpectedError(type: RequestTypes, req: any, res: any
     sendError(type, req, res);
 }
 
-export async function sendErrorInvalidUserId(type: RequestTypes, req: any, res: any) {
+export async function sendErrorInvalidUserId(type: RequestTypesEnum, req: any, res: any) {
     req.body.error = {
         errCode: NOT_FOUND_CODE,
         errMsg: CLIENT_INVALID_USER_ID,
@@ -33,7 +33,7 @@ export async function sendErrorInvalidUserId(type: RequestTypes, req: any, res: 
     sendError(type, req, res);
 }
 
-export async function sendErrorInvalidToken(type: RequestTypes, req: any, res: any) {
+export async function sendErrorInvalidToken(type: RequestTypesEnum, req: any, res: any) {
     req.body.error = {
         errCode: NOT_FOUND_CODE,
         errMsg: CLIENT_INVALID_TOKEN,
@@ -43,7 +43,7 @@ export async function sendErrorInvalidToken(type: RequestTypes, req: any, res: a
     sendError(type, req, res);
 }
 
-export async function sendErrorInvalidPermissions(type: RequestTypes, req: any, res: any) {
+export async function sendErrorInvalidPermissions(type: RequestTypesEnum, req: any, res: any) {
     req.body.error = {
         errCode: null,
         errMsg: CLIENT_INVALID_PERMISSION,

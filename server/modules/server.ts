@@ -2,7 +2,7 @@ import * as express from 'express';
 import { resolve } from 'path';
 import { loadConfigs, checkConfigs } from './load-configs';
 import { Router } from './router';
-import { Configs } from '../types/interfaces/configs.interface';
+import { ConfigsInterface } from '../types/interfaces/configs.interface';
 import { SQLManagerSingleton } from './sql-manager';
 import { LoggerSingleton } from './logger';
 
@@ -12,7 +12,7 @@ const sql = SQLManagerSingleton.getInstance();
 export class Server {
     private server = (<any>express)();
     private listen: any = null;
-    private configs: Configs;
+    private configs: ConfigsInterface;
     private router = new Router(this.server);
 
     constructor(private configFilePath: string) {

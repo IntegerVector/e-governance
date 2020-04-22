@@ -1,12 +1,13 @@
-import { RequestTypes } from "../types/enums/request-type.enum";
-import { getUserById, userLogIn, userRegister, userUpdate, getUserPermissions } from '../actions/users-actions';
+import { RequestTypesEnum } from "../types/enums/request-type.enum";
+import { getUserById, userLogIn, userRegister, userUpdate, getUserPermissions, getUserDataByUserId } from '../actions/users-actions';
+import { getStatuses, getTypes } from '../actions/db-data-getters';
 
 export class Actions {
     private static actions: any = {};
 
     public static add(
         actionName: string,
-        actionFunction: (type: RequestTypes, req: any, res: any) => Promise<void>
+        actionFunction: (type: RequestTypesEnum, req: any, res: any) => Promise<void>
     ): void {
         this.actions[actionName] = actionFunction;
     }
@@ -17,7 +18,7 @@ export class Actions {
 
     public static execute(
         actionName: string,
-        type: RequestTypes,
+        type: RequestTypesEnum,
         req: any,
         res: any
     ): void {
@@ -31,3 +32,6 @@ Actions.add('UserLogIn', userLogIn);
 Actions.add('UserRegister', userRegister);
 Actions.add('UserUpdate', userUpdate);
 Actions.add('GetUserPermissions', getUserPermissions);
+Actions.add('GetUserDataByUserId', getUserDataByUserId);
+Actions.add('GetUsersStatuses', getStatuses);
+Actions.add('GetUsersTypes', getTypes);

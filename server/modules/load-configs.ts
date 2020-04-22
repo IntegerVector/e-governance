@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import { LoggerSingleton } from './logger';
-import { Configs } from '../types/interfaces/configs.interface';
+import { ConfigsInterface } from '../types/interfaces/configs.interface';
 
 const logger = LoggerSingleton.getInstance();
 
@@ -15,7 +15,7 @@ export function loadConfigs(configFilePath = 'config.json') {
     }
 }
 
-export function checkConfigs(configs: Configs) {
+export function checkConfigs(configs: ConfigsInterface) {
     if (!configs.port) {
         logger.error('Server Port not present in config file! Please add it');
         return false;
