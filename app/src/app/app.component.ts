@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { DataSourceService } from './shared/services/data-source/data-source.service';
@@ -10,17 +10,15 @@ import { DEFAULT_USER_ID } from './shared/constants/shared.constants';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
-    public userId: string = DEFAULT_USER_ID;
+export class AppComponent {
+    public userId: string;
 
     constructor(
         private dataSourceService: DataSourceService,
         private router: Router
-    ) { }
-
-    public ngOnInit() {
+    ) {
         const { userId, userToken } = this.dataSourceService.restoreUserAuthData();
-        this.userId = userId;
+        this.userId = userId || DEFAULT_USER_ID;
         this.router.navigate([MAIN_PAGE_INTERNAL_URL], {
             queryParams: {
                 userId
