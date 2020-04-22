@@ -8,15 +8,15 @@ SET time_zone = "+00:00";
 CREATE DATABASE IF NOT EXISTS `egovernance` DEFAULT CHARACTER SET cp1251 COLLATE cp1251_general_ci;
 USE `egovernance`;
 
-DROP TABLE IF EXISTS `Permissions`;
-CREATE TABLE `Permissions` (
+DROP TABLE IF EXISTS `PermissionsEnum`;
+CREATE TABLE `PermissionsEnum` (
   `permissionId` int PRIMARY KEY AUTO_INCREMENT,
   `permission` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
 
-TRUNCATE TABLE `Permissions`;
+TRUNCATE TABLE `PermissionsEnum`;
 
-INSERT INTO `Permissions` (`permissionId`, `permission`) VALUES
+INSERT INTO `PermissionsEnum` (`permissionId`, `permission`) VALUES
 (1, 'ReadDocs'),
 (2, 'ReadUsers'),
 (3, 'UploadDocs'),
@@ -43,15 +43,15 @@ INSERT INTO `UserType` (`userTypeId`, `type`) VALUES
 
 -- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `UserStatus`;
-CREATE TABLE `UserStatus` (
+DROP TABLE IF EXISTS `UserStatusEnum`;
+CREATE TABLE `UserStatusEnum` (
   `userStatusId` int PRIMARY KEY AUTO_INCREMENT,
   `status` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
 
-TRUNCATE TABLE `UserStatus`;
+TRUNCATE TABLE `UserStatusEnum`;
 
-INSERT INTO `UserStatus` (`userStatusId`, `status`) VALUES
+INSERT INTO `UserStatusEnum` (`userStatusId`, `status`) VALUES
 (1, 'Active'),
 (2, 'Banned'),
 (3, 'Deleted');
@@ -94,25 +94,25 @@ CREATE TABLE `User` (
   `userSPhoneNumber` varchar(15),
   `userEmail` varchar(100),
   `userSEmail` varchar(100),
-  `userBirthDate` date NOT NULL,
+  `userBirthDate` char(10) NOT NULL,
   `userTypeId` int(11) NOT NULL,
   `userStatusId` int(11) NOT NULL,
   `sys_AddedBy` int(11),
-  `sys_AddedDate` date,
-  `sys_UpdatedDate` date,
+  `sys_AddedDate` char(10),
+  `sys_UpdatedDate` char(10),
   `sys_UpdatedBy` int(11),
   `sys_DeletedBy` int(11),
-  `sys_DeletedDate` date,
-  `validFrom` date NOT NULL,
-  `validTo` date,
-  `userDataId` int(11)
+  `sys_DeletedDate` char(10),
+  `validFrom` char(10) NOT NULL,
+  `validTo` char(10),
+  `userDataId` int
 ) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
 
 
 TRUNCATE TABLE `User`;
 
 INSERT INTO `User` (`userId`, `userToken`, `userFirstName`, `userLastName`, `userPatronymic`, `userPhoneNumber`, `userSPhoneNumber`, `userEmail`, `userSEmail`, `userBirthDate`, `userTypeId`, `userStatusId`, `sys_AddedBy`, `sys_AddedDate`, `sys_UpdatedDate`, `sys_UpdatedBy`, `sys_DeletedBy`, `sys_DeletedDate`, `validFrom`, `validTo`, `userDataId`) VALUES
-(0, 'MzQ1MDk4MzQ1MTIzNjc4OTg3MzQ1MTIzNTY3NjU0MDk4MTIzNTY3MTIzNTY3ODkw', 'Андрій', 'Рубан', 'Миколайович', '123123123', NULL, 'andrii.ruban@nure.ua', NULL, '1998-12-25', 2, 1, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-01', NULL, 0);
+(1, 'MzQ1MDk4MzQ1MTIzNjc4OTg3MzQ1MTIzNTY3NjU0MDk4MTIzNTY3MTIzNTY3ODkw', 'Андрій', 'Рубан', 'Миколайович', '123123123', NULL, 'andrii.ruban@nure.ua', NULL, '1998-12-25', 2, 1, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-01', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -120,17 +120,19 @@ DROP TABLE IF EXISTS `UserData`;
 CREATE TABLE `UserData` (
   `userDataId` int PRIMARY KEY AUTO_INCREMENT,
   `login` varchar(32) NOT NULL,
-  `pass` varchar(32) NOT NULL
+  `pass` varchar(32) NOT NULL,
+  `profilePicturePath` char(64),
+  `userDocumentsId` int
 ) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
 
-INSERT INTO `UserData` (`userDataId`, `login`, `pass`) VALUES
-(0, 'admin', 'admin');
+INSERT INTO `UserData` (`userDataId`, `login`, `pass`, `profilePicturePath`, `userDocumentsId`) VALUES
+(1, 'admin', 'admin', '/files/user-data', NULL);
 
 -- Adding Primary keys:
 
-ALTER TABLE `Permissions` AUTO_INCREMENT=10;
+ALTER TABLE `PermissionsEnum` AUTO_INCREMENT=10;
 ALTER TABLE `UserType` AUTO_INCREMENT=10;
-ALTER TABLE `UserStatus` AUTO_INCREMENT=10;
+ALTER TABLE `UserStatusEnum` AUTO_INCREMENT=10;
 ALTER TABLE `UserTypePermissions` AUTO_INCREMENT=20;
 ALTER TABLE `User` AUTO_INCREMENT=10;
 ALTER TABLE `UserData` AUTO_INCREMENT=10;
@@ -139,12 +141,12 @@ ALTER TABLE `UserData` AUTO_INCREMENT=10;
 
 ALTER TABLE `UserTypePermissions`
   ADD CONSTRAINT `ut_fk` FOREIGN KEY (`userTypeId`) REFERENCES `UserType` (`userTypeId`),
-  ADD CONSTRAINT `p_fk` FOREIGN KEY (`permissionId`) REFERENCES `Permissions` (`permissionId`);
+  ADD CONSTRAINT `p_fk` FOREIGN KEY (`permissionId`) REFERENCES `PermissionsEnum` (`permissionId`);
 
 ALTER TABLE `User`
   ADD CONSTRAINT `ut2_fk` FOREIGN KEY (`userTypeId`) REFERENCES `UserType` (`userTypeId`),
-  ADD CONSTRAINT `us_fk` FOREIGN KEY (`userStatusId`) REFERENCES `UserStatus` (`userStatusId`),
-  ADD CONSTRAINT `ud_fk` FOREIGN KEY (`documentDataId`) REFERENCES `UserData` (`userDataId`);
+  ADD CONSTRAINT `us_fk` FOREIGN KEY (`userStatusId`) REFERENCES `UserStatusEnum` (`userStatusId`),
+  ADD CONSTRAINT `ud_fk` FOREIGN KEY (`userDataId`) REFERENCES `UserData` (`userDataId`);
 
 -- To Do: extend UserData table with additional data
 
