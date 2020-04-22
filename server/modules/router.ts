@@ -28,13 +28,13 @@ export class Router {
             res.sendFile(resolve(CLIENT_ROOT + req.url));
         });
 
-        this.server.get(/.+\.(html)|(js)|(js\.map)|(ico)/, (req, res) => {
+        this.server.get(/.+\.(html)|(js)|(map)|(ico)|(ttf)/, (req, res) => {
             logger.info('File request:', CLIENT_ROOT + req.url);
             res.sendFile(resolve(CLIENT_ROOT + req.url));
         });
 
         this.routes.forEach((rout: RouteInterface) => {
-            this.server.post(rout.url, (req, res) => {
+            this.server.post(new RegExp(rout.url), (req, res) => {
                 Actions.execute(rout.action, rout.type, req, res);
             });
         });
