@@ -2,12 +2,13 @@ import { createConnection } from 'mysql';
 import { LoggerSingleton } from './logger';
 import { HOST } from '../constants/constants';
 import { DB_MULTIPLE_USERS_WITH_SAME_ID, DB_MULTIPLE_STATUSES_WITH_SAME_ID, DB_STATUSE_DOESNT_EXISTS, DB_MULTIPLE_TYPES_WITH_SAME_ID, DB_TYPE_DOESNT_EXISTS, DB_PERMISSIONS_TYPES_WITH_SAME_ID, DB_PERMISSION_DOESNT_EXISTS, CLIENT_INVALID_USER_ID, CLIENT_INVALID_TOKEN, CLIENT_INVALID_LOGIN_OR_PASS, CLIENT_INVALID_USER_DATA_ID, CLIENT_INVALID_USER_TYPE_ID } from '../constants/errors';
-import { UserStatus } from '../types/enums/user-status.enum';
-import { UserType } from '../types/enums/user-type.enum';
-import { Permissions } from '../types/enums/permissions.enum';
+import { UserStatusEnum } from '../types/enums/user-status.enum';
+import { PermissionsEnum } from '../types/enums/permissions.enum';
 import { User } from '../types/dto/user-dto';
 import { getToken } from './token-generator';
 import { UserData } from '../types/dto/user-data-dto';
+import { UserTypeEnum } from '../types/enums/user-type.enum';
+import { UserType } from '../types/dto/user-type-dto';
 
 const logger = LoggerSingleton.getInstance();
 
@@ -40,9 +41,9 @@ class SQLManager {
         });
     }
 
-    public async getPermissionId(permission: Permissions): Promise<number> {
+    public async getPermissionId(permission: PermissionsEnum): Promise<number> {
         return new Promise(async (resolve, reject) => {
-            const request = `select permissionId from Permissions where permission = "${permission}";`;
+            const request = `select permissionId from PermissionsEnum where permission = "${permission}";`;
             const result = await this.query(request);
 
             if (result.length > 1) {
@@ -61,9 +62,9 @@ class SQLManager {
         });
     }
 
-    public async getPermissionById(permissionId: number): Promise<Permissions> {
+    public async getPermissionById(permissionId: number): Promise<PermissionsEnum> {
         return new Promise(async (resolve, reject) => {
-            const request = `select permission from Permissions where permissionId = "${permissionId}";`;
+            const request = `select permission from PermissionsEnum where permissionId = "${permissionId}";`;
             const result = await this.query(request);
 
             if (result.length > 1) {
@@ -82,7 +83,16 @@ class SQLManager {
         });
     }
 
-    public async getUserTypeById(userTypeId: number): Promise<UserType> {
+    public async getTypes(): Promise<UserType[]> {
+        return new Promise(async (resolver, reject) => {
+            const request = 'select * from UserType;';
+            const result = await this.query(request);
+
+            resolver(result);
+        });
+    }
+
+    public async getUserTypeById(userTypeId: number): Promise<UserTypeEnum> {
         return new Promise(async (resolve, reject) => {
             const request = `select type from UserType where userTypeId = "${userTypeId}";`;
             const result = await this.query(request);
@@ -103,7 +113,7 @@ class SQLManager {
         });
     }
 
-    public async getUserTypeId(userType: UserType): Promise<string> {
+    public async getUserTypeId(userType: UserTypeEnum): Promise<string> {
         return new Promise(async (resolver, reject) => {
             const request = `select userTypeId from UserType where type = "${userType}";`;
             const result = await this.query(request);
@@ -112,9 +122,18 @@ class SQLManager {
         });
     }
 
-    public async getUserStatusById(userStatusId: number): Promise<UserStatus> {
+    public async getStatuses(): Promise<UserStatusEnum[]> {
+        return new Promise(async (resolver, reject) => {
+            const request = 'select * from UserStatusEnum;';
+            const result = await this.query(request);
+
+            resolver(result);
+        });
+    }
+
+    public async getUserStatusById(userStatusId: number): Promise<UserStatusEnum> {
         return new Promise(async (resolve, reject) => {
-            const request = `select status from UserStatus where userStatusId = "${userStatusId}";`;
+            const request = `select status from UserStatusEnum where userStatusId = "${userStatusId}";`;
             const result = await this.query(request);
 
             if (result.length > 1) {
@@ -133,16 +152,16 @@ class SQLManager {
         });
     }
 
-    public async getUserStatusId(userStatus: UserStatus): Promise<string> {
+    public async getUserStatusId(userStatus: UserStatusEnum): Promise<string> {
         return new Promise(async (resolver, reject) => {
-            const request = `select userStatusId from UserStatus where status = "${userStatus}";`;
+            const request = `select userStatusId from UserStatusEnum where status = "${userStatus}";`;
             const result = await this.query(request);
 
             resolver(result[0].userStatusId);
         });
     }
 
-    public async isPermitted(userTypeId: number, permission: Permissions): Promise<boolean> {
+    public async isPermitted(userTypeId: number, permission: PermissionsEnum): Promise<boolean> {
         return new Promise(async (resolve, reject) => {
             const permissionId = await this.getPermissionId(permission);
             const request = `select permissionId from UserTypePermissions where userTypeId = "${userTypeId}";`;
@@ -254,12 +273,12 @@ class SQLManager {
                 return;   
             }
 
-            const permissionsIds: string[] = [...result];
+            const permissionsIds = result.map(permission => permission.permissionId);
             resolver(permissionsIds);
         });
     }
 
-    public getUserPermissions(userId: string): Promise<Permissions[]> {
+    public getUserPermissions(userId: string): Promise<PermissionsEnum[]> {
         return new Promise(async (resolver, reject) => {
             const user = await this.getUserById(userId);
             const permissionsIds = await this.getUserPermissionsIds(user.userTypeId.toString());
@@ -268,6 +287,15 @@ class SQLManager {
             });
 
             resolver(Promise.all(permissions));
+        });
+    }
+
+    public getUserDataById(userDataId: string): Promise<UserData> {
+        return new Promise(async (resolver, reject) => {
+            const request = `select * from UserData where userDataId = "${userDataId}";`;
+            const result = await this.query(request);
+
+            resolver(result[0]);
         });
     }
 
@@ -300,7 +328,7 @@ class SQLManager {
                 return;
             }
 
-            const request = `select * from User where documentDataId = "${userDataId}";`;
+            const request = `select * from User where userDataId = "${userDataId}";`;
             const result = await this.query(request);
 
             if (!result.length) {
@@ -320,11 +348,17 @@ class SQLManager {
     public addUser(admin: User, newUser: User & UserData): Promise<string> {
         return new Promise(async (resolver, reject) => {
             const userToken = getToken(newUser.login, newUser.pass, newUser.userFirstName, newUser.userLastName);
-            const userDataId = await this.addUserData({ login: newUser.login, pass: newUser.pass, userDataId: null });
-            const userStatusId = await this.getUserStatusId(UserStatus.Active);
-            const userTypeId = await this.getUserTypeId(UserType.User)
+            const userDataId = await this.addUserData({
+                login: newUser.login,
+                pass: newUser.pass,
+                userDataId: null,
+                profilePicturePath: newUser.profilePicturePath,
+                userDocumentsId: null
+            });
+            const userStatusId = await this.getUserStatusId(UserStatusEnum.Active);
+            const userTypeId = await this.getUserTypeId(UserTypeEnum.User)
 
-            const request = `insert into User (userToken, userFirstName, userLastName, userPatronymic, userPhoneNumber, userSPhoneNumber, userEmail, userSEmail, userBirthDate, userTypeId, userStatusId, sys_AddedBy, sys_AddedDate, sys_UpdatedDate, sys_UpdatedBy, sys_DeletedBy, sys_DeletedDate, validFrom, validTo, userDataId) values ("${userToken}", "${newUser.userFirstName}", "${newUser.userLastName}", "${newUser.userPatronymic}", ${newUser.userPhoneNumber || 'NULL'}, ${newUser.userSPhoneNumber || 'NULL'}, ${newUser.userEmail}, ${newUser.userSEmail || 'NULL'}, ${newUser.userBirthDate}, ${userTypeId}, ${userStatusId}, ${admin.userId}", "${new Date()}, NULL, NULL, NULL, NULL, ${newUser.validFrom || new Date()}, ${newUser.validTo || 'NULL'}, ${userDataId});`;
+            const request = `insert into User (userToken, userFirstName, userLastName, userPatronymic, userPhoneNumber, userSPhoneNumber, userEmail, userSEmail, userBirthDate, userTypeId, userStatusId, sys_AddedBy, sys_AddedDate, sys_UpdatedDate, sys_UpdatedBy, sys_DeletedBy, sys_DeletedDate, validFrom, validTo, userDataId) values ("${userToken}", "${newUser.userFirstName}", "${newUser.userLastName}", "${newUser.userPatronymic}", "${newUser.userPhoneNumber}", "${newUser.userSPhoneNumber}", "${newUser.userEmail}", "${newUser.userSEmail}", "${newUser.userBirthDate}", ${userTypeId}, ${userStatusId}, ${admin.userId}, "${newUser.sys_AddedDate}", NULL, NULL, NULL, NULL, "${newUser.validFrom}", "${newUser.validTo}", ${userDataId});`;
             await this.query(request);
 
             const findUserId = `select userId from User where userDataId = "${userDataId}" and userTypeId = "${userTypeId}" and userStatusId = "${userStatusId}";`;
@@ -339,9 +373,11 @@ class SQLManager {
             const userDataId = await this.updateUserData({
                 userDataId: user.userDataId,
                 login: user.login,
-                pass: user.pass
+                pass: user.pass,
+                profilePicturePath: user.profilePicturePath,
+                userDocumentsId: user.userDocumentsId
             });
-            const request = `update User set userFirstName = "${user.userFirstName}", userLastName = "${user.userLastName}", userPatronymic = "${user.userPatronymic}", userPhoneNumber = ${user.userPhoneNumber}, userSPhoneNumber = ${user.userSPhoneNumber}, userEmail = "${user.userEmail}", userSEmail = ${user.userSEmail || 'NULL'}, userBirthDate = ${user.userBirthDate}, userTypeId = "${user.userTypeId}", userStatusId = "${user.userStatusId}", sys_UpdatedDate = ${new Date()}, sys_UpdatedBy = "${admin.userId}", validFrom = ${user.validFrom || 'NULL'}, validTo = ${user.validTo || 'NULL'}, userDataId = "${userDataId}" where userId = "${user.userId}"`;
+            const request = `update User set userFirstName = "${user.userFirstName}", userLastName = "${user.userLastName}", userPatronymic = "${user.userPatronymic}", userPhoneNumber = "${user.userPhoneNumber}", userSPhoneNumber = "${user.userSPhoneNumber}", userEmail = "${user.userEmail}", userSEmail = "${user.userSEmail}", userBirthDate = "${user.userBirthDate}", userTypeId = "${user.userTypeId}", userStatusId = "${user.userStatusId}", sys_UpdatedDate = "${user.sys_UpdatedDate}", sys_UpdatedBy = "${admin.userId}", validFrom = "${user.validFrom}", validTo = "${user.validTo}", userDataId = "${userDataId}" where userId = "${user.userId}"`;
             await this.query(request);
 
             const findUserId = `select userId from User where userDataId = "${userDataId}" and userTypeId = "${user.userTypeId}" and userStatusId = "${user.userStatusId}";`;
