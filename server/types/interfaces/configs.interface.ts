@@ -1,4 +1,4 @@
-export interface Configs {
+export interface ConfigsInterface {
     port: number;
     withAdmins: boolean;
     sqlLogin: string;

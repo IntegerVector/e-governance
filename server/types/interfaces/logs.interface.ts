@@ -1,4 +1,4 @@
-export interface Logs {
+export interface LogsInterface {
     logs: string[];
     infos: string[];
     warnings: string[];

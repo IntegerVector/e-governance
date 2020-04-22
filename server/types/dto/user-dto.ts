@@ -1,4 +1,4 @@
-import { BaseRequest } from "../base-request";
+import { BaseRequest } from '../base-request';
 
 export type UserDTO = BaseRequest<User>;
 
@@ -18,10 +18,10 @@ export type User = {
     sys_AddedBy: number;
     sys_UpdatedBy: number;
     sys_DeletedBy: number;
-    sys_AddedDate: Date;
-    sys_UpdatedDate: Date;
-    sys_DeletedDate: Date;
-    validFrom: Date;
-    validTo: Date;
-    documentDataId: number;
+    sys_AddedDate: string;
+    sys_UpdatedDate: string;
+    sys_DeletedDate: string;
+    validFrom: string;
+    validTo: string;
+    userDataId: number;
 };

@@ -1,8 +1,8 @@
-import { BaseRequest } from "../base-request";
+import { BaseRequest } from '../base-request';
 
 export type UserTypeDTO = BaseRequest<UserType>;
 
-type UserType = {
+export type UserType = {
     userTypeId: number;
     type: string;
 };

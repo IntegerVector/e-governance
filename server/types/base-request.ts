@@ -1,8 +1,8 @@
-import { RequestTypes } from "./enums/request-type.enum";
+import { RequestTypesEnum } from "./enums/request-type.enum";
 import { ErrorObjectInterface } from './interfaces/error0object.interface';
 
 export type BaseRequest<T> = {
-    type: RequestTypes;
+    type: RequestTypesEnum;
     userId: number;
     userToken: string;
     data: T;

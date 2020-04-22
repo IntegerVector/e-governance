@@ -1,4 +1,4 @@
-import { BaseRequest } from "../base-request";
+import { BaseRequest } from '../base-request';
 
 export type UserTypePermissionsDTO = BaseRequest<UserTypePermissions>;
 
