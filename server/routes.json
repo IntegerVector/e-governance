@@ -6,12 +6,17 @@
     },
     {
         "type": "get",
+        "url": "/get-user-data-by-user-id",
+        "action": "GetUserDataByUserId"
+    },
+    {
+        "type": "get",
         "url": "/user-log-in",
         "action": "UserLogIn"
     },
     {
         "type": "post",
-        "url": "user-register",
+        "url": "/user-register",
         "action": "UserRegister"
     },
     {
@@ -23,5 +28,15 @@
         "type": "get",
         "url": "/get-user-permissions",
         "action": "GetUserPermissions"
+    },
+    {
+        "type": "get",
+        "url": "/get-user-statuses",
+        "action": "GetUsersStatuses"
+    },
+    {
+        "type": "get",
+        "url": "/get-user-types",
+        "action": "GetUsersTypes"
     }
 ]
