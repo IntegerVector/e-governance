@@ -5,3 +5,5 @@ export const ROUTES_FILE_PATH = './routes.json'
 export const ROOT = '..';
 export const CLIENT_ROOT = ROOT + '/app/dist/app';
 export const MAIN_PAGE = '/index.html';
+export const DOCUMENTS_FILES_PATH = '/files/documents';
+export const USER_DATA_FILES_PATH = '/files/user-data';
