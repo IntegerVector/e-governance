@@ -1,37 +1,73 @@
-<nav *ngIf="panelOptions"
-     class="navpanel">
-    <div class="navpanel-left">
-        <div class="navpanel-container">
-            <ul>
-                <li class="navpanel-element">
-                    <a></a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="navpanel-center">
-        <div class="navpanel-container">
-            <a>
-                <img class="navpanel-logo" src="" alt="">
-                <span class="navpanel-title"></span>
+<nav class="navpanel">
+    <ul class="navpanel-container">
+        <li class="navpanel-element">
+            <a
+                href="javascript:void(0)"
+                [routerLink]="'/main'"
+                [queryParams]="{ userId: userId }">
+                E-Nure
             </a>
-        </div>
-    </div>
-    <div class="navpanel-right">
-        <div class="navpanel-container">
-            <ul>
-                <li class="navpanel-element"></li>
-            </ul>
-            <div class="navpanel-usersection">
-                <a>
-                    <img class="navpanel-usersection-avatar" src="" alt="">
-                    <div class="navpanel-usersection-data">
-                        <span class="navpanel-usersection-data-main"></span>
-                        <span class="navpanel-usersection-data-sub"></span>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-    <span>{{ panelOptions | json }}</span>
+        </li>
+        <li class="navpanel-element">
+            <a
+                href="javascript:void(0)"
+                [routerLink]="'/main'"
+                [queryParams]="{ userId: userId }">
+                Main
+            </a>
+        </li>
+        <li class="navpanel-spacer">
+        </li>
+        <li
+            class="navpanel-element"
+            *ngIf="permissions.isUserViewPermitted">
+            <a
+                href="javascript:void(0)">
+                Users List
+            </a>
+        </li>
+        <li
+            class="navpanel-element"
+            *ngIf="permissions.isUserRegisterPermitted">
+            <a
+                href="javascript:void(0)"
+                [routerLink]="'/sign-up'"
+                [queryParams]="{ userId: userId }">
+                Register User
+            </a>
+        </li>
+        <li
+            class="navpanel-element"
+            *ngIf="!permissions.isSignedIn">
+            <a
+                href="javascript:void(0)"
+                [routerLink]="'/log-in'"
+                [queryParams]="{ userId: userId }">
+                Log In
+            </a>
+        </li>
+        <li
+            class="navpanel-usersection"
+            *ngIf="userId && userId !== 'guest' && userData">
+            <app-profile-picture
+                [user]="user"
+                [picturePath]="userData.profilePicturePath">
+            </app-profile-picture>
+            <a
+                href="javascript:void(0)"
+                [routerLink]="'/user-profile'"
+                [queryParams]="{ userId: userId }">
+                <div class="navpanel-usersection-data">
+                    <span class="navpanel-usersection-data-main">
+                        {{ user.userFirstName + ' ' + user.userLastName }}
+                    </span>
+                    <span
+                        *ngIf="userTypes.length"
+                        class="navpanel-usersection-data-sub">
+                        {{ getUserTypeText(user.userTypeId) }}
+                    </span>
+                </div>
+            </a>
+        </li>
+    </ul>
 </nav>

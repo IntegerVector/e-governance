@@ -1,0 +1,65 @@
+@import '../../../main.constants.scss';
+
+.navpanel {
+    padding: 0.75rem;
+    background-color: $green;
+    border-bottom: 0.2rem solid $lightGreen;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: larger;
+
+    a {
+        color: $white;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: $lighterGreen;
+        text-decoration: none;
+    }
+
+    &-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-content: center;
+    }
+
+    &-element {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        display: flex;
+        align-items: center;
+        flex-grow: 0;
+    }
+
+    &-spacer {
+        flex-grow: 1;
+    }
+
+    &-usersection {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &-data {
+            padding-left: 0.5rem;
+            display: flex;
+            flex-direction: column;
+
+            &-main {
+                text-transform: capitalize;
+                font-size: medium;
+            }
+
+            &-sub {
+                color: $lightGreen;
+                text-transform: lowercase;
+                font-size: small;
+                font-weight: normal;
+            }
+        }
+    }
+}
