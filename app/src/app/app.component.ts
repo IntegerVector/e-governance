@@ -17,11 +17,16 @@ export class AppComponent {
         private dataSourceService: DataSourceService,
         private router: Router
     ) {
-        const { userId, userToken } = this.dataSourceService.restoreUserAuthData();
-        this.userId = userId || DEFAULT_USER_ID;
+        this.dataSourceService.subscribeToUserIdChanges(userId => {
+            if (userId !== this.userId) {
+                this.userId = userId || DEFAULT_USER_ID;
+            }
+        });
+
+        const restoredUserData = this.dataSourceService.restoreUserAuthData();
         this.router.navigate([MAIN_PAGE_INTERNAL_URL], {
             queryParams: {
-                userId
+                userId: restoredUserData.userId
             }
         });
     }
