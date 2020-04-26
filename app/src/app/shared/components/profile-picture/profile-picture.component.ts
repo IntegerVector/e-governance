@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 
 import { User } from '../../types/dto/user-dto';
+import { ProfilePictureSizes } from './types/profile-picture-sizes.enum';
 
 @Component({
     selector: 'app-profile-picture',
@@ -14,7 +15,9 @@ import { User } from '../../types/dto/user-dto';
                     class="user-picture"
                     [ngStyle]="{
                         'background-color': BGColor,
-                        'color': TextColor
+                        'color': TextColor,
+                        'height': sizeInRems + 'rem',
+                        'width': sizeInRems + 'rem'
                     }"
                 >
                 {{ user.userFirstName[0] + user.userLastName[0] }}
@@ -24,6 +27,7 @@ import { User } from '../../types/dto/user-dto';
 export class ProfilePictureComponent implements OnChanges {
     @Input() picturePath: string;
     @Input() user: User;
+    @Input() sizeInRems?: number = ProfilePictureSizes.Small;
 
     public BGColor: string;
     public TextColor: string;
