@@ -69,11 +69,11 @@ export class DataSourceService {
     }
 
     public isUserIdValid(userId: string): boolean {
-        if (!this.userId) {
+        if (!userId || userId === DEFAULT_USER_ID) {
             return false;
         }
 
-        return userId === this.userId ? true : false;
+        return true;
     }
 
     public getId(): string {
@@ -180,6 +180,10 @@ export class DataSourceService {
     }
 
     private errorHandler(err: any, caught: BaseRequest<any>): Observable<BaseRequest<void>> {
+        if (!this.isUserIdValid(this.userId)) {
+            return;
+        }
+
         this.lastError.errCode = err.status;
         this.lastError.errMsg = err.statusText;
         this.lastError.errTip = err.message;
