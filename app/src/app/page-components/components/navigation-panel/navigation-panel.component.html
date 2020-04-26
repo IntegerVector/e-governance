@@ -72,7 +72,7 @@
                         {{ user.userFirstName + ' ' + user.userLastName }}
                     </span>
                     <span
-                        *ngIf="userTypes.length"
+                        *ngIf="userTypes && userTypes.length"
                         class="navpanel-usersection-data-sub">
                         {{ getUserTypeText(user.userTypeId) }}
                     </span>

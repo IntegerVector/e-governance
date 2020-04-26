@@ -27,7 +27,6 @@ export class NavigationPanelComponent implements OnChanges {
     constructor(private dataSourceService: DataSourceService) {}
 
     public ngOnChanges(changes: SimpleChanges) {
-        console.log(changes);
         if (changes.userId.currentValue !== DEFAULT_USER_ID) {
             this.updateUser(this.userId);
             this.updateUserData(this.userId);
@@ -47,7 +46,6 @@ export class NavigationPanelComponent implements OnChanges {
         if (userId && userId !== DEFAULT_USER_ID) {
             this.dataSourceService.getUserById(userId).subscribe(user => {
                 this.user = user;
-                console.log(user);
             });
         }
     }
@@ -56,7 +54,6 @@ export class NavigationPanelComponent implements OnChanges {
         if (userId && userId !== DEFAULT_USER_ID) {
             this.dataSourceService.getUserDataByUserId(userId).subscribe(userData => {
                 this.userData = userData;
-                console.log(userData);
             });
         }
     }
@@ -73,8 +70,6 @@ export class NavigationPanelComponent implements OnChanges {
                 });
 
                 this.permissions.isSignedIn = true;
-
-                console.log(this.permissions);
             });
         } else {
             this.permissions.isSignedIn = false;
