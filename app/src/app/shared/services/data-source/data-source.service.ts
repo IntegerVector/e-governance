@@ -132,6 +132,14 @@ export class DataSourceService {
         return this.get(userLogInUrl, userAuthData);
     }
 
+    public signOut(): void {
+        this.userId = null;
+        this.userTocken = null;
+        if (this.userIdSubscriber) {
+            this.userIdSubscriber.next(DEFAULT_USER_ID);
+        }
+    }
+
     public registerNewUser(user: User & UserData): Observable<User> {
         return this.post(userRegisterUrl, user);
     }
