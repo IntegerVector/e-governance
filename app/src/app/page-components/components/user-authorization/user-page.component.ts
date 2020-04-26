@@ -34,10 +34,6 @@ export class UserPageComponent implements OnInit {
 
     private strategy: UserPageBaseStrategy = null;
 
-    public userStatusMatcher = (status) => {
-        return status.userStatusId === this.user.userStatusId;
-    }
-
     constructor(
         private route: ActivatedRoute,
         private router: Router,
@@ -91,6 +87,18 @@ export class UserPageComponent implements OnInit {
                 }
             });
         });
+    }
+
+    public logOut(): void {
+        this.dataSaverService.clearUserData();
+        this.dataSourceService.signOut();
+        this.router.navigate(['/log-in']);
+    }
+
+    public getUserStatus(userStatuseId: number): string {
+        return this.userStatuses.find(status => {
+            return status.userStatusId === userStatuseId;
+        }).status;
     }
 
     private setUser(userId: string): void {

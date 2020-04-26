@@ -3,7 +3,7 @@
     class="user-page-section">
     <form
         title="Log in"
-        class="user-page-form">
+        class="user-page-sign-in-form">
         <h2 class="flex-grow-1">Log In</h2>
         <div class="input-group flex-row user-page-form-input">
             <div class="input-group-prepend flex-grow-0">
@@ -38,10 +38,10 @@
                 aria-describedby="passwor-wrapping"
                 [(ngModel)]="userData.pass">
         </div>
-        <div class="input-group mb-3 flex-row user-page-form-input">
-            <div class="flex-grow-0">
+        <div class="flex-row user-page-form-input">
+            <span>
                 Remember me &nbsp;
-            </div>
+            </span>
             <input
                 name="remember-me"
                 type="checkbox"
@@ -51,149 +51,227 @@
         <button
             class="btn btn-primary user-page-form-input"
             (click)="submit()">
-            Log In
+            Submit
         </button>
     </form>
 </section>
 <section
     *ngIf="mode !== 'logIn'"
     class="user-page-section">
-    <div>
-        <button title="Log out from your account">Log Out</button>
-    </div>
-    <div>
-        <div *ngIf="userStatuses">
-            <span>User status:</span>
-            <span>{{ userStatuses.find(userStatusMatcher).status }}</span>
+    <div class="user-page-quick-actions">
+        <div>
+            <button
+                class="btn btn-danger"
+                title="Log out from your account"
+                (click)="logOut()">
+            Log Out
+            </button>
         </div>
-        <button title="Ban current user">Ban user</button>
+        <div *ngIf="userStatuses && userStatuses.length && user && user.userStatusId">
+            <span>User status:&nbsp;</span>
+            <span>{{ getUserStatus(user.userStatusId) }}</span>
+        </div>
+        <button
+            class="btn btn-danger"
+            title="Doesn't work for now"
+            [disabled]="true"
+            *ngIf="isAdmin">
+            Ban user
+        </button>
     </div>
     <form
         title="User Information"
         class="user-page-form">
-        <div>
-            <img [src]="userData.profilePicturePath" alt="User Avatar">
-            <button title="Choose new profile picture">Choose new Avatar</button>
-            <div>
-                <label
-                    for="userName"
-                    title="User Name"
-                >User Name</label>
-                <input
-                    id="userName"
-                    name="userName"
-                    type="text"
-                    [(ngModel)]="userData.login"
-                >
-                <label
-                    for="userPass"
-                    title="User Password"
-                >Password</label>
-                <input
-                    id="userPass"
-                    name="userPass"
-                    type="password"
-                    [(ngModel)]="userData.pass"
-                >
-                <button title="Change user login and password">Save new Credentials</button>
+        <div class="flex-row user-page-form-top-section">
+            <div class="flex-col flex-grow-1">
+                <app-profile-picture
+                    class="user-page-form-input"
+                    [picturePath]="userData.profilePicturePath"
+                    [user]="user"
+                    [sizeInRems]="5">
+                </app-profile-picture>
+                <button
+                    class="btn btn-light user-page-form-input"
+                    title="Doesn't work for now"
+                    [disabled]="true">
+                    set Avatar
+                </button>
+            </div>
+            <div class="flex-col flex-grow-1">
+                <div class="input-group flex-row user-page-form-input">
+                    <div class="input-group-prepend flex-grow-0">
+                        <span
+                            class="input-group-text"
+                            id="user-name-wrapping">
+                            Username:
+                        </span>
+                    </div>
+                    <input
+                        name="user-name"
+                        type="text"
+                        class="form-control flex-grow-1"
+                        placeholder="Username"
+                        aria-label="Username"
+                        aria-describedby="user-name-wrapping"
+                        [(ngModel)]="userData.login">
+                </div>
+                <div class="input-group flex-row">
+                    <div class="input-group-prepend flex-grow-0">
+                        <span
+                            class="input-group-text"
+                            id="passwor-wrapping">
+                            Password:
+                        </span>
+                    </div>
+                    <input
+                        name="user-password"
+                        type="password"
+                        class="form-control flex-grow-1"
+                        aria-label="Password"
+                        aria-describedby="passwor-wrapping"
+                        [(ngModel)]="userData.pass">
+                </div>
+                <button
+                    class="btn btn-light"
+                    title="Doesn't work for now"
+                    [disabled]="true"
+                    style="margin-top: 0.7rem;">
+                    Regenerate User Token
+                </button>
             </div>
         </div>
-        <div>
-            <button title="Generate new user Token">Regenerate User Token</button>
-            <label
-                for="userFirstName"
-                title="User first name"
-            >First name</label>
-            <input
-                id="userFirstName"
-                name="userFirstName"
-                type="text"
-                [(ngModel)]="user.userFirstName"
-            >
-            <label
-                for="userLastName"
-                title="User last name"
-            >Last name</label>
-            <input
-                id="userLastName"
-                name="userLastName"
-                type="text"
-                [(ngModel)]="user.userLastName"
-            >
-            <label
-                for="userPatronymic"
-                title="User patronymic"
-            >Patronymic</label>
-            <input
-                id="userPatronymic"
-                name="userPatronymic"
-                type="text"
-                [(ngModel)]="user.userPatronymic"
-            >
-            <label
-                for="userPhoneNumber"
-                title="User phone number"
-            >Phone number</label>
-            <input
-                id="userPhoneNumber"
-                name="userPhoneNumber"
-                type="tel"
-                [(ngModel)]="user.userPhoneNumber"
-            >
-            <label
-                for="userSPhoneNumber"
-                title="User additional phone number"
-            >Additional phone number</label>
-            <input
-                id="userSPhoneNumber"
-                name="userSPhoneNumber"
-                type="tel"
-                [(ngModel)]="user.userSPhoneNumber"
-            >
-            <label
-                for="userEmail"
-                title="User Email"
-            >Email</label>
-            <input
-                id="userEmail"
-                name="userEmail"
-                type="email"
-                [(ngModel)]="user.userEmail"
-            >
-            <label
-                for="userSEmail"
-                title="User additional Email"
-            >Additional Email</label>
-            <input
-                id="userSEmail"
-                name="userSEmail"
-                type="email"
-                [(ngModel)]="user.userSEmail"
-            >
-            <label
-                for="userBirthDate"
-                title="User birth date"
-            >Birthday</label>
-            <input
-                id="userBirthDate"
-                name="userBirthDate"
-                type="text"
-                [ngModel]="user.userBirthDate"
-            >
-            <label
-                for="userType"
-                title="Select user type"
-            >Admin</label>
-            <input
-                id="userType"
-                name="userType"
-                type="checkbox"
-                [(ngModel)]="isAdmin"
-            >
-            <button
-                title="Save new User Data"
-                (click)="submit()"
-            >Save</button>
+        <div class="user-page-form-bottom-section">
+            <div class="input-group input-group-sm mb-3 flex-row user-page-form-input-sm">
+                <div class="input-group-prepend flex-grow-0">
+                    <span
+                        class="input-group-text"
+                        title="User first name">
+                        First name*
+                    </span>
+                </div>
+                <input
+                    class="form-control flex-grow-1"
+                    name="userFirstName"
+                    type="text"
+                    [(ngModel)]="user.userFirstName">
+            </div>
+            <div class="input-group input-group-sm mb-3 flex-row user-page-form-input-sm">
+                <div class="input-group-prepend flex-grow-0">
+                    <span
+                        class="input-group-text"
+                        title="User last name">
+                        Last name*
+                    </span>
+                </div>
+                <input
+                    class="form-control flex-grow-1"
+                    name="userLastName"
+                    type="text"
+                    [(ngModel)]="user.userLastName">
+            </div>
+            <div class="input-group input-group-sm mb-3 flex-row user-page-form-input-sm">
+                <div class="input-group-prepend flex-grow-0">
+                    <span
+                        class="input-group-text"
+                        title="User patronymic">
+                        Patronymic*
+                    </span>
+                </div>
+                <input
+                    class="form-control flex-grow-1"
+                    name="userPatronymic"
+                    type="text"
+                    [(ngModel)]="user.userPatronymic">
+            </div>
+            <div class="input-group input-group-sm mb-3 flex-row user-page-form-input-sm">
+                <div class="input-group-prepend flex-grow-0">
+                    <span
+                        class="input-group-text"
+                        title="User phone number">
+                        Phone number*
+                    </span>
+                </div>
+                <input
+                    class="form-control flex-grow-1"
+                    name="userPhoneNumber"
+                    type="tel"
+                    [(ngModel)]="user.userPhoneNumber">
+            </div>
+            <div class="input-group input-group-sm mb-3 flex-row user-page-form-input-sm">
+                <div class="input-group-prepend flex-grow-0">
+                    <span
+                        class="input-group-text"
+                        title="User additional phone number">
+                        Additional number
+                    </span>
+                </div>
+                <input
+                    class="form-control flex-grow-1"
+                    name="userSPhoneNumber"
+                    type="tel"
+                    [(ngModel)]="user.userSPhoneNumber">
+            </div>
+            <div class="input-group input-group-sm mb-3 flex-row user-page-form-input-sm">
+                <div class="input-group-prepend flex-grow-0">
+                    <span
+                        class="input-group-text"
+                        title="User Email">
+                        Email*
+                    </span>
+                </div>
+                <input
+                    class="form-control flex-grow-1"
+                    name="userEmail"
+                    type="email"
+                    [(ngModel)]="user.userEmail">
+            </div>
+            <div class="input-group input-group-sm mb-3 flex-row user-page-form-input-sm">
+                <div class="input-group-prepend flex-grow-0">
+                    <span
+                        class="input-group-text"
+                        title="User additional Email">
+                        Additional Email
+                    </span>
+                </div>
+                <input
+                    class="form-control flex-grow-1"
+                    name="userSEmail"
+                    type="email"
+                    [(ngModel)]="user.userSEmail">
+            </div>
+            <div class="input-group input-group-sm mb-3 flex-row user-page-form-input-sm">
+                <div class="input-group-prepend flex-grow-0">
+                    <span
+                        class="input-group-text"
+                        title="User birth date">
+                        Birthday*
+                    </span>
+                </div>
+                <input
+                    class="form-control flex-grow-1"
+                    name="userBirthDate"
+                    type="text"
+                    [ngModel]="user.userBirthDate">
+                <span class="flex-grow-1 text-n-important" style="margin-left: 1rem;">
+                    *type dates as: year-month-day'
+                </span>
+            </div>
+            <div *ngIf="isAdmin" class="flex-row user-page-form-input-sm">
+                <span title="Select user type">Admin:&nbsp;</span>
+                <input
+                    id="userType"
+                    name="userType"
+                    type="checkbox"
+                    [(ngModel)]="isAdmin">
+            </div>
+            <div class="flex-row user-page-form-input">
+                <button
+                    class="flex-grow-1 btn btn-primary"
+                    title="Save new User Data"
+                    (click)="submit()">
+                    Save Profile
+                </button>
+            </div>
         </div>
     </form>
 </section>
