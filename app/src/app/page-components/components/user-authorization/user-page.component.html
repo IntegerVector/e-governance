@@ -1,39 +1,63 @@
-<section *ngIf="mode === 'logIn'">
-    <form title="Log in">
-        <label
-            for="userName"
-            title="User Name"
-        >User Name</label>
-        <input
-            id="userName"
-            name="userName"
-            type="text"
-            [(ngModel)]="userData.login"
-        >
-        <label
-            for="userPass"
-            title="User Password"
-        >Password</label>
-        <input
-            id="userPass"
-            name="userPass"
-            type="password"
-            [(ngModel)]="userData.pass"
-        >
-        <label
-            for="rememberMe"
-            title="Will save user data"
-        >Remember me</label>
-        <input
-            id="rememberMe"
-            name="rememberMe"
-            type="checkbox"
-            [(ngModel)]="rememberMe"
-        >
-        <button (click)="submit()">Log In</button>
+<section
+    *ngIf="mode === 'logIn'"
+    class="user-page-section">
+    <form
+        title="Log in"
+        class="user-page-form">
+        <h2 class="flex-grow-1">Log In</h2>
+        <div class="input-group flex-row user-page-form-input">
+            <div class="input-group-prepend flex-grow-0">
+                <span
+                    class="input-group-text"
+                    id="user-name-wrapping">
+                    Username:
+                </span>
+            </div>
+            <input
+                name="user-name"
+                type="text"
+                class="form-control flex-grow-1"
+                placeholder="Username"
+                aria-label="Username"
+                aria-describedby="user-name-wrapping"
+                [(ngModel)]="userData.login">
+        </div>
+        <div class="input-group flex-row user-page-form-input">
+            <div class="input-group-prepend flex-grow-0">
+                <span
+                    class="input-group-text"
+                    id="passwor-wrapping">
+                    Password:
+                </span>
+            </div>
+            <input
+                name="user-password"
+                type="password"
+                class="form-control flex-grow-1"
+                aria-label="Password"
+                aria-describedby="passwor-wrapping"
+                [(ngModel)]="userData.pass">
+        </div>
+        <div class="input-group mb-3 flex-row user-page-form-input">
+            <div class="flex-grow-0">
+                Remember me &nbsp;
+            </div>
+            <input
+                name="remember-me"
+                type="checkbox"
+                aria-label="Remember me checkbox"
+                [(ngModel)]="rememberMe">
+        </div>
+        <button
+            class="btn btn-primary user-page-form-input"
+            (click)="submit()">
+            Log In
+        </button>
     </form>
 </section>
-<section *ngIf="mode !== 'logIn'">
+<section
+    *ngIf="mode !== 'logIn'"
+    class="user-page-section">
     <div>
         <button title="Log out from your account">Log Out</button>
     </div>
@@ -44,7 +68,9 @@
         </div>
         <button title="Ban current user">Ban user</button>
     </div>
-    <form title="User Information">
+    <form
+        title="User Information"
+        class="user-page-form">
         <div>
             <img [src]="userData.profilePicturePath" alt="User Avatar">
             <button title="Choose new profile picture">Choose new Avatar</button>
