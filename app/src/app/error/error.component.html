@@ -1,8 +1,10 @@
-<section *ngIf="error">
+<section *ngIf="error" class="flex-col">
     <h1 *ngIf="error.errCode">{{ error.errCode }}</h1>
     <p *ngIf="error.errMsg">{{ error.errMsg }}</p>
     <span *ngIf="error.errTip">{{ error.errTip }}</span>
+    <br/>
     <button
+        class="btn btn-warning error-button"
         autofocus
         type="button"
         title="{{ buttonTitle || 'go to main page' }}"
