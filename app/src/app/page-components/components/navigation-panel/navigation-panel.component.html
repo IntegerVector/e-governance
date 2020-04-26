@@ -8,6 +8,7 @@
                 E-Nure
             </a>
         </li>
+        <li class="navpanel-separator"></li>
         <li class="navpanel-element">
             <a
                 href="javascript:void(0)"
@@ -27,6 +28,10 @@
             </a>
         </li>
         <li
+            class="navpanel-separator"
+            *ngIf="permissions.isUserViewPermitted">
+        </li>
+        <li
             class="navpanel-element"
             *ngIf="permissions.isUserRegisterPermitted">
             <a
@@ -35,6 +40,10 @@
                 [queryParams]="{ userId: userId }">
                 Register User
             </a>
+        </li>
+        <li
+            class="navpanel-separator"
+            *ngIf="permissions.isUserRegisterPermitted">
         </li>
         <li
             class="navpanel-element"

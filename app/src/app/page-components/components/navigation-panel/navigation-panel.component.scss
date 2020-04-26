@@ -37,6 +37,13 @@
         flex-grow: 1;
     }
 
+    &-separator {
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+        width: 0;
+        border-right: 1px solid $white;
+    }
+
     &-usersection {
         padding-left: 0.5rem;
         padding-right: 0.5rem;
