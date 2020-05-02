@@ -175,10 +175,10 @@ export class DataSourceService {
 
     private makeRequest(url: string, body: BaseRequest<any>): Observable<any> {
         return this.http.post(url, body).pipe(
+            catchError(this.errorHandler.bind(this)),
             tap((data: BaseRequest<any>) => this.updateUserAuthData(data.userId, data.userToken)),
             tap((data: BaseRequest<any>) => this.customErrorCheck(data)),
-            catchError(this.errorHandler.bind(this)),
-            map(this.mapResponce.bind(this))
+            map((data: BaseRequest<any>) => data.data)
         );
     }
 
@@ -195,7 +195,7 @@ export class DataSourceService {
         }
     }
 
-    private errorHandler(err: any, caught: BaseRequest<any>): Observable<BaseRequest<void>> {
+    private errorHandler(err: any, caught: any): Observable<BaseRequest<void>> {
         if (!this.isUserIdValid(this.userId)) {
             return;
         }
@@ -206,21 +206,12 @@ export class DataSourceService {
 
         this.errorHandlerService.navigateToErrPage(this.lastError);
 
-        return of({
-            ...caught,
-            userId: +this.userId,
-            userToken: this.userTocken,
-            error: this.lastError
-        });
+        return caught;
     }
 
     private customErrorCheck(data: BaseRequest<any>): void {
         if (data.error) {
             this.notificationsService.push(data.error.errMsg || 'Unexpected Error', NotificationType.Error);
         }
-    }
-
-    private mapResponce(data: BaseRequest<any>): any {
-        return data.data;
     }
 }
