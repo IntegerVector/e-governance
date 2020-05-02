@@ -4,6 +4,9 @@ SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
+CREATE USER 'eg-user'@'localhost' IDENTIFIED WITH mysql_native_password BY '';
+GRANT SELECT, INSERT, UPDATE ON egovernance.* TO 'eg-user'@'localhost';
+
 
 CREATE DATABASE IF NOT EXISTS `egovernance` DEFAULT CHARACTER SET cp1251 COLLATE cp1251_general_ci;
 USE `egovernance`;
