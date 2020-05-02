@@ -107,11 +107,14 @@ export async function userUpdate(type: RequestTypesEnum, req: any, res: any) {
                 return;
             }
 
-            const permissions = await sql.getUserPermissions(req.body.userId);
+            
+            if (req.body.userId !== req.body.data.userId) {
+                const permissions = await sql.getUserPermissions(req.body.userId);
 
-            if (!permissions.find(permission => permission === PermissionsEnum.UpdateUser)) {
-                sendErrorInvalidPermissions(type, req, res);
-                return;
+                if (!permissions.find(permission => permission === PermissionsEnum.UpdateUser)) {
+                    sendErrorInvalidPermissions(type, req, res);
+                    return;
+                }
             }
 
             const admin = await sql.getUserById(req.body.userId);
