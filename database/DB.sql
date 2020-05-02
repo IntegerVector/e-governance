@@ -115,7 +115,7 @@ CREATE TABLE `User` (
 TRUNCATE TABLE `User`;
 
 INSERT INTO `User` (`userId`, `userToken`, `userFirstName`, `userLastName`, `userPatronymic`, `userPhoneNumber`, `userSPhoneNumber`, `userEmail`, `userSEmail`, `userBirthDate`, `userTypeId`, `userStatusId`, `sys_AddedBy`, `sys_AddedDate`, `sys_UpdatedDate`, `sys_UpdatedBy`, `sys_DeletedBy`, `sys_DeletedDate`, `validFrom`, `validTo`, `userDataId`) VALUES
-(1, 'MzQ1MDk4MzQ1MTIzNjc4OTg3MzQ1MTIzNTY3NjU0MDk4MTIzNTY3MTIzNTY3ODkw', 'Андрій', 'Рубан', 'Миколайович', '123123123', NULL, 'andrii.ruban@nure.ua', NULL, '1998-12-25', 2, 1, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-01', NULL, 1);
+(1, 'MzQ1MDk4MzQ1MTIzNjc4OTg3MzQ1MTIzNTY3NjU0MDk4MTIzNTY3MTIzNTY3ODkw', 'Just', 'Admin', 'NoName', '123123123', NULL, 'example@mail.org', NULL, '1970-01-01', 2, 1, NULL, NULL, NULL, NULL, NULL, NULL, '1970-01-01', NULL, 1);
 
 -- --------------------------------------------------------
 
