@@ -5,7 +5,7 @@ export async function sendError(type: RequestTypesEnum, req: any, res: any) {
     const body = {
         type,
         error: req.body.error,
-        data: req.body.error,
+        data: null,
         userToken: null,
         userId: null,
     };
