@@ -1,0 +1,29 @@
+@import '../../../main.constants.scss';
+
+.notification {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: stretch;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: large;
+    color: $white;
+
+    &-type {
+        &-success {
+            flex-grow: 1;
+            background-color: $green;
+        }
+        &-error {
+            flex-grow: 1;
+            background-color: $red;
+        }
+        &-info {
+            flex-grow: 1;
+            background-color: $blue;
+        }
+    }
+}

@@ -26,6 +26,8 @@ import { DataSaverService } from '../data-saver/data-saver.service';
 import { UserDataInterface } from '../data-saver/types/user-data.interface';
 import { UserType } from '../../types/dto/user-type-dto';
 import { UserStatusEnum } from '../../types/dto/user-status-dto';
+import { NotificationsService } from 'src/app/page-components/components/notification/services/notifications.service';
+import { NotificationType } from 'src/app/page-components/components/notification/types/notification-type.enum';
 
 @Injectable({
     providedIn: 'root'
@@ -50,7 +52,8 @@ export class DataSourceService {
     constructor(
         private http: HttpClient,
         private errorHandlerService: ErrorHandlerService,
-        private dataSaverService: DataSaverService
+        private dataSaverService: DataSaverService,
+        private notificationsService: NotificationsService
     ) { }
 
     public restoreUserAuthData(): UserDataInterface {
@@ -172,15 +175,20 @@ export class DataSourceService {
 
     private makeRequest(url: string, body: BaseRequest<any>): Observable<any> {
         return this.http.post(url, body).pipe(
-            tap((data: UserDTO) => this.updateUserAuthData(data.userId, data.userToken)),
+            tap((data: BaseRequest<any>) => this.updateUserAuthData(data.userId, data.userToken)),
+            tap((data: BaseRequest<any>) => this.customErrorCheck(data)),
             catchError(this.errorHandler.bind(this)),
             map(this.mapResponce.bind(this))
         );
     }
 
     private updateUserAuthData(userId: number, userToken: string): void {
-        this.userId = userId.toString() || DEFAULT_USER_ID;
-        this.userTocken = userToken || DEFAULT_USER_TOKEN;
+        if (!userToken || !userId) {
+            return;
+        }
+
+        this.userId = userId.toString();
+        this.userTocken = userToken;
 
         if (this.userIdSubscriber) {
             this.userIdSubscriber.next(this.userId);
@@ -204,6 +212,12 @@ export class DataSourceService {
             userToken: this.userTocken,
             error: this.lastError
         });
+    }
+
+    private customErrorCheck(data: BaseRequest<any>): void {
+        if (data.error) {
+            this.notificationsService.push(data.error.errMsg || 'Unexpected Error', NotificationType.Error);
+        }
     }
 
     private mapResponce(data: BaseRequest<any>): any {

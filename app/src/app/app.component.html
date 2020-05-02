@@ -1,2 +1,8 @@
 <app-navigation-panel [userId]="userId"></app-navigation-panel>
+<app-notification
+    *ngIf="notificationText && notificationType"
+    [hidden]="!showNotification"
+    [text]="notificationText"
+    [type]="notificationType">
+</app-notification>
 <router-outlet></router-outlet>

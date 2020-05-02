@@ -32,9 +32,11 @@ export class NavigationPanelComponent implements OnChanges {
             this.updateUserData(this.userId);
             this.updatePermissions(this.userId);
 
-            this.dataSourceService.getUsersTypes().subscribe(types => {
-                this.userTypes = types;
-            });
+            if (this.userId) {
+                this.dataSourceService.getUsersTypes().subscribe(types => {
+                    this.userTypes = types;
+                });
+            }
         }
     }
 

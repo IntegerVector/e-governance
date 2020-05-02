@@ -15,6 +15,8 @@ import { DataSourceService } from 'src/app/shared/services/data-source/data-sour
 import { UserStatusEnum } from 'src/app/shared/types/dto/user-status-dto';
 import { UserType } from 'src/app/shared/types/dto/user-type-dto';
 import { UserTypeEnum } from 'src/app/shared/types/enums/user-type.enum';
+import { NotificationsService } from '../notification/services/notifications.service';
+import { NotificationType } from '../notification/types/notification-type.enum';
 
 @Component({
     selector: 'app-user-page',
@@ -40,7 +42,8 @@ export class UserPageComponent implements OnInit {
         private errorHandlerService: ErrorHandlerService,
         private getUserPageStrategyService: GetUserPageStrategyService,
         private dataSaverService: DataSaverService,
-        private dataSourceService: DataSourceService
+        private dataSourceService: DataSourceService,
+        private notificationsService: NotificationsService
     ) {}
 
     public ngOnInit(): void {
@@ -74,6 +77,12 @@ export class UserPageComponent implements OnInit {
 
     public submit(): void {
         this.strategy.submit({ ...this.user, ...this.userData }).subscribe(user => {
+            if (user) {
+                this.notificationsService.push('Success', NotificationType.Success);
+            } else {
+                return;
+            }
+
             if (this.rememberMe) {
                 this.dataSaverService.saveUserData({
                     userId: user.userId.toString(),

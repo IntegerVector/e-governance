@@ -8,15 +8,19 @@ import { NavigationPanelComponent } from './components/navigation-panel/navigati
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { UserPageComponent } from './components/user-authorization/user-page.component';
 import { SharedModule } from '../shared/shared.module';
+import { NotificationComponent } from './components/notification/notification.component';
+import { NotificationsService } from './components/notification/services/notifications.service';
 
 @NgModule({
     declarations: [
         NavigationPanelComponent,
         MainPageComponent,
-        UserPageComponent
+        UserPageComponent,
+        NotificationComponent
     ],
     exports: [
-        NavigationPanelComponent
+        NavigationPanelComponent,
+        NotificationComponent
     ],
     imports: [
         FormsModule,
@@ -25,6 +29,8 @@ import { SharedModule } from '../shared/shared.module';
         SharedModule,
         ErrorModule
     ],
-    providers: [],
+    providers: [
+        NotificationsService
+    ],
 })
 export class PageComponentsModule { }
