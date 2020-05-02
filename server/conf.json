@@ -1,7 +1,7 @@
 {
     "port": 8080,
     "withAdmins": true,
-    "sqlLogin": "",
+    "sqlLogin": "eg-user",
     "sqlPass": "",
-    "dataBase": ""
+    "dataBase": "egovernance"
 }
