@@ -14,16 +14,6 @@ const sql = SQLManagerSingleton.getInstance();
 export async function getStatuses(type: RequestTypesEnum, req: any, res: any) {
     if (type === RequestTypesEnum.get) {
         try {
-            if (!await sql.checkUserId(req.body.userId)) {
-                sendErrorInvalidUserId(type, req,  res);
-                return;
-            }
-    
-            if (!await sql.checkToken(req.body.userId, req.body.userToken)) {
-                sendErrorInvalidToken(type, req, res);
-                return;
-            }
-
             const statuses = await sql.getStatuses();
 
             const responce: BaseRequest<{ statuses: UserStatusEnum[] }> = {
@@ -47,16 +37,6 @@ export async function getStatuses(type: RequestTypesEnum, req: any, res: any) {
 export async function getTypes(type: RequestTypesEnum, req: any, res: any) {
     if (type === RequestTypesEnum.get) {
         try {
-            if (!await sql.checkUserId(req.body.userId)) {
-                sendErrorInvalidUserId(type, req,  res);
-                return;
-            }
-    
-            if (!await sql.checkToken(req.body.userId, req.body.userToken)) {
-                sendErrorInvalidToken(type, req, res);
-                return;
-            }
-
             const types = await sql.getTypes();
 
             const responce: BaseRequest<{ types: UserType[] }> = {
