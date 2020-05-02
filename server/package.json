@@ -1,7 +1,7 @@
 {
-  "name": "fkeeper_server",
+  "name": "egovernance_server",
   "version": "1.0.0",
-  "description": "server for fkeeper project",
+  "description": "server for egovernance project",
   "main": "./target/index.js",
   "scripts": {
     "tsc": "tsc",
