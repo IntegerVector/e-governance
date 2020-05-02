@@ -1,5 +1,4 @@
 export function normalize(date: string): string {
-    console.dir(date);
     if (!date) {
         return 'NULL';
     }
