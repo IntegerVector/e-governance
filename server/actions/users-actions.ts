@@ -68,7 +68,7 @@ export async function userRegister(type: RequestTypesEnum, req: any, res: any) {
             const userToAdd = {
                 ...req.body.data,
                 userBirthDate: normalize(req.body.data.userBirthDate),
-                sys_AddedDate: normalize(new Date()),
+                sys_AddedDate: normalize('now'),
                 sys_UpdatedDate: normalize(req.body.data.sys_UpdatedDate),
                 sys_DeletedDate: normalize(req.body.data.sys_DeletedDate),
                 validFrom: normalize(req.body.data.validFrom),
@@ -119,7 +119,7 @@ export async function userUpdate(type: RequestTypesEnum, req: any, res: any) {
                 ...req.body.data,
                 userBirthDate: normalize(req.body.data.userBirthDate),
                 sys_AddedDate: normalize(req.body.data.sys_AddedDate),
-                sys_UpdatedDate: normalize(new Date()),
+                sys_UpdatedDate: normalize('now'),
                 sys_DeletedDate: normalize(req.body.data.sys_DeletedDate),
                 validFrom: normalize(req.body.data.validFrom),
                 validTo: normalize(req.body.data.validTo),
