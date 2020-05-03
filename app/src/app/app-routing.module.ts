@@ -13,6 +13,7 @@ import {
     SIGN_UP_INTERNAL_URL,
     PROFILE_INTERNAL_URL
 } from './shared/constants/internal-urls.constants';
+import { getChildRoutes } from './page-components/components/main-page/helpers/get-child-routes.helper';
 
 
 const routes: Routes = [
@@ -26,7 +27,8 @@ const routes: Routes = [
         component: MainPageComponent,
         resolve: {
             urlParams: UrlParamsResolverService
-        }
+        },
+        children: getChildRoutes()
     },
     {
         path: LOG_IN_INTERNAL_URL,
