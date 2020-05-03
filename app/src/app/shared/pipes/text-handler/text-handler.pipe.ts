@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { TextHandlerService } from './text-handler.service';
+import { TextHandlerService } from '../../services/text-handler/text-handler.service';
 
 @Pipe({ name: 'handleText' })
 export class TextHandlerPipe implements PipeTransform {

@@ -6,7 +6,7 @@ import { DataSourceService } from './services/data-source/data-source.service';
 import { UrlParamsResolverService } from './services/url-params-resolver/url-params-resolver.service';
 import { DataSaverService } from './services/data-saver/data-saver.service';
 import { TextHandlerService } from './services/text-handler/text-handler.service';
-import { TextHandlerPipe } from './services/text-handler/text-handler.pipe';
+import { TextHandlerPipe } from './pipes/text-handler/text-handler.pipe';
 import { ProfilePictureComponent } from './components/profile-picture/profile-picture.component';
 
 @NgModule({
