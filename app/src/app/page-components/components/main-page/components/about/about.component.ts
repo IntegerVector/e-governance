@@ -2,13 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import {
-    headerLabel,
-    headerTitle,
     sectionHeaderLabel,
     sectionPDefaultText,
     sectionText,
     sectionPTextTemplate
-} from '../main-page.constants';
+} from './about.constants';
 import { User } from 'src/app/shared/types/dto/user-dto';
 import { DataSourceService } from 'src/app/shared/services/data-source/data-source.service';
 import { ErrorHandlerService } from 'src/app/error/services/error-handler.service';
@@ -20,8 +18,6 @@ import { DEFAULT_USER_ID } from 'src/app/shared/constants/shared.constants';
     styleUrls: ['./about.component.scss']
 })
 export class MainPageAboutComponent implements OnInit {
-    public headerLabel = headerLabel;
-    public headerTitle = headerTitle;
     public sectionHLabel = sectionHeaderLabel;
     public sectionPText = sectionPDefaultText;
     public sectionText = sectionText;

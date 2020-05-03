@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ErrorModule } from 'src/app/error/error.module';
-import { MainPageAboutComponent } from './components/about.component';
+import { MainPageAboutComponent } from './components/about/about.component';
 import { MainPageComponent } from './main-page.component';
 
 
