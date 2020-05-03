@@ -18,6 +18,16 @@ html, body {
     padding: 0;
     font-size: medium;
     font-family: openSans;
+    background-color: $white;
+}
+
+.body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: medium;
+    font-family: openSans;
+    background-color: $white;
 }
 
 nav {
@@ -84,6 +94,10 @@ app-root app-main-page app-user-page{
     height: 100%;
 }
 
+.flex-no-wrap {
+    flex-wrap: nowrap;
+}
+
 .flex-grow-0 {
     flex-grow: 0 !important;
 }
@@ -117,4 +131,15 @@ app-root app-main-page app-user-page{
     font-weight: normal;
     font-size: small;
     color: $grey;
+}
+
+.centered {
+    text-align: center;
+}
+
+.page-title {
+    color: $black;
+    font-size: xx-large;
+    font-weight: normal;
+    text-align: center;
 }
