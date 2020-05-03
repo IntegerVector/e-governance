@@ -1,4 +1,4 @@
-<section *ngIf="error" class="flex-col">
+<section *ngIf="error" class="flex-col error">
     <h1 *ngIf="error.errCode">{{ error.errCode }}</h1>
     <p *ngIf="error.errMsg">{{ error.errMsg }}</p>
     <span *ngIf="error.errTip">{{ error.errTip }}</span>
