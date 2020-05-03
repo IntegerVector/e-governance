@@ -1,8 +1,16 @@
-<app-navigation-panel [userId]="userId"></app-navigation-panel>
-<app-notification
-    *ngIf="notificationText && notificationType"
-    [hidden]="!showNotification"
-    [text]="notificationText"
-    [type]="notificationType">
-</app-notification>
-<router-outlet></router-outlet>
+<div class="grid">
+    <app-navigation-panel
+        class="grid-nav"
+        [userId]="userId">
+    </app-navigation-panel>
+    <app-notification
+        class="grid-notification"
+        *ngIf="notificationText && notificationType"
+        [hidden]="!showNotification"
+        [text]="notificationText"
+        [type]="notificationType">
+    </app-notification>
+    <div class="grid-main">
+        <router-outlet></router-outlet>
+    </div>
+</div>
