@@ -3,18 +3,17 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { MainPageModule } from './components/main-page/main-page.module';
 import { ErrorModule } from '../error/error.module';
-import { NavigationPanelComponent } from './components/navigation-panel/navigation-panel.component';
-import { MainPageComponent } from './components/main-page/main-page.component';
-import { UserPageComponent } from './components/user-authorization/user-page.component';
 import { SharedModule } from '../shared/shared.module';
+import { NavigationPanelComponent } from './components/navigation-panel/navigation-panel.component';
+import { UserPageComponent } from './components/user-authorization/user-page.component';
 import { NotificationComponent } from './components/notification/notification.component';
 import { NotificationsService } from './components/notification/services/notifications.service';
 
 @NgModule({
     declarations: [
         NavigationPanelComponent,
-        MainPageComponent,
         UserPageComponent,
         NotificationComponent
     ],
@@ -26,8 +25,9 @@ import { NotificationsService } from './components/notification/services/notific
         FormsModule,
         BrowserModule,
         RouterModule,
+        MainPageModule,
         SharedModule,
-        ErrorModule
+        ErrorModule,
     ],
     providers: [
         NotificationsService
