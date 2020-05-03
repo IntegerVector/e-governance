@@ -63,9 +63,8 @@ app-root app-main-page app-user-page{
     }
     &-main {
         flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        display: grid;
+        grid-template-rows: 0 auto;
     }
 }
 
