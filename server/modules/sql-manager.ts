@@ -9,6 +9,7 @@ import { getToken } from './token-generator';
 import { UserData } from '../types/dto/user-data-dto';
 import { UserTypeEnum } from '../types/enums/user-type.enum';
 import { UserType } from '../types/dto/user-type-dto';
+import { compare } from './password-encrypter';
 
 const logger = LoggerSingleton.getInstance();
 
@@ -307,16 +308,20 @@ class SQLManager {
                 return;
             }
 
-            const request = `select userDataId from UserData where login = "${login}" and pass = "${pass}";`;
-            const result = await this.query(request);
+            const userPass = await this.getUserPass(login);
+            const isUserDataValid = await compare(pass, userPass);
 
-            if (!result.length) {
-                logger.error(CLIENT_INVALID_LOGIN_OR_PASS);
-                reject(CLIENT_INVALID_LOGIN_OR_PASS);
+            if (isUserDataValid) {
+                const request = `select userDataId from UserData where login = "${login}" and pass = "${userPass}";`;
+                const result = await this.query(request);
+                resolver(result[0].userDataId);
+
                 return;
             }
 
-            resolver(result[0].userDataId);
+            logger.error(CLIENT_INVALID_LOGIN_OR_PASS);
+            reject(CLIENT_INVALID_LOGIN_OR_PASS);
+            return;
         });
     }
 
@@ -421,6 +426,19 @@ class SQLManager {
         });
     }
 
+    private async getUserPass(userLogin: string): Promise<string> {
+        return new Promise(async (resolve, reject) => {
+            const request = `select pass from UserData where login = "${userLogin}"`;
+            const result = await this.query(request);
+
+            if (!result.length) {
+                reject('');
+                return;
+            }
+
+            resolve(result[0].pass);
+        });
+    }
 
 }
 

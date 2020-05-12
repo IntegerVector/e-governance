@@ -123,13 +123,13 @@ DROP TABLE IF EXISTS `UserData`;
 CREATE TABLE `UserData` (
   `userDataId` int PRIMARY KEY AUTO_INCREMENT,
   `login` varchar(32) NOT NULL,
-  `pass` varchar(32) NOT NULL,
+  `pass` varchar(1000) NOT NULL,
   `profilePicturePath` char(64),
   `userDocumentsId` int
 ) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
 
 INSERT INTO `UserData` (`userDataId`, `login`, `pass`, `profilePicturePath`, `userDocumentsId`) VALUES
-(1, 'admin', 'admin', '/files/user-data', NULL);
+(1, 'admin', '$2b$10$TGPsUycXjhQe37cGedauL.8twG1u5wiNlEhg8Ycz.ZohWQVkHhDYq', '/files/user-data', NULL);
 
 -- Adding Primary keys:
 
