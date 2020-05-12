@@ -1,7 +1,9 @@
 {
     "port": 8080,
-    "withAdmins": true,
+    "withSSL": false,
+    "certPath": "",
+    "keyPath" : "",
     "sqlLogin": "eg-user",
-    "sqlPass": "",
+    "sqlPass": "!dXNlcl9wYXNzX2Jhc3MK",
     "dataBase": "egovernance"
 }

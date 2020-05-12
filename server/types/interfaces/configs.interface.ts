@@ -1,6 +1,8 @@
 export interface ConfigsInterface {
     port: number;
-    withAdmins: boolean;
+    withSSL: boolean;
+    certPath: string;
+    keyPath: string;
     sqlLogin: string;
     sqlPass: string;
     dataBase: string;

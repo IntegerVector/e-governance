@@ -1,4 +1,6 @@
 import * as express from 'express';
+import * as https from 'https';
+import * as fs from 'fs';
 import { resolve } from 'path';
 import { loadConfigs, checkConfigs } from './load-configs';
 import { Router } from './router';
@@ -35,7 +37,20 @@ export class Server {
 
     public async run(): Promise<void> {
         await this.init();
-        this.listen = this.server.listen(this.configs.port);
+
+        this.listen = this.configs.withSSL
+            ? https.createServer(
+                  {
+                      key: fs.readFileSync(this.configs.keyPath),
+                      cert: fs.readFileSync(this.configs.certPath)
+                  },
+                  this.server
+              ).listen(this.configs.port, () => {
+                  logger.info('server started with SSL encripting');
+              })
+            : this.server.listen(this.configs.port, () => {
+                  logger.info('server started without SSL encription');
+              });
     }
 
     public stop(): void {

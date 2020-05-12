@@ -21,9 +21,17 @@ export function checkConfigs(configs: ConfigsInterface) {
         return false;
     }
 
-    if (!configs.withAdmins) {
-        logger.error('withAdmins option not present in config file! It seems like error');
+    if (!configs.withSSL) {
+        logger.info('withSSL option not set to "true" you server will use plain HTTP protocol');
         return false;
+    }
+
+    if (configs.withSSL) {
+        if (!configs.certPath || !configs.keyPath) {
+            const error = 'There are no server sertificate or key specified in config file, set withSSL to false, or specify certificate abd key';
+            logger.error(error);
+            throw error;
+        }
     }
 
     if (!configs.dataBase) {
