@@ -1,7 +1,20 @@
 import { createConnection } from 'mysql';
 import { LoggerSingleton } from './logger';
 import { HOST } from '../constants/constants';
-import { DB_MULTIPLE_USERS_WITH_SAME_ID, DB_MULTIPLE_STATUSES_WITH_SAME_ID, DB_STATUSE_DOESNT_EXISTS, DB_MULTIPLE_TYPES_WITH_SAME_ID, DB_TYPE_DOESNT_EXISTS, DB_PERMISSIONS_TYPES_WITH_SAME_ID, DB_PERMISSION_DOESNT_EXISTS, CLIENT_INVALID_USER_ID, CLIENT_INVALID_TOKEN, CLIENT_INVALID_LOGIN_OR_PASS, CLIENT_INVALID_USER_DATA_ID, CLIENT_INVALID_USER_TYPE_ID } from '../constants/errors';
+import {
+    DB_MULTIPLE_USERS_WITH_SAME_ID,
+    DB_MULTIPLE_STATUSES_WITH_SAME_ID,
+    DB_STATUSE_DOESNT_EXISTS,
+    DB_MULTIPLE_TYPES_WITH_SAME_ID,
+    DB_TYPE_DOESNT_EXISTS,
+    DB_PERMISSIONS_TYPES_WITH_SAME_ID,
+    DB_PERMISSION_DOESNT_EXISTS,
+    CLIENT_INVALID_USER_ID,
+    CLIENT_INVALID_TOKEN,
+    CLIENT_INVALID_LOGIN_OR_PASS,
+    CLIENT_INVALID_USER_DATA_ID,
+    CLIENT_INVALID_USER_TYPE_ID
+} from '../constants/errors';
 import { UserStatusEnum } from '../types/enums/user-status.enum';
 import { PermissionsEnum } from '../types/enums/permissions.enum';
 import { User } from '../types/dto/user-dto';
@@ -9,7 +22,7 @@ import { getToken } from './token-generator';
 import { UserData } from '../types/dto/user-data-dto';
 import { UserTypeEnum } from '../types/enums/user-type.enum';
 import { UserType } from '../types/dto/user-type-dto';
-import { compare } from './password-encrypter';
+import { compare, encrypt } from './password-encrypter';
 
 const logger = LoggerSingleton.getInstance();
 
@@ -394,9 +407,10 @@ class SQLManager {
 
     public addUserData(userData: UserData): Promise<string> {
         return new Promise(async (resolver, reject) => {
-            const request = `insert into UserData (login, pass) values ("${userData.login}", "${userData.pass}");`;
+            const encryptedPass = await encrypt(userData.pass);
+            const request = `insert into UserData (login, pass) values ("${userData.login}", "${encryptedPass}");`;
             await this.query(request);
-            const findUserDataId = `select userDataId from UserData where login = "${userData.login}" and pass = "${userData.pass}";`;
+            const findUserDataId = `select userDataId from UserData where login = "${userData.login}";`;
             const result = await this.query(findUserDataId);
             resolver(result[0].userDataId);
         });
@@ -404,9 +418,10 @@ class SQLManager {
 
     public updateUserData(userData: UserData): Promise<string> {
         return new Promise(async (resolver, reject) => {
-            const request = `update UserData set login = "${userData.login}", pass = "${userData.pass}" where userDataId = "${userData.userDataId}";`;
+            const encryptedPass = await encrypt(userData.pass);
+            const request = `update UserData set login = "${userData.login}", pass = "${encryptedPass}" where userDataId = "${userData.userDataId}";`;
             await this.query(request);
-            const findUserDataId = `select userDataId from UserData where login = "${userData.login}" and pass = "${userData.pass}";`;
+            const findUserDataId = `select userDataId from UserData where login = "${userData.login}";`;
             const result = await this.query(findUserDataId);
             resolver(result[0].userDataId);
         });
@@ -428,7 +443,7 @@ class SQLManager {
 
     private async getUserPass(userLogin: string): Promise<string> {
         return new Promise(async (resolve, reject) => {
-            const request = `select pass from UserData where login = "${userLogin}"`;
+            const request = `select pass from UserData where login = "${userLogin}";`;
             const result = await this.query(request);
 
             if (!result.length) {
