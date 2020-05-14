@@ -17,12 +17,14 @@ import {
 } from '../constants/errors';
 import { UserStatusEnum } from '../types/enums/user-status.enum';
 import { PermissionsEnum } from '../types/enums/permissions.enum';
+import { Permissions } from '../types/dto/permissions-dto';
 import { User } from '../types/dto/user-dto';
 import { getToken } from './token-generator';
 import { UserData } from '../types/dto/user-data-dto';
 import { UserTypeEnum } from '../types/enums/user-type.enum';
 import { UserType } from '../types/dto/user-type-dto';
 import { compare, encrypt } from './password-encrypter';
+import { UserStatus } from '../types/dto/user-status-dto';
 
 const logger = LoggerSingleton.getInstance();
 
@@ -55,9 +57,9 @@ class SQLManager {
         });
     }
 
-    public async getPermissionId(permission: PermissionsEnum): Promise<number> {
+    public async getPermissionId(permission: Permissions): Promise<number> {
         return new Promise(async (resolve, reject) => {
-            const request = `select permissionId from PermissionsEnum where permission = "${permission}";`;
+            const request = `select permissionId from Permissions where permission = "${permission}";`;
             const result = await this.query(request);
 
             if (result.length > 1) {
@@ -78,7 +80,7 @@ class SQLManager {
 
     public async getPermissionById(permissionId: number): Promise<PermissionsEnum> {
         return new Promise(async (resolve, reject) => {
-            const request = `select permission from PermissionsEnum where permissionId = "${permissionId}";`;
+            const request = `select permission from Permissions where permissionId = "${permissionId}";`;
             const result = await this.query(request);
 
             if (result.length > 1) {
@@ -106,7 +108,7 @@ class SQLManager {
         });
     }
 
-    public async getUserTypeById(userTypeId: number): Promise<UserTypeEnum> {
+    public async getUserTypeById(userTypeId: number): Promise<UserType> {
         return new Promise(async (resolve, reject) => {
             const request = `select type from UserType where userTypeId = "${userTypeId}";`;
             const result = await this.query(request);
@@ -136,18 +138,18 @@ class SQLManager {
         });
     }
 
-    public async getStatuses(): Promise<UserStatusEnum[]> {
+    public async getStatuses(): Promise<UserStatus[]> {
         return new Promise(async (resolver, reject) => {
-            const request = 'select * from UserStatusEnum;';
+            const request = 'select * from UserStatus;';
             const result = await this.query(request);
 
             resolver(result);
         });
     }
 
-    public async getUserStatusById(userStatusId: number): Promise<UserStatusEnum> {
+    public async getUserStatusById(userStatusId: number): Promise<UserStatus> {
         return new Promise(async (resolve, reject) => {
-            const request = `select status from UserStatusEnum where userStatusId = "${userStatusId}";`;
+            const request = `select status from UserStatus where userStatusId = "${userStatusId}";`;
             const result = await this.query(request);
 
             if (result.length > 1) {
@@ -168,14 +170,14 @@ class SQLManager {
 
     public async getUserStatusId(userStatus: UserStatusEnum): Promise<string> {
         return new Promise(async (resolver, reject) => {
-            const request = `select userStatusId from UserStatusEnum where status = "${userStatus}";`;
+            const request = `select userStatusId from UserStatus where status = "${userStatus}";`;
             const result = await this.query(request);
 
             resolver(result[0].userStatusId);
         });
     }
 
-    public async isPermitted(userTypeId: number, permission: PermissionsEnum): Promise<boolean> {
+    public async isPermitted(userTypeId: number, permission: Permissions): Promise<boolean> {
         return new Promise(async (resolve, reject) => {
             const permissionId = await this.getPermissionId(permission);
             const request = `select permissionId from UserTypePermissions where userTypeId = "${userTypeId}";`;
@@ -321,14 +323,21 @@ class SQLManager {
                 return;
             }
 
-            const userPass = await this.getUserPass(login);
-            const isUserDataValid = await compare(pass, userPass);
+            try {
+                const userPass = await this.getUserPass(login);
+                const isUserDataValid = await compare(pass, userPass);
 
-            if (isUserDataValid) {
-                const request = `select userDataId from UserData where login = "${login}" and pass = "${userPass}";`;
-                const result = await this.query(request);
-                resolver(result[0].userDataId);
+                if (isUserDataValid) {
+                    const request = `select userDataId from UserData where login = "${login}" and pass = "${userPass}";`;
+                    const result = await this.query(request);
+                    resolver(result[0].userDataId);
 
+                    return;
+                }
+            }
+            catch (err) {
+                logger.error(CLIENT_INVALID_LOGIN_OR_PASS);
+                reject(CLIENT_INVALID_LOGIN_OR_PASS);
                 return;
             }
 
@@ -416,8 +425,14 @@ class SQLManager {
 
     public updateUserData(userData: UserData): Promise<string> {
         return new Promise(async (resolver, reject) => {
-            const encryptedPass = await encrypt(userData.pass);
-            const request = `update UserData set login = "${userData.login}", pass = "${encryptedPass}" where userDataId = "${userData.userDataId}";`;
+            if (userData.pass) {
+
+            }
+            const encryptedPass = userData.pass ? await encrypt(userData.pass) : null;
+            const request = encryptedPass
+                ? `update UserData set login = "${userData.login}", pass = "${encryptedPass}" where userDataId = "${userData.userDataId}";`
+                : `update UserData set login = "${userData.login}" where userDataId = "${userData.userDataId}";`;
+
             await this.query(request);
             const findUserDataId = `select userDataId from UserData where login = "${userData.login}";`;
             const result = await this.query(findUserDataId);

@@ -1,22 +1,18 @@
 import { RequestTypesEnum } from '../types/enums/request-type.enum';
-import {
-    sendUnexpectedError,
-    sendErrorInvalidUserId,
-    sendErrorInvalidToken
-} from './error-handler';
+import { sendUnexpectedError } from '../modules/error-handler';
 import { SQLManagerSingleton } from '../modules/sql-manager';
 import { BaseRequest } from '../types/base-request';
 import { UserStatusEnum } from '../types/enums/user-status.enum';
 import { UserType } from '../types/dto/user-type-dto';
-
-const sql = SQLManagerSingleton.getInstance();
+import { UserStatus } from '../types/dto/user-status-dto';
+import * as dbGetter from '../modules/db-data-getters';
 
 export async function getStatuses(type: RequestTypesEnum, req: any, res: any) {
     if (type === RequestTypesEnum.get) {
         try {
-            const statuses = await sql.getStatuses();
+            const statuses = await dbGetter.getStatuses();
 
-            const responce: BaseRequest<{ statuses: UserStatusEnum[] }> = {
+            const responce: BaseRequest<{ statuses: UserStatus[] }> = {
                 type,
                 error: null,
                 userId: req.body.userId,
@@ -37,7 +33,7 @@ export async function getStatuses(type: RequestTypesEnum, req: any, res: any) {
 export async function getTypes(type: RequestTypesEnum, req: any, res: any) {
     if (type === RequestTypesEnum.get) {
         try {
-            const types = await sql.getTypes();
+            const types = await dbGetter.getTypes();
 
             const responce: BaseRequest<{ types: UserType[] }> = {
                 type,
