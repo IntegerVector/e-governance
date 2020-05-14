@@ -49,7 +49,7 @@ export class Server {
                   logger.info('server started with SSL encripting');
               })
             : this.server.listen(this.configs.port, () => {
-                  logger.info('server started without SSL encription');
+                  logger.info('server started without SSL encryption');
               });
     }
 
