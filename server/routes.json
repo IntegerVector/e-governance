@@ -48,5 +48,10 @@
         "type": "get",
         "url": "/get-document-by-id",
         "action": "get-document-by-id"
+    },
+    {
+        "type": "get",
+        "url": "/get-document-type",
+        "action": "get-document-type"
     }
 ]

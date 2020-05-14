@@ -70,6 +70,17 @@ class SQLManager {
         });
     }
 
+    public async getDocumentTypeById(documentTypeId: string): Promise<DocumentTypesEnum> {
+        return new Promise(async (resolve, reject) => {
+            const types = await this.getDocumentTypes();
+            const type = _.find(types, type => {
+                return type.documentTypeId == documentTypeId;
+            });
+
+            resolve(_.get(type, 'typeName'));
+        });
+    }
+
     public async getDocumentsByUserDataId(userDataId: string): Promise<Documents[]> {
         return new Promise(async (resolve, reject) => {
             const request = `select * from UsersDocuments where userDataId = "${userDataId}"`;
@@ -226,7 +237,7 @@ class SQLManager {
                 return;
             }
 
-            result.find(value => permissionId === value)
+            result.find(value => permissionId == value)
                 ? resolve(true)
                 : resolve(false);
         });
@@ -278,7 +289,7 @@ class SQLManager {
                 reject(DB_MULTIPLE_USERS_WITH_SAME_ID);
             }
 
-            if (result[0].userToken.toString() === token.toString()) {
+            if (result[0].userToken.toString() == token.toString()) {
                 resolve(true);
             }
 

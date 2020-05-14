@@ -14,7 +14,8 @@ import {
     getUsersTypesUrl,
     getUserStatusesUrl,
     getDocumentsTypesUrl,
-    getDocumentByIdUrl
+    getDocumentByIdUrl,
+    getDocumentTypeUrl
 } from './constants/urls';
 import { UserDTO, User } from '../../types/dto/user-dto';
 import { BaseRequest } from '../../types/base-request';
@@ -32,6 +33,7 @@ import { NotificationType } from 'src/app/page-components/components/notificatio
 import { DocumentTypes } from '../../types/dto/document-types-dto';
 import { ErrorObjectInterface } from '../../types/interfaces/error0bject.interface';
 import { Documents } from '../../types/dto/documents-dto';
+import { DocumentTypesEnum } from '../../types/enums/document-types.enum';
 
 @Injectable({
     providedIn: 'root'
@@ -142,6 +144,12 @@ export class DataSourceService {
                 map(data => data.documentTypes),
                 tap(data => this.documentTypes = data)
             );
+    }
+
+    public getDocumentTypeById(documentTypeId: string): Observable<DocumentTypesEnum> {
+        const requestData = { documentTypeId };
+
+        return this.get(getDocumentTypeUrl, requestData);
     }
 
     public getUserDataByUserId(userId: string): Observable<UserData> {
