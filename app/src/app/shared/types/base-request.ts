@@ -1,5 +1,5 @@
 import { RequestTypesEnum } from './enums/request-type.enum';
-import { ErrorObjectInterface } from 'src/app/error/types/error-object.interface';
+import { ErrorObjectInterface } from './interfaces/error0bject.interface';
 
 export type BaseRequest<T> = {
     type: RequestTypesEnum;

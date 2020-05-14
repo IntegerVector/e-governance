@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { ErrorObjectInterface } from 'src/app/shared/types/interfaces/error0bject.interface';
 
-import { ErrorObjectInterface } from '../types/error-object.interface';
 
 @Injectable({
     providedIn: 'root'

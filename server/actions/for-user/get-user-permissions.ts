@@ -1,12 +1,19 @@
 import * as dbUsers from '../../modules/db-modules/db-users'; 
-import { sendUnexpectedError } from '../../modules/error-handler';
+import { sendUnexpectedError, sendError } from '../../modules/error-handler';
 import { RequestTypesEnum } from '../../types/enums/request-type.enum';
 import { PermissionsEnum } from '../../types/enums/permissions.enum';
 import { BaseRequest } from '../../types/base-request';
+import { checkUser } from '../../modules/security-modules/check-user';
 
 export async function action(type: RequestTypesEnum, req: any, res: any) {
     if (type === RequestTypesEnum.get) {
         try {
+            const error = await checkUser(req.body.userId, req.body.userToken);
+            if (error) {
+                req.body.error = error;
+                sendError(type, req, res);
+                return;
+            }
 
             const permissions = await dbUsers.getUserPermissions(req.body.userId);
             const responce: BaseRequest<{ permissions: PermissionsEnum[] }> = {

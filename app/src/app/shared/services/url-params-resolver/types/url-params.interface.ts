@@ -1,4 +1,4 @@
-import { ErrorObjectInterface } from 'src/app/error/types/error-object.interface';
+import { ErrorObjectInterface } from 'src/app/shared/types/interfaces/error0bject.interface';
 
 export interface UrlParamsInterface {
     userId: string;

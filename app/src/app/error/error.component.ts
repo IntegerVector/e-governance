@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { ErrorObjectInterface } from './types/error-object.interface';
 import { unknownErrorTip, unknownErrorMsg, goToMainPageButtonLabel, goToMainPageButtonTitle } from './error.constants';
+import { ErrorObjectInterface } from '../shared/types/interfaces/error0bject.interface';
 
 @Component({
     selector: 'app-error',

@@ -23,26 +23,6 @@ export async function sendUnexpectedError(type: RequestTypesEnum, req: any, res:
     sendError(type, req, res);
 }
 
-export async function sendErrorInvalidUserId(type: RequestTypesEnum, req: any, res: any) {
-    req.body.error = {
-        errCode: NOT_FOUND_CODE,
-        errMsg: CLIENT_INVALID_USER_ID,
-        errTip: CLIENT_NOT_AUTHORIZED_TIP
-    };
-
-    sendError(type, req, res);
-}
-
-export async function sendErrorInvalidToken(type: RequestTypesEnum, req: any, res: any) {
-    req.body.error = {
-        errCode: NOT_FOUND_CODE,
-        errMsg: CLIENT_INVALID_TOKEN,
-        errTip: CLIENT_NOT_AUTHORIZED_TIP
-    };
-
-    sendError(type, req, res);
-}
-
 export async function sendErrorInvalidPermissions(type: RequestTypesEnum, req: any, res: any) {
     req.body.error = {
         errCode: null,

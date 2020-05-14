@@ -23,14 +23,6 @@ export async function userRegister(
     newUser: User & UserData
 ): Promise<User> {
     try {
-        if (!await sql.checkUserId(operatorId)) {
-            return null;
-        }
-
-        if (!await sql.checkToken(operatorId, operatorToken)) {
-            return null;
-        }
-
         const permissions = await sql.getUserPermissions(operatorId);
 
         if (!permissions.find(permission => permission === PermissionsEnum.AddUser)) {
@@ -62,14 +54,6 @@ export async function userUpdate(
     user: User & UserData
 ): Promise<User> {
     try {
-        if (!await sql.checkUserId(operatorId)) {
-            return null;
-        }
-
-        if (!await sql.checkToken(operatorId, operatorToken)) {
-            return null;
-        }
-
         if (operatorId != user.userId.toString()) {
             const permissions = await sql.getUserPermissions(operatorId.toString());
 
@@ -103,14 +87,6 @@ export async function getUserById(
     userId: string
 ): Promise<User> {
     try {
-        if (!await sql.checkUserId(operatorId)) {
-            return null;
-        }
-
-        if (!await sql.checkToken(operatorId, operatorToken)) {
-            return null;
-        }
-
         if (operatorId != userId) {
             const permissions = await sql.getUserPermissions(operatorId);
 
@@ -132,14 +108,6 @@ export async function getUserDataByUserId(
     userId: string
 ): Promise<UserData> {
     try {
-        if (!await sql.checkUserId(operatorId)) {
-            return null;
-        }
-
-        if (!await sql.checkToken(operatorId, operatorToken)) {
-            return null;
-        }
-
         if (operatorId != userId) {
             const permissions = await sql.getUserPermissions(operatorId);
 

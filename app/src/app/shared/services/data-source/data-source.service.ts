@@ -20,7 +20,6 @@ import { BaseRequest } from '../../types/base-request';
 import { RequestTypesEnum } from '../../types/enums/request-type.enum';
 import { DEFAULT_USER_ID, DEFAULT_USER_TOKEN } from '../../constants/shared.constants';
 import { ErrorHandlerService } from 'src/app/error/services/error-handler.service';
-import { ErrorObjectInterface } from 'src/app/error/types/error-object.interface';
 import { UserData } from '../../types/dto/user-data-dto';
 import { PermissionsEnum } from '../../types/enums/permissions.enum';
 import { DataSaverService } from '../data-saver/data-saver.service';
@@ -30,6 +29,7 @@ import { UserStatus } from '../../types/dto/user-status-dto';
 import { NotificationsService } from 'src/app/page-components/components/notification/services/notifications.service';
 import { NotificationType } from 'src/app/page-components/components/notification/types/notification-type.enum';
 import { DocumentTypes } from '../../types/dto/document-types-dto';
+import { ErrorObjectInterface } from '../../types/interfaces/error0bject.interface';
 
 @Injectable({
     providedIn: 'root'
