@@ -111,16 +111,24 @@ export class UserPageComponent implements OnInit {
     }
 
     private setUser(userId: string): void {
-        this.strategy.getUser(userId).subscribe(user => {
-            this.user = user;
-            const userType = this.userTypes.find(type => type.userTypeId === user.userTypeId).type;
-            this.isAdmin = userType === UserTypeEnum.Administrator;
-        });
+        const userObs = this.strategy.getUser(userId);
+        if (userObs) {
+            userObs.subscribe(user => {
+                this.user = user;
+                const userType = this.userTypes.find(type => {
+                    return type.userTypeId === user.userTypeId;
+                }).type;
+                this.isAdmin = userType === UserTypeEnum.Administrator;
+            });
+        }
     }
 
     private setUserData(userId: string): void {
-        this.strategy.getUserData(userId).subscribe(userData => {
-            this.userData = userData;
-        });
+        const userDataObs = this.strategy.getUserData(userId);
+        if (userDataObs) {
+            userDataObs.subscribe(userData => {
+                this.userData = userData;
+            });
+        }
     }
 }
