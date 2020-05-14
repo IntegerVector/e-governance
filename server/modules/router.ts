@@ -15,9 +15,11 @@ const logger = LoggerSingleton.getInstance();
 
 export class Router {
     private routes: RouteInterface[];
+    private actionsManager: Actions;
 
     constructor(private server: express.Application) {
         this.routes = this.loadRoutes();
+        this.actionsManager = new Actions('target/actions');
     }
 
     public initRoutes(): void {
@@ -33,7 +35,7 @@ export class Router {
 
         this.routes.forEach((rout: RouteInterface) => {
             this.server.post(new RegExp(rout.url), (req, res) => {
-                Actions.execute(rout.action, rout.type, req, res);
+                this.actionsManager.execute(rout.action, rout.type, req, res);
             });
         });
     }

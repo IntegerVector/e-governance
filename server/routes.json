@@ -2,41 +2,41 @@
     {
         "type": "get",
         "url": "/get-user-by-id",
-        "action": "GetUserById"
+        "action": "get-user-by-id"
     },
     {
         "type": "get",
         "url": "/get-user-data-by-user-id",
-        "action": "GetUserDataByUserId"
+        "action": "get-user-data-by-user-id"
     },
     {
         "type": "get",
         "url": "/user-log-in",
-        "action": "UserLogIn"
+        "action": "user-log-in"
     },
     {
         "type": "post",
         "url": "/user-register",
-        "action": "UserRegister"
+        "action": "user-register"
     },
     {
         "type": "post",
         "url": "/user-update",
-        "action": "UserUpdate"
+        "action": "user-update"
     },
     {
         "type": "get",
         "url": "/get-user-permissions",
-        "action": "GetUserPermissions"
+        "action": "get-user-permissions"
     },
     {
         "type": "get",
         "url": "/get-user-statuses",
-        "action": "GetUsersStatuses"
+        "action": "get-users-statuses"
     },
     {
         "type": "get",
         "url": "/get-user-types",
-        "action": "GetUsersTypes"
+        "action": "get-users-types"
     }
 ]
