@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
+import { get } from 'lodash';
 
 import { User } from '../../types/dto/user-dto';
 import { ProfilePictureSizes } from './types/profile-picture-sizes.enum';
@@ -20,7 +21,7 @@ import { ProfilePictureSizes } from './types/profile-picture-sizes.enum';
                         'width': sizeInRems + 'rem'
                     }"
                 >
-                {{ user.userFirstName[0] + user.userLastName[0] }}
+                {{ getText() }}
                 </span>`,
     styleUrls: ['./profile-picture.scss']
 })
@@ -45,6 +46,11 @@ export class ProfilePictureComponent implements OnChanges {
         }
 
         this.TextColor = this.getTextColor(this.BGColor);
+    }
+
+    public getText(): string {
+        return get(this.user, 'userFirstName[0]', '') +
+                get(this.user, 'userLastName[0]', '');
     }
 
     private getTextColor(hex: string): string {
