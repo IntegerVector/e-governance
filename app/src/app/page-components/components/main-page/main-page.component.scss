@@ -28,7 +28,7 @@
             text-decoration: underline;
         }
 
-        &-list {
+        &__list {
             min-width: 15rem;
             padding: 1rem;
             height: 100%;
@@ -37,10 +37,25 @@
                 padding-bottom: 0.5rem;
                 list-style: circle;
             }
+
+            &-child {
+                display: flex;
+                padding: 0.5rem;
+
+                &-list {
+                    display: flex;
+                    flex-direction: column;
+
+                    li {
+                        padding-bottom: 0.5rem;
+                        list-style: '»  ';
+                    }
+                }
+            }
         }
     }
 
-    &-content {
+    &__content {
         height: 100%;
         width: 100%;
         padding: 2rem;

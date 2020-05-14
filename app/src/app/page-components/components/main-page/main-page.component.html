@@ -1,21 +1,33 @@
 <section class="main-page">
     <aside class="main-page-menu">
-        <ul class="main-page-menu-list">
-            <li>
+        <ul class="main-page-menu__list">
+            <li
+                *ngFor="let link of links"
+                [ngStyle]="{'list-style': link.title ? 'circle' : 'none'}">
                 <a
-                    [routerLink]="'/main/about'"
-                    [queryParams]="{ userId: userId }">
-                    About
+                    [routerLink]="link.routerLink"
+                    [queryParams]="link.getQueryParams()">
+                    {{ link.title }}
                 </a>
+                <ul
+                    *ngIf="link.childs && link.childs.length"
+                    class="main-page-menu__list-child">
+                    &nbsp;&nbsp;
+                    <div class="main-page-menu__list-child-list">
+                        <li *ngFor="let child of link.childs">
+                            <a
+                                [routerLink]="child.routerLink"
+                                [queryParams]="child.getQueryParams()">
+                                {{ child.title }}
+                            </a>
+                        </li>
+                    </div>
+                </ul>
             </li>
-            <li><a>Some example </a></li>
-            <li><a>Some other example</a></li>
-            <li><a>Shorter One </a></li>
-            <li><a>And some more</a></li>
         </ul>
     </aside>
-    <section class="main-page-content">
-        <div class="main-page-content-container">
+    <section class="main-page__content">
+        <div class="main-page__content-container">
             <router-outlet></router-outlet>
         </div>
     </section>
