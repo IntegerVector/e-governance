@@ -64,8 +64,8 @@ INSERT INTO `UserStatusEnum` (`userStatusId`, `status`) VALUES
 DROP TABLE IF EXISTS `UserTypePermissions`;
 CREATE TABLE `UserTypePermissions` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `userTypeId` int(11) NOT NULL,
-  `permissionId` int(11) NOT NULL
+  `userTypeId` int NOT NULL,
+  `permissionId` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
 
 TRUNCATE TABLE `UserTypePermissions`;
@@ -98,13 +98,13 @@ CREATE TABLE `User` (
   `userEmail` varchar(100),
   `userSEmail` varchar(100),
   `userBirthDate` char(10) NOT NULL,
-  `userTypeId` int(11) NOT NULL,
-  `userStatusId` int(11) NOT NULL,
-  `sys_AddedBy` int(11),
+  `userTypeId` int NOT NULL,
+  `userStatusId` int NOT NULL,
+  `sys_AddedBy` int,
   `sys_AddedDate` char(10),
   `sys_UpdatedDate` char(10),
-  `sys_UpdatedBy` int(11),
-  `sys_DeletedBy` int(11),
+  `sys_UpdatedBy` int,
+  `sys_DeletedBy` int,
   `sys_DeletedDate` char(10),
   `validFrom` char(10) NOT NULL,
   `validTo` char(10),
@@ -131,7 +131,46 @@ CREATE TABLE `UserData` (
 INSERT INTO `UserData` (`userDataId`, `login`, `pass`, `profilePicturePath`, `userDocumentsId`) VALUES
 (1, 'admin', '$2b$10$TGPsUycXjhQe37cGedauL.8twG1u5wiNlEhg8Ycz.ZohWQVkHhDYq', '/files/user-data', NULL);
 
--- Adding Primary keys:
+-- --------------------------------------------------------
+
+DROP TABLE IF EXISTS `DocumentTypes`;
+CREATE TABLE `DocumentTypes` (
+  `documentTypeId` int PRIMARY KEY AUTO_INCREMENT,
+  `typeName` varchar(40) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
+
+INSERT INTO `DocumentTypes` (`documentTypeId`, `typeName`) VALUES (1, 'PDF'), (2, 'CSV');
+
+-- --------------------------------------------------------
+
+DROP TABLE IF EXISTS `Documents`;
+CREATE TABLE `Documents` (
+  `documentId` int PRIMARY KEY AUTO_INCREMENT,
+  `name` varchar(200) NOT NULL,
+  `path` varchar(200) NOT NULL,
+  `documentType` int NOT NULL,
+  `sys_AddedBy` int,
+  `sys_AddedDate` char(10),
+  `sys_UpdatedDate` char(10),
+  `sys_UpdatedBy` int,
+  `sys_DeletedBy` int,
+  `sys_DeletedDate` char(10)
+) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
+
+INSERT INTO `Documents` (`documentId`, `name`, `path`, `documentType`, `sys_AddedBy`, `sys_AddedDate`, `sys_UpdatedBy`, `sys_UpdatedDate`, `sys_DeletedBy`, `sys_DeletedDate`) VALUES
+(1, 'Academic Vacation Template', '/files/documents/acad_vacation_template.pdf', 1, 1, NULL, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+DROP TABLE IF EXISTS `UsersDocuments`;
+CREATE TABLE `UsersDocuments` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `userDataId` int NOT NULL,
+  `documentId` int NOT NULL,
+  `needsActions` BOOLEAN NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
+
+-- --------------------------------------------------------
 
 ALTER TABLE `PermissionsEnum` AUTO_INCREMENT=10;
 ALTER TABLE `UserType` AUTO_INCREMENT=10;
@@ -139,8 +178,10 @@ ALTER TABLE `UserStatusEnum` AUTO_INCREMENT=10;
 ALTER TABLE `UserTypePermissions` AUTO_INCREMENT=20;
 ALTER TABLE `User` AUTO_INCREMENT=10;
 ALTER TABLE `UserData` AUTO_INCREMENT=10;
+ALTER TABLE `DocumentTypes` AUTO_INCREMENT=10;
+ALTER TABLE `Documents` AUTO_INCREMENT=10;
+ALTER TABLE `UsersDocuments` AUTO_INCREMENT=10;
 
--- Adding Foreign keys:
 
 ALTER TABLE `UserTypePermissions`
   ADD CONSTRAINT `ut_fk` FOREIGN KEY (`userTypeId`) REFERENCES `UserType` (`userTypeId`),
@@ -150,6 +191,13 @@ ALTER TABLE `User`
   ADD CONSTRAINT `ut2_fk` FOREIGN KEY (`userTypeId`) REFERENCES `UserType` (`userTypeId`),
   ADD CONSTRAINT `us_fk` FOREIGN KEY (`userStatusId`) REFERENCES `UserStatusEnum` (`userStatusId`),
   ADD CONSTRAINT `ud_fk` FOREIGN KEY (`userDataId`) REFERENCES `UserData` (`userDataId`);
+
+ALTER TABLE `Documents`
+  ADD CONSTRAINT `dt_fk` FOREIGN KEY (`documentType`) REFERENCES `DocumentTypes` (`documentTypeId`);
+
+ALTER TABLE `UsersDocuments`
+  ADD CONSTRAINT `udi_fk` FOREIGN KEY (`userDataId`) REFERENCES `UserData` (`userDataId`),
+  ADD CONSTRAINT `di_fk` FOREIGN KEY (`documentId`) REFERENCES `Documents` (`documentId`);
 
 -- To Do: extend UserData table with additional data
 
