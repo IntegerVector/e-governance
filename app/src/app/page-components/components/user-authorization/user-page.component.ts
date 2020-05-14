@@ -33,6 +33,7 @@ export class UserPageComponent implements OnInit {
     public isAdmin: boolean;
     public userTypes: UserType[];
     public userStatuses: UserStatus[];
+    public pass: string;
 
     private strategy: UserPageBaseStrategy = null;
 
@@ -96,6 +97,10 @@ export class UserPageComponent implements OnInit {
                 }
             });
         });
+    }
+
+    public passChanged(pass: string) {
+        this.userData.pass = pass;
     }
 
     public logOut(): void {

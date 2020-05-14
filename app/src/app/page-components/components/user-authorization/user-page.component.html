@@ -129,7 +129,8 @@
                         class="form-control flex-grow-1"
                         aria-label="Password"
                         aria-describedby="passwor-wrapping"
-                        [(ngModel)]="userData.pass">
+                        [(ngModel)]="pass"
+                        (ngModelChange)="passChanged(pass)">
                 </div>
                 <button
                     class="btn btn-light"
