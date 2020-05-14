@@ -9,3 +9,4 @@ export const getUserStatusesUrl = '/get-user-statuses';
 export const getDocumentsTypesUrl = '/get-document-types';
 export const getDocumentByIdUrl = '/get-document-by-id';
 export const getDocumentTypeUrl = '/get-document-type';
+export const getUserDocumentsUrl = '/get-user-documents';

@@ -29,6 +29,7 @@ import { DocumentTypesEnum } from '../../types/enums/document-types.enum';
 import * as _ from 'lodash';
 import { Documents } from '../../types/dto/documents-dto';
 import { DocumentTypes } from '../../types/dto/document-types-dto';
+import { UsersDocuments } from '../../types/dto/users-documents-dto';
 
 const logger = LoggerSingleton.getInstance();
 
@@ -81,16 +82,10 @@ class SQLManager {
         });
     }
 
-    public async getDocumentsByUserDataId(userDataId: string): Promise<Documents[]> {
+    public async getDocumentsByUserDataId(userDataId: string): Promise<UsersDocuments[]> {
         return new Promise(async (resolve, reject) => {
-            const request = `select * from UsersDocuments where userDataId = "${userDataId}"`;
-            const usersDocuments = await this.query(request);
-            const documentsIds = _.map(usersDocuments, 'documentId');
-            const documentsPromises: Promise<Documents>[] = _.map(documentsIds, id => {
-                return this.getDocumentByDocumentId(id);
-            });
-
-            const documents = await Promise.all(documentsPromises);
+            const request = `select * from UsersDocuments where userDataId = "${userDataId}";`;
+            const documents = await this.query(request);
 
             resolve(documents);
         });
@@ -98,7 +93,7 @@ class SQLManager {
 
     public async getDocumentByDocumentId(documentId: string): Promise<Documents> {
         return new Promise(async (resolve, reject) => {
-            const request = `select * from Documents where documentId = "${documentId}"`;
+            const request = `select * from Documents where documentId = "${documentId}";`;
             const result = await this.query(request);
 
             resolve(_.get(result, '[0]'));

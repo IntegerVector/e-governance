@@ -53,5 +53,10 @@
         "type": "get",
         "url": "/get-document-type",
         "action": "get-document-type"
+    },
+    {
+        "type": "get",
+        "url": "/get-user-documents",
+        "action": "get-user-documents"
     }
 ]

@@ -15,7 +15,8 @@ import {
     getUserStatusesUrl,
     getDocumentsTypesUrl,
     getDocumentByIdUrl,
-    getDocumentTypeUrl
+    getDocumentTypeUrl,
+    getUserDocumentsUrl
 } from './constants/urls';
 import { UserDTO, User } from '../../types/dto/user-dto';
 import { BaseRequest } from '../../types/base-request';
@@ -34,6 +35,7 @@ import { DocumentTypes } from '../../types/dto/document-types-dto';
 import { ErrorObjectInterface } from '../../types/interfaces/error0bject.interface';
 import { Documents } from '../../types/dto/documents-dto';
 import { DocumentTypesEnum } from '../../types/enums/document-types.enum';
+import { UsersDocuments } from '../../types/dto/users-documents-dto';
 
 @Injectable({
     providedIn: 'root'
@@ -108,6 +110,12 @@ export class DataSourceService {
         const requestData = { documentId };
 
         return this.get(getDocumentByIdUrl, requestData);
+    }
+
+    public getUserDocuments(userDataId: string): Observable<UsersDocuments[]> {
+        const requestData = { userDataId };
+
+        return this.get(getUserDocumentsUrl, requestData);
     }
 
     public getUsersTypes(): Observable<UserType[]> {
