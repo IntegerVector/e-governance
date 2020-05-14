@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 
-import { LoggerSingleton } from './logger';
+import { LoggerSingleton } from '../core-modules/logger';
 
 const logger = LoggerSingleton.getInstance();
 const SALT = 8;

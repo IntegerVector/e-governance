@@ -1,4 +1,4 @@
-import * as dbUsers from '../../modules/db-users'; 
+import * as dbUsers from '../../modules/db-modules/db-users'; 
 import { RequestTypesEnum } from '../../types/enums/request-type.enum';
 import { UserDTO } from '../../types/dto/user-dto';
 import { CLIENT_INVALID_LOGIN_OR_PASS } from '../../constants/errors';

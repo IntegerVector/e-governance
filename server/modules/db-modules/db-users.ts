@@ -1,9 +1,9 @@
-import { SQLManagerSingleton } from '../modules/sql-manager';
-import { PermissionsEnum } from '../types/enums/permissions.enum';
-import { User } from '../types/dto/user-dto';
-import { UserData } from '../types/dto/user-data-dto';
-import { normalize } from '../helpers/date-normalizer';
-import { USER_DATA_FILES_PATH } from '../constants/constants';
+import { SQLManagerSingleton } from './sql-manager';
+import { PermissionsEnum } from '../../types/enums/permissions.enum';
+import { User } from '../../types/dto/user-dto';
+import { UserData } from '../../types/dto/user-data-dto';
+import { normalize } from '../../helpers/date-normalizer';
+import { USER_DATA_FILES_PATH } from '../../constants/constants';
 
 const sql = SQLManagerSingleton.getInstance();
 

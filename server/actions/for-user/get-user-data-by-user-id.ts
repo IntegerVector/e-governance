@@ -1,4 +1,4 @@
-import * as dbUsers from '../../modules/db-users'; 
+import * as dbUsers from '../../modules/db-modules/db-users'; 
 import { sendUnexpectedError } from '../../modules/error-handler';
 import { RequestTypesEnum } from '../../types/enums/request-type.enum';
 import { UserDataDTO } from '../../types/dto/user-data-dto';

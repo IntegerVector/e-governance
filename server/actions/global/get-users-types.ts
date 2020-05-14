@@ -1,4 +1,4 @@
-import * as dbGetter from '../../modules/db-data-getters';
+import * as dbGetter from '../../modules/db-modules/db-data-getters';
 import { sendUnexpectedError } from '../../modules/error-handler';
 import { BaseRequest } from '../../types/base-request';
 import { UserType } from '../../types/dto/user-type-dto';

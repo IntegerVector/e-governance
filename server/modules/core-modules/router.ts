@@ -6,9 +6,9 @@ import {
     ROUTES_FILE_PATH,
     CLIENT_ROOT,
     MAIN_PAGE,
-} from '../constants/constants';
+} from '../../constants/constants';
 import { Actions } from './action-manager';
-import { RouteInterface } from '../types/interfaces/route.interface';
+import { RouteInterface } from '../../types/interfaces/route.interface';
 import { LoggerSingleton } from './logger';
 
 const logger = LoggerSingleton.getInstance();

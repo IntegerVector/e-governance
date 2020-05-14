@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import { LoggerSingleton } from './logger';
-import { ConfigsInterface } from '../types/interfaces/configs.interface';
+import { ConfigsInterface } from '../../types/interfaces/configs.interface';
 
 const logger = LoggerSingleton.getInstance();
 

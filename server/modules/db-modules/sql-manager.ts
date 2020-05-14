@@ -1,6 +1,6 @@
 import { createConnection } from 'mysql';
-import { LoggerSingleton } from './logger';
-import { HOST } from '../constants/constants';
+import { LoggerSingleton } from '../core-modules/logger';
+import { HOST } from '../../constants/constants';
 import {
     DB_MULTIPLE_USERS_WITH_SAME_ID,
     DB_MULTIPLE_STATUSES_WITH_SAME_ID,
@@ -14,17 +14,21 @@ import {
     CLIENT_INVALID_LOGIN_OR_PASS,
     CLIENT_INVALID_USER_DATA_ID,
     CLIENT_INVALID_USER_TYPE_ID
-} from '../constants/errors';
-import { UserStatusEnum } from '../types/enums/user-status.enum';
-import { PermissionsEnum } from '../types/enums/permissions.enum';
-import { Permissions } from '../types/dto/permissions-dto';
-import { User } from '../types/dto/user-dto';
-import { getToken } from './token-generator';
-import { UserData } from '../types/dto/user-data-dto';
-import { UserTypeEnum } from '../types/enums/user-type.enum';
-import { UserType } from '../types/dto/user-type-dto';
-import { compare, encrypt } from './password-encrypter';
-import { UserStatus } from '../types/dto/user-status-dto';
+} from '../../constants/errors';
+import { UserStatusEnum } from '../../types/enums/user-status.enum';
+import { PermissionsEnum } from '../../types/enums/permissions.enum';
+import { Permissions } from '../../types/dto/permissions-dto';
+import { User } from '../../types/dto/user-dto';
+import { getToken } from '../security-modules/token-generator';
+import { UserData } from '../../types/dto/user-data-dto';
+import { UserTypeEnum } from '../../types/enums/user-type.enum';
+import { UserType } from '../../types/dto/user-type-dto';
+import { compare, encrypt } from '../security-modules/password-encrypter';
+import { UserStatus } from '../../types/dto/user-status-dto';
+import { DocumentTypesEnum } from '../../types/enums/document-types.enum';
+import * as _ from 'lodash';
+import { Documents } from '../../types/dto/documents-dto';
+import { DocumentTypes } from '../../types/dto/document-types-dto';
 
 const logger = LoggerSingleton.getInstance();
 
@@ -54,6 +58,39 @@ class SQLManager {
                 this.query(`use ${database};`);
                 resolve();
             });
+        });
+    }
+
+    public async getDocumentTypes(): Promise<DocumentTypes[]> {
+        return new Promise(async (resolve, reject) => {
+            const request = 'select * from DocumentTypes;';
+            const result = await this.query(request);
+
+            resolve(result);
+        });
+    }
+
+    public async getDocumentsByUserDataId(userDataId: string): Promise<Documents[]> {
+        return new Promise(async (resolve, reject) => {
+            const request = `select * from UsersDocuments where userDataId = "${userDataId}"`;
+            const usersDocuments = await this.query(request);
+            const documentsIds = _.map(usersDocuments, 'documentId');
+            const documentsPromises: Promise<Documents>[] = _.map(documentsIds, id => {
+                return this.getDocumentByDocumentId(id);
+            });
+
+            const documents = await Promise.all(documentsPromises);
+
+            resolve(documents);
+        });
+    }
+
+    public async getDocumentByDocumentId(documentId: string): Promise<Documents> {
+        return new Promise(async (resolve, reject) => {
+            const request = `select * from Documents where documentId = "${documentId}"`;
+            const result = await this.query(request);
+
+            resolve(_.get(result, '[0]'));
         });
     }
 

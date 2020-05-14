@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import { resolve } from 'path';
 import { LoggerSingleton } from './logger';
-import { RequestTypesEnum } from "../types/enums/request-type.enum";
+import { RequestTypesEnum } from "../../types/enums/request-type.enum";
 
 const logger = LoggerSingleton.getInstance();
 

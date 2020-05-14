@@ -2,11 +2,11 @@ import * as express from 'express';
 import * as https from 'https';
 import * as fs from 'fs';
 import { resolve } from 'path';
-import { loadConfigs, checkConfigs } from './load-configs';
-import { Router } from './router';
+import { loadConfigs, checkConfigs } from './core-modules/load-configs';
+import { Router } from './core-modules/router';
 import { ConfigsInterface } from '../types/interfaces/configs.interface';
-import { SQLManagerSingleton } from './sql-manager';
-import { LoggerSingleton } from './logger';
+import { SQLManagerSingleton } from './db-modules/sql-manager';
+import { LoggerSingleton } from './core-modules/logger';
 
 const logger = LoggerSingleton.getInstance();
 const sql = SQLManagerSingleton.getInstance();

@@ -1,7 +1,7 @@
 import * as fs from 'fs';
-import { LOG_FILE_PATH } from '../constants/constants';
-import { LogTypesEnum } from '../types/enums/log-types.enum';
-import { LogsInterface } from '../types/interfaces/logs.interface';
+import { LOG_FILE_PATH } from '../../constants/constants';
+import { LogTypesEnum } from '../../types/enums/log-types.enum';
+import { LogsInterface } from '../../types/interfaces/logs.interface';
 
 const defaultLogs: LogsInterface = {
     logs: [],
