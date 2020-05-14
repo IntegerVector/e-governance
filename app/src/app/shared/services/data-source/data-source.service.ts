@@ -13,7 +13,8 @@ import {
     getUserPermissionsUrl,
     getUsersTypesUrl,
     getUserStatusesUrl,
-    getDocumentsTypesUrl
+    getDocumentsTypesUrl,
+    getDocumentByIdUrl
 } from './constants/urls';
 import { UserDTO, User } from '../../types/dto/user-dto';
 import { BaseRequest } from '../../types/base-request';
@@ -30,6 +31,7 @@ import { NotificationsService } from 'src/app/page-components/components/notific
 import { NotificationType } from 'src/app/page-components/components/notification/types/notification-type.enum';
 import { DocumentTypes } from '../../types/dto/document-types-dto';
 import { ErrorObjectInterface } from '../../types/interfaces/error0bject.interface';
+import { Documents } from '../../types/dto/documents-dto';
 
 @Injectable({
     providedIn: 'root'
@@ -98,6 +100,12 @@ export class DataSourceService {
         const requestData = { userId };
 
         return this.get(getUserDataUrl, requestData);
+    }
+
+    public getDocumentById(documentId: string): Observable<Documents> {
+        const requestData = { documentId };
+
+        return this.get(getDocumentByIdUrl, requestData);
     }
 
     public getUsersTypes(): Observable<UserType[]> {
