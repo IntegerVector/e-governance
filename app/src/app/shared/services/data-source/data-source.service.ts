@@ -16,7 +16,9 @@ import {
     getDocumentsTypesUrl,
     getDocumentByIdUrl,
     getDocumentTypeUrl,
-    getUserDocumentsUrl
+    getUserDocumentsUrl,
+    getUserActiveDocumentsUrl,
+    getUserInactiveDocumentsUrl
 } from './constants/urls';
 import { UserDTO, User } from '../../types/dto/user-dto';
 import { BaseRequest } from '../../types/base-request';
@@ -116,6 +118,18 @@ export class DataSourceService {
         const requestData = { userDataId };
 
         return this.get(getUserDocumentsUrl, requestData);
+    }
+
+    public getUserActiveDocuments(userDataId: string): Observable<UsersDocuments[]> {
+        const requestData = { userDataId };
+
+        return this.get(getUserActiveDocumentsUrl, requestData);
+    }
+
+    public getUserInactiveDocuments(userDataId: string): Observable<UsersDocuments[]> {
+        const requestData = { userDataId };
+
+        return this.get(getUserInactiveDocumentsUrl, requestData);
     }
 
     public getUsersTypes(): Observable<UserType[]> {

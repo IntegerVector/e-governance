@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 import * as dbDocuments from '../../modules/db-modules/db-documents';
 import { sendUnexpectedError, sendError, sendErrorInvalidPermissions } from '../../modules/error-handler';
 import { RequestTypesEnum } from '../../types/enums/request-type.enum';
@@ -31,7 +33,7 @@ export async function action(type: RequestTypesEnum, req: any, res: any) {
                 error: null,
                 userId: req.body.userId,
                 userToken: req.body.userToken,
-                data: documents
+                data: _.filter(documents, document => document.needsActions)
             };
             
             res.send(responce);

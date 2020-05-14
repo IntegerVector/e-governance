@@ -10,3 +10,5 @@ export const getDocumentsTypesUrl = '/get-document-types';
 export const getDocumentByIdUrl = '/get-document-by-id';
 export const getDocumentTypeUrl = '/get-document-type';
 export const getUserDocumentsUrl = '/get-user-documents';
+export const getUserActiveDocumentsUrl = '/get-user-active-documents';
+export const getUserInactiveDocumentsUrl = '/get-user-inactive-documents';

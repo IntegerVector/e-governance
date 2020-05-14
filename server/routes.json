@@ -58,5 +58,15 @@
         "type": "get",
         "url": "/get-user-documents",
         "action": "get-user-documents"
+    },
+    {
+        "type": "get",
+        "url": "/get-user-active-documents",
+        "action": "get-user-active-documents"
+    },
+    {
+        "type": "get",
+        "url": "/get-user-inactive-documents",
+        "action": "get-user-inactive-documents"
     }
 ]
