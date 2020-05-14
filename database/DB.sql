@@ -170,6 +170,9 @@ CREATE TABLE `UsersDocuments` (
   `needsActions` BOOLEAN NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
 
+INSERT INTO `UsersDocuments` (`id`, `userDataId`, `documentId`, `needsActions`) VALUES
+(1, 1, 1, false);
+
 -- --------------------------------------------------------
 
 ALTER TABLE `Permissions` AUTO_INCREMENT=10;
