@@ -34,6 +34,10 @@ export class ProfilePictureComponent implements OnChanges {
     public TextColor: string;
 
     public ngOnChanges(): void {
+        if (!this.user.userId) {
+            return;
+        }
+
         const color = this.user.userId % 5;
 
         switch (color) {
