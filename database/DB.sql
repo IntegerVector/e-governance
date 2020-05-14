@@ -158,7 +158,7 @@ CREATE TABLE `Documents` (
 ) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
 
 INSERT INTO `Documents` (`documentId`, `name`, `path`, `documentType`, `sys_AddedBy`, `sys_AddedDate`, `sys_UpdatedBy`, `sys_UpdatedDate`, `sys_DeletedBy`, `sys_DeletedDate`) VALUES
-(1, 'Academic Vacation Template', '/files/documents/acad_vacation_template.pdf', 1, 1, NULL, NULL, NULL, NULL, NULL);
+(1, 'Academic Vacation Template', '/files/documents/acad_vacation_template.html', 3, 1, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
