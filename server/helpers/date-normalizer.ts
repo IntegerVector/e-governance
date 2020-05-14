@@ -10,8 +10,12 @@ export function normalize(date: string): string {
     }
     if (/now/i.test(date)) {
         const now = new Date();
-        return `${now.getUTCFullYear()}-${now.getUTCMonth()}-${now.getUTCDate()+1}`;
+        return `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`;
     }
 
     return date;
+}
+
+export function getDate(date: Date): string {
+    return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
 }
