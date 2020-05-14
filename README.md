@@ -34,6 +34,20 @@ e.g. {
 };
 - Import `database/DB.sql` to your mysql database;
 
+Also add server certificate and private key paths to `server/conf.json` file
+```js
+{
+    "port": 8080,
+    "withSSL": true, // or change it to `false`, and server will run with plain HTTP
+    "certPath": "path/to/certificate/server.cert",
+    "keyPath" : "path/to/key/server.key",
+    "sqlLogin": "eg-user",
+    "sqlPass": "my_strong_password_!",
+    "dataBase": "egovernance"
+}
+
+```
+
 Install the dependencies and devDependencies and build server with frontend application.
 
 ```sh
@@ -47,7 +61,7 @@ $ npm install -d
 $ npm run build
 ```
 
-Open browser on [localhost:8080](localhost:8080) for starting web application.
+Open browser on [https://localhost:8080](https://localhost:8080) or [http://localhost:8080](http://localhost:8080) for starting web application.
 
 ### Lisence
 Apache License 2.0
