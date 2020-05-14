@@ -371,7 +371,6 @@ class SQLManager {
                 pass: newUser.pass,
                 userDataId: null,
                 profilePicturePath: newUser.profilePicturePath,
-                userDocumentsId: null
             });
             const userStatusId = await this.getUserStatusId(UserStatusEnum.Active);
             const userTypeId = await this.getUserTypeId(UserTypeEnum.User)
@@ -393,7 +392,6 @@ class SQLManager {
                 login: user.login,
                 pass: user.pass,
                 profilePicturePath: user.profilePicturePath,
-                userDocumentsId: user.userDocumentsId
             });
             const request = `update User set userFirstName = "${user.userFirstName}", userLastName = "${user.userLastName}", userPatronymic = "${user.userPatronymic}", userPhoneNumber = "${user.userPhoneNumber}", userSPhoneNumber = "${user.userSPhoneNumber}", userEmail = "${user.userEmail}", userSEmail = "${user.userSEmail}", userBirthDate = "${user.userBirthDate}", userTypeId = "${user.userTypeId}", userStatusId = "${user.userStatusId}", sys_UpdatedDate = "${user.sys_UpdatedDate}", sys_UpdatedBy = "${admin.userId}", validFrom = "${user.validFrom}", validTo = "${user.validTo}", userDataId = "${userDataId}" where userId = "${user.userId}"`;
             await this.query(request);

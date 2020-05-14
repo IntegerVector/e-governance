@@ -1,8 +1,8 @@
 import { BaseRequest } from '../base-request';
 
-export type PermissionsDTO = BaseRequest<PermissionsEnum>;
+export type PermissionsDTO = BaseRequest<Permissions>;
 
-export type PermissionsEnum = {
+export type Permissions = {
     permissionId: number;
     permission: string;
 };

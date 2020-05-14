@@ -1,8 +1,8 @@
 import { BaseRequest } from '../base-request';
 
-export type UserStatusDTO = BaseRequest<UserStatusEnum>;
+export type UserStatusDTO = BaseRequest<UserStatus>;
 
-export type UserStatusEnum = {
+export type UserStatus = {
     userStatusId: number;
     status: string;
 };

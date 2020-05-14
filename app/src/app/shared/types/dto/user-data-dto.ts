@@ -7,6 +7,4 @@ export type UserData = {
     login: string;
     pass: string;
     profilePicturePath: string;
-    userDocumentsId: number;
-    // ToDo: Will be extended!
 };

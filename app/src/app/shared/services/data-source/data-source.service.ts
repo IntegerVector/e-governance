@@ -25,7 +25,7 @@ import { PermissionsEnum } from '../../types/enums/permissions.enum';
 import { DataSaverService } from '../data-saver/data-saver.service';
 import { UserDataInterface } from '../data-saver/types/user-data.interface';
 import { UserType } from '../../types/dto/user-type-dto';
-import { UserStatusEnum } from '../../types/dto/user-status-dto';
+import { UserStatus } from '../../types/dto/user-status-dto';
 import { NotificationsService } from 'src/app/page-components/components/notification/services/notifications.service';
 import { NotificationType } from 'src/app/page-components/components/notification/types/notification-type.enum';
 
@@ -41,7 +41,7 @@ export class DataSourceService {
         errTip: null
     };
     private userTypes: UserType[];
-    private userStatuses: UserStatusEnum[];
+    private userStatuses: UserStatus[];
 
     private userIdObservable = new Observable(subscriber => {
         subscriber.next(DEFAULT_USER_ID);
@@ -109,7 +109,7 @@ export class DataSourceService {
             );
     }
 
-    public getUserStatuses(): Observable<UserStatusEnum[]> {
+    public getUserStatuses(): Observable<UserStatus[]> {
         if (this.userStatuses) {
             return of(this.userStatuses);
         }

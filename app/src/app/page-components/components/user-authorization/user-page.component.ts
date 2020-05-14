@@ -12,7 +12,7 @@ import { DEFAULT_USER_ID } from 'src/app/shared/constants/shared.constants';
 import { DataSaverService } from 'src/app/shared/services/data-saver/data-saver.service';
 import { MAIN_PAGE_INTERNAL_URL } from 'src/app/shared/constants/internal-urls.constants';
 import { DataSourceService } from 'src/app/shared/services/data-source/data-source.service';
-import { UserStatusEnum } from 'src/app/shared/types/dto/user-status-dto';
+import { UserStatus } from 'src/app/shared/types/dto/user-status-dto';
 import { UserType } from 'src/app/shared/types/dto/user-type-dto';
 import { UserTypeEnum } from 'src/app/shared/types/enums/user-type.enum';
 import { NotificationsService } from '../notification/services/notifications.service';
@@ -32,7 +32,7 @@ export class UserPageComponent implements OnInit {
     public rememberMe: boolean;
     public isAdmin: boolean;
     public userTypes: UserType[];
-    public userStatuses: UserStatusEnum[];
+    public userStatuses: UserStatus[];
 
     private strategy: UserPageBaseStrategy = null;
 
