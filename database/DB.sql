@@ -11,15 +11,15 @@ GRANT SELECT, INSERT, UPDATE ON egovernance.* TO 'eg-user'@'localhost';
 CREATE DATABASE IF NOT EXISTS `egovernance` DEFAULT CHARACTER SET cp1251 COLLATE cp1251_general_ci;
 USE `egovernance`;
 
-DROP TABLE IF EXISTS `PermissionsEnum`;
-CREATE TABLE `PermissionsEnum` (
+DROP TABLE IF EXISTS `Permissions`;
+CREATE TABLE `Permissions` (
   `permissionId` int PRIMARY KEY AUTO_INCREMENT,
   `permission` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
 
-TRUNCATE TABLE `PermissionsEnum`;
+TRUNCATE TABLE `Permissions`;
 
-INSERT INTO `PermissionsEnum` (`permissionId`, `permission`) VALUES
+INSERT INTO `Permissions` (`permissionId`, `permission`) VALUES
 (1, 'ReadDocs'),
 (2, 'ReadUsers'),
 (3, 'UploadDocs'),
@@ -46,15 +46,15 @@ INSERT INTO `UserType` (`userTypeId`, `type`) VALUES
 
 -- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `UserStatusEnum`;
-CREATE TABLE `UserStatusEnum` (
+DROP TABLE IF EXISTS `UserStatus`;
+CREATE TABLE `UserStatus` (
   `userStatusId` int PRIMARY KEY AUTO_INCREMENT,
   `status` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
 
-TRUNCATE TABLE `UserStatusEnum`;
+TRUNCATE TABLE `UserStatus`;
 
-INSERT INTO `UserStatusEnum` (`userStatusId`, `status`) VALUES
+INSERT INTO `UserStatus` (`userStatusId`, `status`) VALUES
 (1, 'Active'),
 (2, 'Banned'),
 (3, 'Deleted');
@@ -172,9 +172,9 @@ CREATE TABLE `UsersDocuments` (
 
 -- --------------------------------------------------------
 
-ALTER TABLE `PermissionsEnum` AUTO_INCREMENT=10;
+ALTER TABLE `Permissions` AUTO_INCREMENT=10;
 ALTER TABLE `UserType` AUTO_INCREMENT=10;
-ALTER TABLE `UserStatusEnum` AUTO_INCREMENT=10;
+ALTER TABLE `UserStatus` AUTO_INCREMENT=10;
 ALTER TABLE `UserTypePermissions` AUTO_INCREMENT=20;
 ALTER TABLE `User` AUTO_INCREMENT=10;
 ALTER TABLE `UserData` AUTO_INCREMENT=10;
@@ -185,11 +185,11 @@ ALTER TABLE `UsersDocuments` AUTO_INCREMENT=10;
 
 ALTER TABLE `UserTypePermissions`
   ADD CONSTRAINT `ut_fk` FOREIGN KEY (`userTypeId`) REFERENCES `UserType` (`userTypeId`),
-  ADD CONSTRAINT `p_fk` FOREIGN KEY (`permissionId`) REFERENCES `PermissionsEnum` (`permissionId`);
+  ADD CONSTRAINT `p_fk` FOREIGN KEY (`permissionId`) REFERENCES `Permissions` (`permissionId`);
 
 ALTER TABLE `User`
   ADD CONSTRAINT `ut2_fk` FOREIGN KEY (`userTypeId`) REFERENCES `UserType` (`userTypeId`),
-  ADD CONSTRAINT `us_fk` FOREIGN KEY (`userStatusId`) REFERENCES `UserStatusEnum` (`userStatusId`),
+  ADD CONSTRAINT `us_fk` FOREIGN KEY (`userStatusId`) REFERENCES `UserStatus` (`userStatusId`),
   ADD CONSTRAINT `ud_fk` FOREIGN KEY (`userDataId`) REFERENCES `UserData` (`userDataId`);
 
 ALTER TABLE `Documents`
