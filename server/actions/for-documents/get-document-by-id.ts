@@ -1,13 +1,11 @@
 import * as dbDocuments from '../../modules/db-modules/db-documents';
-import { sendUnexpectedError, sendError } from '../../modules/error-handler';
+import { sendUnexpectedError, sendError, sendErrorInvalidPermissions } from '../../modules/error-handler';
 import { RequestTypesEnum } from '../../types/enums/request-type.enum';
 import { BaseRequest } from '../../types/base-request';
-import { DocumentTypes } from '../../types/dto/document-types-dto';
 import { Documents } from '../../types/dto/documents-dto';
-import { SQLManagerSingleton } from '../../modules/db-modules/sql-manager';
 import { checkUser } from '../../modules/security-modules/check-user';
-
-const sql = SQLManagerSingleton.getInstance();
+import { checkPermissions } from '../../modules/security-modules/permissions-check';
+import { PermissionsEnum } from '../../types/enums/permissions.enum';
 
 export async function action(type: RequestTypesEnum, req: any, res: any) {
     if (type === RequestTypesEnum.get) {
@@ -16,6 +14,12 @@ export async function action(type: RequestTypesEnum, req: any, res: any) {
             if (error) {
                 req.body.error = error;
                 sendError(type, req, res);
+                return;
+            }
+
+            const isPermitted = await checkPermissions(req.body.userId, [PermissionsEnum.ReadDocs]);
+            if (!isPermitted) {
+                sendErrorInvalidPermissions(type, req, res);
                 return;
             }
 

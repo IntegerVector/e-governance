@@ -1,8 +1,10 @@
 import * as dbUsers from '../../modules/db-modules/db-users'; 
-import { sendUnexpectedError, sendError } from '../../modules/error-handler';
+import { sendUnexpectedError, sendError, sendErrorInvalidPermissions } from '../../modules/error-handler';
 import { RequestTypesEnum } from '../../types/enums/request-type.enum';
 import { UserDataDTO } from '../../types/dto/user-data-dto';
 import { checkUser } from '../../modules/security-modules/check-user';
+import { checkPermissions } from '../../modules/security-modules/permissions-check';
+import { PermissionsEnum } from '../../types/enums/permissions.enum';
 
 export async function action(type: RequestTypesEnum, req: any, res: any) {
     if (type === RequestTypesEnum.get) {
@@ -14,11 +16,15 @@ export async function action(type: RequestTypesEnum, req: any, res: any) {
                 return;
             }
 
-            const userData = await dbUsers.getUserDataByUserId(
-                req.body.userId,
-                req.body.userToken,
-                req.body.data.userId
-            );
+            if (req.body.userId != req.body.data.userId) {
+                const isPermitted = await checkPermissions(req.body.userId, [PermissionsEnum.ReadUsers]);
+                if (!isPermitted) {
+                    sendErrorInvalidPermissions(type, req, res);
+                    return;
+                }
+            }
+
+            const userData = await dbUsers.getUserDataByUserId(req.body.data.userId);
 
             const responce: UserDataDTO = {
                 type,

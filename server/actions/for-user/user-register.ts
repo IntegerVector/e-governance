@@ -1,8 +1,10 @@
 import * as dbUsers from '../../modules/db-modules/db-users'; 
-import { sendUnexpectedError, sendError } from '../../modules/error-handler';
+import { sendUnexpectedError, sendError, sendErrorInvalidPermissions } from '../../modules/error-handler';
 import { RequestTypesEnum } from '../../types/enums/request-type.enum';
 import { UserDTO } from '../../types/dto/user-dto';
 import { checkUser } from '../../modules/security-modules/check-user';
+import { checkPermissions } from '../../modules/security-modules/permissions-check';
+import { PermissionsEnum } from '../../types/enums/permissions.enum';
 
 export async function action(type: RequestTypesEnum, req: any, res: any) {
     if (type === RequestTypesEnum.post) {
@@ -14,9 +16,14 @@ export async function action(type: RequestTypesEnum, req: any, res: any) {
                 return;
             }
 
+            const isPermitted = await checkPermissions(req.body.userId, [PermissionsEnum.AddUser]);
+            if (!isPermitted) {
+                sendErrorInvalidPermissions(type, req, res);
+                return;
+            }
+
             const newUser = await dbUsers.userRegister(
                 req.body.userId,
-                req.body.userToken,
                 req.body.data
             );
 

@@ -19,16 +19,9 @@ export async function userLogIn(login: string, pass: string): Promise<User> {
 
 export async function userRegister(
     operatorId: string,
-    operatorToken: string,
     newUser: User & UserData
 ): Promise<User> {
     try {
-        const permissions = await sql.getUserPermissions(operatorId);
-
-        if (!permissions.find(permission => permission === PermissionsEnum.AddUser)) {
-            return null;
-        }
-
         const admin = await sql.getUserById(operatorId);
         const userToAdd = {
             ...newUser,
@@ -50,18 +43,9 @@ export async function userRegister(
 
 export async function userUpdate(
     operatorId: string,
-    operatorToken: string,
     user: User & UserData
 ): Promise<User> {
     try {
-        if (operatorId != user.userId.toString()) {
-            const permissions = await sql.getUserPermissions(operatorId.toString());
-
-            if (!permissions.find(permission => permission === PermissionsEnum.UpdateUser)) {
-                return null;
-            }
-        }
-
         const admin = await sql.getUserById(operatorId.toString());
         const userToUpdate = {
             ...user,
@@ -81,20 +65,8 @@ export async function userUpdate(
     }
 }
 
-export async function getUserById(
-    operatorId: string,
-    operatorToken: string,
-    userId: string
-): Promise<User> {
+export async function getUserById(userId: string): Promise<User> {
     try {
-        if (operatorId != userId) {
-            const permissions = await sql.getUserPermissions(operatorId);
-
-            if (!permissions.find(permission => permission === PermissionsEnum.ReadUsers)) {
-                return null;
-            }
-        }
-
         return await sql.getUserById(userId);
     }
     catch(err) {
@@ -102,20 +74,8 @@ export async function getUserById(
     }
 }
 
-export async function getUserDataByUserId(
-    operatorId: string,
-    operatorToken: string,
-    userId: string
-): Promise<UserData> {
+export async function getUserDataByUserId(userId: string): Promise<UserData> {
     try {
-        if (operatorId != userId) {
-            const permissions = await sql.getUserPermissions(operatorId);
-
-            if (!permissions.find(permission => permission === PermissionsEnum.ReadUsers)) {
-                return null;
-            }
-        }
-
         const user = await sql.getUserById(userId);
         const userData = await sql.getUserDataById(user.userDataId.toString());
         userData.pass = null;
