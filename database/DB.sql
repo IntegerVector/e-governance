@@ -139,7 +139,7 @@ CREATE TABLE `DocumentTypes` (
   `typeName` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
 
-INSERT INTO `DocumentTypes` (`documentTypeId`, `typeName`) VALUES (1, 'PDF'), (2, 'CSV');
+INSERT INTO `DocumentTypes` (`documentTypeId`, `typeName`) VALUES (1, 'PDF'), (2, 'CSV'), (3, 'HTML');
 
 -- --------------------------------------------------------
 

@@ -1,4 +1,5 @@
 export enum DocumentTypesEnum {
     PDF = 'PDF',
-    CSV = 'CSV'
+    CSV = 'CSV',
+    HTML = 'HTML'
 }
