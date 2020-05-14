@@ -12,7 +12,8 @@ import {
     getUserDataByUserIdUrl,
     getUserPermissionsUrl,
     getUsersTypesUrl,
-    getUserStatusesUrl
+    getUserStatusesUrl,
+    getDocumentsTypesUrl
 } from './constants/urls';
 import { UserDTO, User } from '../../types/dto/user-dto';
 import { BaseRequest } from '../../types/base-request';
@@ -28,6 +29,7 @@ import { UserType } from '../../types/dto/user-type-dto';
 import { UserStatus } from '../../types/dto/user-status-dto';
 import { NotificationsService } from 'src/app/page-components/components/notification/services/notifications.service';
 import { NotificationType } from 'src/app/page-components/components/notification/types/notification-type.enum';
+import { DocumentTypes } from '../../types/dto/document-types-dto';
 
 @Injectable({
     providedIn: 'root'
@@ -42,6 +44,7 @@ export class DataSourceService {
     };
     private userTypes: UserType[];
     private userStatuses: UserStatus[];
+    private documentTypes: DocumentTypes[];
 
     private userIdObservable = new Observable(subscriber => {
         subscriber.next(DEFAULT_USER_ID);
@@ -118,6 +121,18 @@ export class DataSourceService {
             .pipe(
                 map(data => data.statuses),
                 tap(data => this.userStatuses = data)
+            );
+    }
+
+    public getDocumentTypes(): Observable<DocumentTypes[]> {
+        if (this.documentTypes) {
+            return of(this.documentTypes);
+        }
+
+        return this.get(getDocumentsTypesUrl, null)
+            .pipe(
+                map(data => data.documentTypes),
+                tap(data => this.documentTypes = data)
             );
     }
 

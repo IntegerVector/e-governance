@@ -6,3 +6,4 @@ export const getUserDataByUserIdUrl = '/get-user-data-by-user-id';
 export const getUserPermissionsUrl = '/get-user-permissions';
 export const getUsersTypesUrl = '/get-user-types';
 export const getUserStatusesUrl = '/get-user-statuses';
+export const getDocumentsTypesUrl = '/get-document-types';

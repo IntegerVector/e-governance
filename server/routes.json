@@ -38,5 +38,10 @@
         "type": "get",
         "url": "/get-user-types",
         "action": "get-users-types"
+    },
+    {
+        "type": "get",
+        "url": "/get-document-types",
+        "action": "get-document-types"
     }
 ]
