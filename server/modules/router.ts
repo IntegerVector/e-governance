@@ -1,7 +1,12 @@
 import * as express from 'express';
 import * as fs from 'fs';
+import { get } from 'lodash';
 import { resolve } from 'path';
-import { ROUTES_FILE_PATH, CLIENT_ROOT, MAIN_PAGE, USER_DATA_FILES_PATH } from '../constants/constants';
+import {
+    ROUTES_FILE_PATH,
+    CLIENT_ROOT,
+    MAIN_PAGE,
+} from '../constants/constants';
 import { Actions } from './action-manager';
 import { RouteInterface } from '../types/interfaces/route.interface';
 import { LoggerSingleton } from './logger';
@@ -20,17 +25,10 @@ export class Router {
             res.redirect(MAIN_PAGE);
         });
 
-        this.server.get(MAIN_PAGE + '/*', (req, res) => {
-            res.sendFile(resolve(CLIENT_ROOT + MAIN_PAGE));
-        });
-
-        this.server.get(USER_DATA_FILES_PATH + '/*', (req, res) => {
-            res.sendFile(resolve(CLIENT_ROOT + req.url));
-        });
-
-        this.server.get(/.+\.(html)|(js)|(map)|(ico)|(ttf)/, (req, res) => {
+        this.server.get(/.+\.((html)|(js)|(map)|(ico)|(ttf))/, (req, res) => {
+            const pathMatch = req.url.match(/.+\.((html)|(js)|(map)|(ico)|(ttf))/);
             logger.info('File request:', CLIENT_ROOT + req.url);
-            res.sendFile(resolve(CLIENT_ROOT + req.url));
+            res.sendFile(resolve(CLIENT_ROOT + get(pathMatch, '[0]')));
         });
 
         this.routes.forEach((rout: RouteInterface) => {
