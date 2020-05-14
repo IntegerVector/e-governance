@@ -7,12 +7,14 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ErrorModule } from 'src/app/error/error.module';
 import { MainPageAboutComponent } from './components/about/about.component';
 import { MainPageComponent } from './main-page.component';
+import { MainPageDocumentsComponent } from './components/documents/documents.component';
 
 
 @NgModule({
     declarations: [
         MainPageComponent,
-        MainPageAboutComponent
+        MainPageAboutComponent,
+        MainPageDocumentsComponent
     ],
     exports: [
         MainPageComponent
