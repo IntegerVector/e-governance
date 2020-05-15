@@ -48,6 +48,12 @@
             ✖
         </span>
         <span class="flex-grow-1"></span>
-        <span title="Accept" class="document-preview-controll__button flex-grow-0">🖋</span>
+        <span
+            *ngIf="isNotSigned()"
+            (click)="signADoc(userDocument.id.toString())"
+            title="Sign a document"
+            class="document-preview-controll__button flex-grow-0">
+            🖋
+        </span>
     </div>
 </div>

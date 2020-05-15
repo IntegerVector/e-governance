@@ -5,11 +5,10 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    border: solid 1px $lightGrey;
-    border-radius: 0.5rem;
 
     &-view {
         flex-grow: 1;
+        border: solid 1px $lightGrey;
 
         &__wrapper {
             width: 100%;
@@ -32,12 +31,13 @@
 
     &-controll {
         padding: 0.2rem;
+        margin-top: 1rem;
         flex-grow: 0;
         display: flex;
         flex-direction: row;
-        background-color: $white;
-        border-bottom-right-radius: 0.5rem;
-        border-bottom-left-radius: 0.5rem;
+        background-color: white;
+        border: solid 1px $lightGrey;
+        border-radius: 0.5rem;
 
         &__button {
             display: flex;
@@ -54,7 +54,7 @@
         }
 
         &__button:hover {
-            background-color: #ffffffcb;
+            background-color: $lighterBlue;
         }
     }
 }

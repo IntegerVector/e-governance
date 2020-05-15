@@ -57,6 +57,7 @@ export class DocumentPreviewComponent implements OnChanges {
         element.setAttribute('download', filePath);
 
         element.click();
+        this.notificationsService.push('Success', NotificationType.Success);
     }
 
     public deleteFile(fileId: string): void {
@@ -66,6 +67,21 @@ export class DocumentPreviewComponent implements OnChanges {
                 result ? NotificationType.Success : NotificationType.Error
             );
         });
+    }
+
+    public signADoc(usersDocumentsId: string): void {
+        this.dataSourceService
+            .signADocument(usersDocumentsId)
+            .subscribe(result => {
+                this.notificationsService.push(
+                    result ? 'Success' : 'Error occures',
+                    result ? NotificationType.Success : NotificationType.Error
+                );
+        });
+    }
+
+    public isNotSigned(): boolean {
+        return !!_.get(this, 'userDocument.needsActions', false);
     }
 
     public isDocumentPDF(): boolean {
