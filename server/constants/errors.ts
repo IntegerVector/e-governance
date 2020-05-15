@@ -16,5 +16,7 @@ export const CLIENT_UNEXPECTED_ERROR_TIP = 'Try to reload the page';
 export const CLIENT_INVALID_LOGIN_OR_PASS = 'Invalid user name or password';
 export const CLIENT_INVALID_USER_DATA_ID = 'Invalid user data id';
 export const CLIENT_INVALID_USER_TYPE_ID = 'Invalid user type id';
+export const CLIENT_USER_DELETED = 'This user was deleted';
+export const CLIENT_USER_DELETED_TIP = 'contact your administrator';
 
 export const DOCUMENT_ALRADY_DELETED = 'Document already deleted';

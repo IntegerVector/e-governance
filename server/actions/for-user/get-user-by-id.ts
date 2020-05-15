@@ -5,6 +5,8 @@ import { UserDTO } from '../../types/dto/user-dto';
 import { checkUser } from '../../modules/security-modules/check-user';
 import { checkPermissions } from '../../modules/security-modules/permissions-check';
 import { PermissionsEnum } from '../../types/enums/permissions.enum';
+import { checkIfUserDeleted } from '../../modules/validation-modules/validate-deleted';
+import { CLIENT_USER_DELETED, CLIENT_USER_DELETED_TIP } from '../../constants/errors';
 
 export async function action(type: RequestTypesEnum, req: any, res: any) {
     if (req.body.type === RequestTypesEnum.get) {
@@ -22,6 +24,17 @@ export async function action(type: RequestTypesEnum, req: any, res: any) {
                     sendErrorInvalidPermissions(type, req, res);
                     return;
                 }
+            }
+
+            const isDeleted = await checkIfUserDeleted(req.body.data.userId);
+            if (isDeleted) {
+                req.body.error = {
+                    errCode: '0',
+                    errMsg: CLIENT_USER_DELETED,
+                    errTip: CLIENT_USER_DELETED_TIP
+                };
+                sendError(type, req, res);
+                return;
             }
 
             const user = await dbUsers.getUserById(req.body.data.userId);
