@@ -30,3 +30,15 @@ export async function deleteDocument(userId: string, documentId: string): Promis
         return false;
     }
 }
+
+export async function signADoc(usersDocumentsId: string): Promise<boolean> {
+    try {
+        const request = `update UsersDocuments set needsActions = FALSE where id="${usersDocumentsId}";`;
+        await sql.query(request);
+
+        return true;
+    }
+    catch(err) {
+        return false;
+    }
+}
