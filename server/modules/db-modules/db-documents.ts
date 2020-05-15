@@ -21,3 +21,12 @@ export async function getUserDocuments(userDataId: string): Promise<UsersDocumen
         return null;
     }
 }
+
+export async function deleteDocument(userId: string, documentId: string): Promise<boolean> {
+    try {
+        return await sql.deleteDocument(userId, documentId);
+    }
+    catch(err) {
+        return false;
+    }
+}

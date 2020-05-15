@@ -6,6 +6,8 @@ import {
     ROUTES_FILE_PATH,
     CLIENT_ROOT,
     MAIN_PAGE,
+    DOCUMENTS_FILES_PATH,
+    ROOT,
 } from '../../constants/constants';
 import { Actions } from './action-manager';
 import { RouteInterface } from '../../types/interfaces/route.interface';
@@ -25,6 +27,10 @@ export class Router {
     public initRoutes(): void {
         this.server.get('/', (req, res) => {
             res.redirect(MAIN_PAGE);
+        });
+
+        this.server.get(DOCUMENTS_FILES_PATH + '/*', (req, res) => {
+            res.sendFile(resolve(ROOT + req.url));
         });
 
         this.server.get(/.+\.((html)|(js)|(map)|(ico)|(ttf))/, (req, res) => {

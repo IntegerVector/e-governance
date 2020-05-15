@@ -2,15 +2,14 @@ import * as dbDocuments from '../../modules/db-modules/db-documents';
 import { sendUnexpectedError, sendError, sendErrorInvalidPermissions } from '../../modules/error-handler';
 import { RequestTypesEnum } from '../../types/enums/request-type.enum';
 import { BaseRequest } from '../../types/base-request';
-import { Documents } from '../../types/dto/documents-dto';
 import { checkUser } from '../../modules/security-modules/check-user';
 import { checkPermissions } from '../../modules/security-modules/permissions-check';
 import { PermissionsEnum } from '../../types/enums/permissions.enum';
+import { CLIENT_UNEXPECTED_ERROR, CLIENT_UNEXPECTED_ERROR_TIP, DOCUMENT_ALRADY_DELETED } from '../../constants/errors';
 import { checkIfDocumentDeleted } from '../../modules/validation-modules/validate-deleted';
-import { DOCUMENT_ALRADY_DELETED } from '../../constants/errors';
 
 export async function action(type: RequestTypesEnum, req: any, res: any) {
-    if (type === RequestTypesEnum.get) {
+    if (type === RequestTypesEnum.post) {
         try {
             const error = await checkUser(req.body.userId, req.body.userToken);
             if (error) {
@@ -19,7 +18,7 @@ export async function action(type: RequestTypesEnum, req: any, res: any) {
                 return;
             }
 
-            const isPermitted = await checkPermissions(req.body.userId, [PermissionsEnum.ReadDocs]);
+            const isPermitted = await checkPermissions(req.body.userId, [PermissionsEnum.DeleteDocs]);
             if (!isPermitted) {
                 sendErrorInvalidPermissions(type, req, res);
                 return;
@@ -38,15 +37,27 @@ export async function action(type: RequestTypesEnum, req: any, res: any) {
                 return;
             }
 
-            const document = await dbDocuments.getDocumentById(documentId);
+            const isDeleted = await dbDocuments.deleteDocument(req.body.userId, documentId);
 
-            const responce: BaseRequest<Documents> = {
-                type,
-                error: null,
-                userId: req.body.userId,
-                userToken: req.body.userToken,
-                data: document
-            };
+            const responce: BaseRequest<boolean> = isDeleted
+                ? {
+                    type,
+                    error: null,
+                    userId: req.body.userId,
+                    userToken: req.body.userToken,
+                    data: true
+                }
+                : {
+                    type,
+                    error: {
+                        errCode: '',
+                        errMsg: CLIENT_UNEXPECTED_ERROR,
+                        errTip: CLIENT_UNEXPECTED_ERROR_TIP
+                    },
+                    userId: req.body.userId,
+                    userToken: req.body.userToken,
+                    data: false
+                };
             
             res.send(responce);
         }

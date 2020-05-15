@@ -30,6 +30,7 @@ import * as _ from 'lodash';
 import { Documents } from '../../types/dto/documents-dto';
 import { DocumentTypes } from '../../types/dto/document-types-dto';
 import { UsersDocuments } from '../../types/dto/users-documents-dto';
+import { getDate, normalize } from '../../helpers/date-normalizer';
 
 const logger = LoggerSingleton.getInstance();
 
@@ -97,6 +98,22 @@ class SQLManager {
             const result = await this.query(request);
 
             resolve(_.get(result, '[0]'));
+        });
+    }
+
+    public async deleteDocument(userId: string, documentId: string): Promise<boolean> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const request = `update Documents set sys_DeletedBy = "${userId}", sys_DeletedDate = "${normalize('now')}" where documentId = ${documentId};`;
+                await this.query(request);
+    
+                resolve(true);
+                return;
+            }
+            catch(err) {
+                reject(false);
+                return;
+            }
         });
     }
 
