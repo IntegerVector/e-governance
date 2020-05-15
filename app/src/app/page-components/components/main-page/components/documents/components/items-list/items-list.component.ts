@@ -41,7 +41,9 @@ export class ItemsListComponent implements OnChanges {
     }
 
     public onSelected(document: UsersDocuments): void {
-        this.selectedDocument = document;
+        this.selectedDocument = _.find(this.documents, doc => {
+            return doc.documentId === document.documentId;
+        });
 
         this.selected.emit(this.selectedDocument);
     }
