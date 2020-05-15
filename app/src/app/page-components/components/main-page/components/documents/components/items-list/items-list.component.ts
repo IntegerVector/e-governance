@@ -1,9 +1,9 @@
 import { Component, Input, Output, OnChanges, EventEmitter } from '@angular/core';
+import * as _ from 'lodash';
+
 import { DataSourceService } from 'src/app/shared/services/data-source/data-source.service';
 import { Documents } from 'src/app/shared/types/dto/documents-dto';
 import { DocumentTypesEnum } from 'src/app/shared/types/enums/document-types.enum';
-
-import * as _ from 'lodash';
 import { UsersDocuments } from 'src/app/shared/types/dto/users-documents-dto';
 
 @Component({
@@ -13,9 +13,9 @@ import { UsersDocuments } from 'src/app/shared/types/dto/users-documents-dto';
 })
 export class ItemsListComponent implements OnChanges {
     @Input() documents: UsersDocuments[];
-    @Output() selected = new EventEmitter<string>();
+    @Output() selected = new EventEmitter<UsersDocuments>();
 
-    public selectedId = '';
+    public selectedDocument: UsersDocuments = null;
     public items: {
         document: Documents;
         type: DocumentTypesEnum;
@@ -40,12 +40,17 @@ export class ItemsListComponent implements OnChanges {
         });
     }
 
-    public onSelected(id: string): void {
-        this.selectedId = id;
-        this.selected.emit(id);
+    public onSelected(document: UsersDocuments): void {
+        this.selectedDocument = document;
+
+        this.selected.emit(this.selectedDocument);
     }
 
     public isActive(itemId: number): boolean {
-        return this.selectedId.toString() === itemId.toString();
+        if (this.selectedDocument) {
+            return this.selectedDocument.documentId.toString() === itemId.toString();
+        }
+
+        return false;
     }
 }

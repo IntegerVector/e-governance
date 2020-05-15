@@ -2,7 +2,7 @@
     <ul class="items-list-container__list">
         <li *ngFor="let item of items">
             <div
-                (click)="onSelected(item.document.documentId)"
+                (click)="onSelected(item.document)"
                 [ngClass]="{
                     'items-list-container__list-item': true,
                     'items-list-container__list-item-active': isActive(item.document.documentId),
