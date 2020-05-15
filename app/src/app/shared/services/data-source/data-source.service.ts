@@ -19,7 +19,8 @@ import {
     getUserDocumentsUrl,
     getUserActiveDocumentsUrl,
     getUserInactiveDocumentsUrl,
-    deleteFileByIdUrl
+    deleteFileByIdUrl,
+    signADocumentUrl
 } from './constants/urls';
 import { UserDTO, User } from '../../types/dto/user-dto';
 import { BaseRequest } from '../../types/base-request';
@@ -137,6 +138,12 @@ export class DataSourceService {
         const requestData = { documentId };
 
         return this.post(deleteFileByIdUrl, requestData);
+    }
+
+    public signADocument(usersDocumentsId: string): Observable<boolean> {
+        const requestData = { usersDocumentsId };
+
+        return this.post(signADocumentUrl, requestData);
     }
 
     public getUsersTypes(): Observable<UserType[]> {
