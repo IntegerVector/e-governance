@@ -65,15 +65,27 @@
                 <button
                     (click)="addFile()"
                     class="btn btn-info mb-2"
-                    title="additionall files">
-                    Add files
+                    title="Doesn't working for real">
+                    Choose additional files
                 </button>
-                <input #docs [hidden]="true" type="file" name="docs" class="btn mb-2">
-                <ul class="list-group ac-vacation-form__docs-list">
+                <input
+                    #docs
+                    [hidden]="true"
+                    (change)="updateDocuments()"
+                    type="file"
+                    name="docs"
+                    multiple="true">
+                <ul
+                    *ngIf="documents.length"
+                    class="list-group ac-vacation-form__docs-list">
                     <li class="list-group-item ac-vacation-form__docs-list__item disabled">
                         List of files:
                     </li>
-                    <li class="list-group-item ac-vacation-form__docs-list__item"></li>
+                    <li
+                        class="list-group-item ac-vacation-form__docs-list__item"
+                        *ngFor="let doc of documents">
+                        {{ doc.name }}
+                    </li>
                 </ul>
             </div>
         </div>

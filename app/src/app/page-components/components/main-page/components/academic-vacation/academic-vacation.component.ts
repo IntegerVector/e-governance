@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import * as _ from 'lodash';
+
 import { DataSourceService } from 'src/app/shared/services/data-source/data-source.service';
 import { ActivatedRoute } from '@angular/router';
 import { DEFAULT_USER_ID } from 'src/app/shared/constants/shared.constants';
@@ -46,6 +48,8 @@ export class MainPageAcademicVacationComponent implements OnInit {
         reasonDescription: ''
     };
 
+    public documents: File[] = [];
+
     private userId: string;
 
     constructor(
@@ -82,6 +86,11 @@ export class MainPageAcademicVacationComponent implements OnInit {
                 || this.formData.reason === VacationReasons.other
                     ? validity && !!this.formData.reasonDescription
                     : validity;
+    }
+
+    public updateDocuments(): void {
+        this.documents = _.get(this.addDocsElement, 'nativeElement.files');
+        console.log(this.documents);
     }
 
     private setUser(userId: string): void {
