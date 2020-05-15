@@ -9,6 +9,8 @@
     &-view {
         flex-grow: 1;
         border: solid 1px $lightGrey;
+        width: 100%;
+        height: 100%;
 
         &__wrapper {
             width: 100%;

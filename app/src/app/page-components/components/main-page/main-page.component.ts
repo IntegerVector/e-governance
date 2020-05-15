@@ -34,7 +34,7 @@ export class MainPageComponent implements OnInit {
             title: null,
             childs: [
                 {
-                    routerLink: '/main/about',
+                    routerLink: '/main/academic-vacation',
                     getQueryParams: this.getQueryParams.bind(this),
                     title: 'Academic Vacation'
                 },

@@ -1,0 +1,122 @@
+<form class="ac-vacation-form">
+    <div
+        *ngIf="user"
+        class="ac-vacation-form__head">
+        {{ user.userFirstName }}&nbsp;{{ user.userLastName }}, please fill form to create vacation request:
+    </div>
+    <div class="ac-vacation-form__wrapper">
+        <div class="ac-vacation-form__data-section">
+            <div class="ac-vacation-form__data-section__dates">
+                <div class="flex-row">
+                    <span for="dateFrom">
+                        Date from:&nbsp;
+                    </span>
+                    <input
+                        type="date"
+                        [(ngModel)]="formData.dateFrom"
+                        name="dateFrom"
+                        class="form-control form-control-sm"
+                        id="dateFrom">
+                </div>
+                <div class="flex-row">
+                    <span for="dateTo">
+                        Till date:&nbsp;
+                    </span>
+                    <input
+                        type="date"
+                        [(ngModel)]="formData.dateTo"
+                        name="dateTo"
+                        class="form-control form-control-sm"
+                        id="dateTo">
+                </div>
+            </div>
+            <div class="flex-row">
+                <div class="input-group input-group-sm flex-grow-1 flex-row">
+                    <div class="input-group-prepend flex-grow-0" for="courceNumber">
+                        <span class="input-group-text">
+                            Cource number:&nbsp;
+                        </span>
+                    </div>
+                    <input
+                        type="number"
+                        min="1"
+                        max="6"
+                        [(ngModel)]="formData.courceNumber"
+                        name="courceNumber"
+                        class="form-control form-control-sm flex-grow-1"
+                        id="courceNumber">
+                </div>
+                <div class="input-group input-group-sm flex-grow-1 flex-row">
+                    <div class="input-group-prepend flex-grow-0" for="groupNumber">
+                        <span class="input-group-text">
+                            Group:&nbsp;
+                        </span>
+                    </div>
+                    <input
+                        type="text"
+                        name="groupNumber"
+                        [(ngModel)]="formData.group"
+                        class="form-control form-control-sm flex-grow-1"
+                        id="groupNumber">
+                </div>
+            </div>
+            <div class="ac-vacation-form__docs">
+                <p class="text-n-important">*For creating any academic vacation request you must specify additional documents that proves your reasons:</p>
+                <button
+                    (click)="addFile()"
+                    class="btn btn-info mb-2"
+                    title="additionall files">
+                    Add files
+                </button>
+                <input #docs [hidden]="true" type="file" name="docs" class="btn mb-2">
+                <ul class="list-group ac-vacation-form__docs-list">
+                    <li class="list-group-item ac-vacation-form__docs-list__item disabled">
+                        List of files:
+                    </li>
+                    <li class="list-group-item ac-vacation-form__docs-list__item"></li>
+                </ul>
+            </div>
+        </div>
+        <div class="ac-vacation-form__reasons">
+            <div class="flex-row">
+                <span for="reason">Reasons:</span>
+                <select
+                    name="reason"
+                    id="reason"
+                    class="form-control form-control-sm"
+                    [(ngModel)]="formData.reason">
+                    <option *ngFor="let reason of reasons" [value]="reason.key">
+                        {{ reason.text }}
+                    </option>
+                </select>
+            </div>
+            <div
+                *ngIf="formData.reason === 'F' || formData.reason === 'O'"
+                class="form-group ac-vacation-form__reasons-descr">
+                <label for="reasonDesc">Describe reason:</label>
+                <textarea
+                    [(ngModel)]="formData.reasonDescription"
+                    rows = "4"
+                    cols = "20"
+                    name="reasonDesc"
+                    class="form-control"
+                    id="reasonDesc">
+                </textarea>
+            </div>
+        </div>
+    </div>
+    <div class="ac-vacation-form__footer">
+        <p class="text-n-important">*All fields are mandatorry</p>
+        <p class="text-n-important">After sending request, go to the "Waiting documents" to make a sign on it</p>
+        <div class="flex-row" style="justify-content: center;">
+            <button
+                (click)="submit()"
+                id="submitBtn"
+                class="btn btn-primary mb-2 flex-grow-1"
+                title="send academic vacation request"
+                [disabled]="!validate()">
+                Send
+            </button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,84 @@
+.ac-vacation-form {
+    display: flex;
+    flex-direction: column;
+
+    &__head {
+        margin-bottom: 2rem;
+        padding-left: 1.5rem;
+    }
+
+    &__wrapper {
+        display: flex;
+        flex-direction: row;
+    }
+
+    &__footer {
+        padding: 1.5rem;
+
+        #submitBtn {
+            max-width: 10rem;
+        }
+    }
+
+    &__data-section {
+        flex-grow: 1;
+        padding: 1.5rem;
+
+        #courceNumber {
+            width: 6.4rem;
+            max-width: 6.4rem;
+        }
+
+        #groupNumber {
+            width: 9.6rem;
+            max-width: 9.6rem;
+        }
+
+        &__dates {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+
+            #dateFrom {
+                margin-left: 0.5rem;
+                width: 10rem;
+            }
+
+            #dateTo {
+                margin-left: 0.5rem;
+                width: 10rem;
+            }
+        }
+    }
+
+    &__spacer {
+        flex-grow: 0;
+        height: 100%;
+        width: 1;
+        border: solid 1px #1f5e92;
+    }
+
+    &__reasons {
+        flex-grow: 6;
+        padding: 1.5rem;
+
+        &-descr {
+            margin-top: 1rem;
+        }
+
+        #reason {
+            margin-left: 0.5rem;
+        }
+    }
+
+    &__docs {
+        margin-top: 2rem;
+
+        &-list {
+            padding-top: 1rem;
+            max-width: 30rem;
+        }
+    }
+}
