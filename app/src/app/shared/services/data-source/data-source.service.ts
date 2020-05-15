@@ -18,7 +18,8 @@ import {
     getDocumentTypeUrl,
     getUserDocumentsUrl,
     getUserActiveDocumentsUrl,
-    getUserInactiveDocumentsUrl
+    getUserInactiveDocumentsUrl,
+    deleteFileByIdUrl
 } from './constants/urls';
 import { UserDTO, User } from '../../types/dto/user-dto';
 import { BaseRequest } from '../../types/base-request';
@@ -130,6 +131,12 @@ export class DataSourceService {
         const requestData = { userDataId };
 
         return this.get(getUserInactiveDocumentsUrl, requestData);
+    }
+
+    public deleteDocument(documentId: string): Observable<boolean> {
+        const requestData = { documentId };
+
+        return this.post(deleteFileByIdUrl, requestData);
     }
 
     public getUsersTypes(): Observable<UserType[]> {

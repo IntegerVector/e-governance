@@ -1,0 +1,53 @@
+<div class="document-preview">
+    <div
+        *ngIf="permited.toViewDocument"
+        class="document-preview-view">
+        <div
+            class="document-preview-view__wrapper"
+            *ngIf="isDocumentPDF()">
+            <embed
+                style="width: inherit; height: inherit;"
+                [attr.src]="getFileSrc(document.path)"/>
+        </div>
+    </div>
+    <div
+        *ngIf="!permited.toViewDocument"
+        class="document-preview__no_data">
+        You have no permissions to view it<br/>
+        try to contact your administrator
+    </div>
+    <div
+        *ngIf="!userDocument && permited.toViewDocument"
+        class="document-preview__no_data">
+        Nothing selected
+    </div>
+    <div
+        *ngIf="(!document || !documentType) && userDocument && permited.toViewDocument"
+        class="document-preview__no_data">
+        Loading...
+    </div>
+    <div
+        *ngIf="permited.toViewDocument && document && documentType"
+        class="document-preview-controll">
+        <span
+            (click)="downloadFile(document.path)"
+            title="Download"
+            class="document-preview-controll__button flex-grow-0">
+            ⇩
+        </span>
+        <span
+            *ngIf="permited.toUploadDocument"
+            title="Update (Doesn't work for now)"
+            class="document-preview-controll__button flex-grow-0">
+            ⟳
+        </span>
+        <span
+            *ngIf="permited.toDeleteDocument"
+            (click)="deleteFile(document.documentId.toString())"
+            title="Delete" class="document-preview-controll__button flex-grow-0">
+            ✖
+        </span>
+        <span class="flex-grow-1"></span>
+        <span title="Accept" class="document-preview-controll__button flex-grow-0">🖋</span>
+    </div>
+</div>

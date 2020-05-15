@@ -5,8 +5,11 @@
         (selected)="documentSelected($event)">
     </app-items-list>
     <span class="document-view-container__spacer"></span>
-    <div class="flex-grow-5">
-        WOW
-    </div>
+    <app-document-preview
+        class="flex-grow-5"
+        style="border-radius: 0.5rem;"
+        [userDocument]="selected"
+        [permissions]="permissions">
+    </app-document-preview>
 </div>
 

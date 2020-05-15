@@ -1,0 +1,60 @@
+@import '../../../../../../../main.constants.scss';
+
+.document-preview {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: solid 1px $lightGrey;
+    border-radius: 0.5rem;
+
+    &-view {
+        flex-grow: 1;
+
+        &__wrapper {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    &__no_data {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        color: $darkGrey;
+        background-color: $white;
+        border-radius: 0.5rem;
+        font-size: large;
+        width: 100%;
+        height: 100%;
+    }
+
+    &-controll {
+        padding: 0.2rem;
+        flex-grow: 0;
+        display: flex;
+        flex-direction: row;
+        background-color: $white;
+        border-bottom-right-radius: 0.5rem;
+        border-bottom-left-radius: 0.5rem;
+
+        &__button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            width: 3rem;
+            height: 3rem;
+            margin: 0.2rem;
+            padding: 0.5rem;
+            cursor: pointer;
+            background-color: transparent;
+            border-radius: 50%;
+        }
+
+        &__button:hover {
+            background-color: #ffffffcb;
+        }
+    }
+}

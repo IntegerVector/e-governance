@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import * as _ from 'lodash';
+
 import { DataSourceService } from 'src/app/shared/services/data-source/data-source.service';
 import { DEFAULT_USER_ID } from 'src/app/shared/constants/shared.constants';
 import { DocumentsComponentMode } from './documents-component-mode.enum';
 import { UsersDocuments } from 'src/app/shared/types/dto/users-documents-dto';
-import { Observable } from 'rxjs';
-
-import * as _ from 'lodash';
+import { PermissionsEnum } from 'src/app/shared/types/enums/permissions.enum';
 
 @Component({
     selector: '<app-main-page-documents>',
@@ -15,6 +16,8 @@ import * as _ from 'lodash';
 })
 export class MainPageDocumentsComponent implements OnInit {
     public documents: UsersDocuments[];
+    public selected: UsersDocuments = null;
+    public permissions: PermissionsEnum[];
 
     private mode: DocumentsComponentMode;
     private userId: string;
@@ -31,22 +34,31 @@ export class MainPageDocumentsComponent implements OnInit {
             this.userId = data.urlParams.userId;
 
             if (this.userId && this.userId !== DEFAULT_USER_ID) {
-                this.setUserDataId();
+                this.setUserDataId(this.userId);
+                this.setPermissions(this.userId);
             }
         });
     }
 
-    public documentSelected(id: string): void {
-        console.log(id);
+    public documentSelected(document: UsersDocuments): void {
+        this.selected = document;
     }
 
-    private setUserDataId(): void {
-        this.dataSourceService.getUserById(this.userId).subscribe(user => {
+    private setUserDataId(userId: string): void {
+        this.dataSourceService.getUserById(userId).subscribe(user => {
             this.userDataId = user.userDataId.toString();
 
             if (this.userDataId) {
                 this.setUsersDocuments();
             }
+        });
+    }
+
+    private setPermissions(userId: string): void {
+        this.dataSourceService
+            .getPermissions(userId)
+            .subscribe(permissions => {
+                this.permissions = permissions;
         });
     }
 
