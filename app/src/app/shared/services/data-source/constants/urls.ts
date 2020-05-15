@@ -13,3 +13,4 @@ export const getUserDocumentsUrl = '/get-user-documents';
 export const getUserActiveDocumentsUrl = '/get-user-active-documents';
 export const getUserInactiveDocumentsUrl = '/get-user-inactive-documents';
 export const deleteFileByIdUrl = '/delete-file-by-id';
+export const signADocumentUrl = '/sign-a-document';

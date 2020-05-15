@@ -68,5 +68,15 @@
         "type": "get",
         "url": "/get-user-inactive-documents",
         "action": "get-user-inactive-documents"
+    },
+    {
+        "type": "post",
+        "url": "/delete-file-by-id",
+        "action": "delete-file-by-id"
+    },
+    {
+        "type": "post",
+        "url": "/sign-a-document",
+        "action": "sign-a-document"
     }
 ]
