@@ -1,0 +1,27 @@
+<div class="items-list-container">
+    <ul class="items-list-container__list">
+        <li *ngFor="let item of items">
+            <div
+                (click)="onSelected(item.document.documentId)"
+                [ngClass]="{
+                    'items-list-container__list-item': true,
+                    'items-list-container__list-item-active': isActive(item.document.documentId),
+                    'items-list-container__list-item-inactive': !isActive(item.document.documentId)
+                }">
+                <span
+                    class="items-list-container__list-item-name"
+                    [title]="item.document.name">
+                    {{ item.document.name }}
+                </span>
+                <span class="items-list-container__list-item-type">
+                    {{ item.type }}
+                </span>
+            </div>
+        </li>
+        <div
+            class="items-list-container__no_data"
+            *ngIf="!items.length">
+        Nothing to display
+        </div>
+    </ul>
+</div>

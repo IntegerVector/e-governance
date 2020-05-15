@@ -1,1 +1,12 @@
-<p>Works</p>
+<div class="document-view-container">
+    <app-items-list
+        class="flex-grow-1"
+        [documents]="documents"
+        (selected)="documentSelected($event)">
+    </app-items-list>
+    <span class="document-view-container__spacer"></span>
+    <div class="flex-grow-5">
+        WOW
+    </div>
+</div>
+

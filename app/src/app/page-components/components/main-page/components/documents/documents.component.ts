@@ -6,6 +6,8 @@ import { DocumentsComponentMode } from './documents-component-mode.enum';
 import { UsersDocuments } from 'src/app/shared/types/dto/users-documents-dto';
 import { Observable } from 'rxjs';
 
+import * as _ from 'lodash';
+
 @Component({
     selector: '<app-main-page-documents>',
     templateUrl: './documents.component.html',
@@ -27,12 +29,15 @@ export class MainPageDocumentsComponent implements OnInit {
         this.route.data.subscribe(data => {
             this.mode = data.mode;
             this.userId = data.urlParams.userId;
-            console.log(this.mode);
 
             if (this.userId && this.userId !== DEFAULT_USER_ID) {
                 this.setUserDataId();
             }
         });
+    }
+
+    public documentSelected(id: string): void {
+        console.log(id);
     }
 
     private setUserDataId(): void {
@@ -48,7 +53,6 @@ export class MainPageDocumentsComponent implements OnInit {
     private setUsersDocuments(): void {
         this.getUsersDocmentsObservable().subscribe(documents => {
             this.documents = documents;
-            console.log(documents);
         });
     }
 
