@@ -500,7 +500,7 @@ class SQLManager {
         });
     }
 
-    private async query(sqlQuery: string): Promise<any[]> {
+    public async query(sqlQuery: string): Promise<any[]> {
         return new Promise((resolve, reject) => {
             this.connection.query(sqlQuery, (err: string, result: object[]) => {
                 if (err) {

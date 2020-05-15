@@ -18,5 +18,6 @@ export const CLIENT_INVALID_USER_DATA_ID = 'Invalid user data id';
 export const CLIENT_INVALID_USER_TYPE_ID = 'Invalid user type id';
 export const CLIENT_USER_DELETED = 'This user was deleted';
 export const CLIENT_USER_DELETED_TIP = 'contact your administrator';
+export const CLIENT_LOGIN_NOT_UNIC = 'this login already in use';
 
 export const DOCUMENT_ALRADY_DELETED = 'Document already deleted';

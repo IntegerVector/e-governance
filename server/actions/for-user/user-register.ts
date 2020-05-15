@@ -5,6 +5,8 @@ import { UserDTO } from '../../types/dto/user-dto';
 import { checkUser } from '../../modules/security-modules/check-user';
 import { checkPermissions } from '../../modules/security-modules/permissions-check';
 import { PermissionsEnum } from '../../types/enums/permissions.enum';
+import { isUserLoginUnic } from '../../modules/validation-modules/validate-existent';
+import { CLIENT_LOGIN_NOT_UNIC } from '../../constants/errors';
 
 export async function action(type: RequestTypesEnum, req: any, res: any) {
     if (type === RequestTypesEnum.post) {
@@ -19,6 +21,16 @@ export async function action(type: RequestTypesEnum, req: any, res: any) {
             const isPermitted = await checkPermissions(req.body.userId, [PermissionsEnum.AddUser]);
             if (!isPermitted) {
                 sendErrorInvalidPermissions(type, req, res);
+                return;
+            }
+
+            if (!isUserLoginUnic(req.body.data.login)) {
+                req.body.error = {
+                    errCode: '0',
+                    errMsg: CLIENT_LOGIN_NOT_UNIC,
+                    errTip: null
+                };
+                sendError(type, req, res);
                 return;
             }
 

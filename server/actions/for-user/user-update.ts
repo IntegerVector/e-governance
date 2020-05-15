@@ -6,7 +6,8 @@ import { checkUser } from '../../modules/security-modules/check-user';
 import { checkPermissions } from '../../modules/security-modules/permissions-check';
 import { PermissionsEnum } from '../../types/enums/permissions.enum';
 import { checkIfUserDeleted } from '../../modules/validation-modules/validate-deleted';
-import { CLIENT_USER_DELETED, CLIENT_USER_DELETED_TIP } from '../../constants/errors';
+import { CLIENT_USER_DELETED, CLIENT_USER_DELETED_TIP, CLIENT_LOGIN_NOT_UNIC } from '../../constants/errors';
+import { isUserLoginUnic } from '../../modules/validation-modules/validate-existent';
 
 export async function action(type: RequestTypesEnum, req: any, res: any) {
     if (type === RequestTypesEnum.post) {
@@ -41,6 +42,18 @@ export async function action(type: RequestTypesEnum, req: any, res: any) {
                 };
                 sendError(type, req, res);
                 return;
+            }
+
+            if (req.body.data.login) {
+                if (!isUserLoginUnic(req.body.data.login)) {
+                    req.body.error = {
+                        errCode: '0',
+                        errMsg: CLIENT_LOGIN_NOT_UNIC,
+                        errTip: null
+                    };
+                    sendError(type, req, res);
+                    return;
+                }
             }
 
             const updatedUser = await dbUsers.userUpdate(
