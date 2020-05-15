@@ -92,6 +92,12 @@ export class DocumentPreviewComponent implements OnChanges {
         return false;
     }
 
+    public isDocumentHTML(): boolean {
+        if (this.documentType) {
+            return DocumentTypesEnum.HTML === this.documentType;
+        }
+    }
+
     public getFileSrc(src: string): SafeUrl {
         return this.domSanitizer.bypassSecurityTrustResourceUrl(src);
     }

@@ -9,6 +9,14 @@
                 style="width: inherit; height: inherit;"
                 [attr.src]="getFileSrc(document.path)"/>
         </div>
+        <div
+            class="document-preview-view__wrapper"
+            *ngIf="isDocumentHTML()">
+            <iframe
+                style="width: inherit; height: inherit; overflow-y: scroll;"
+                [src]="getFileSrc(document.path)">
+            </iframe>
+        </div>
     </div>
     <div
         *ngIf="!permited.toViewDocument"
