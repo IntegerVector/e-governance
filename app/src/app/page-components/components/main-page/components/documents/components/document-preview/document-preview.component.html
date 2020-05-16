@@ -6,15 +6,17 @@
             class="document-preview-view__wrapper"
             *ngIf="isDocumentPDF()">
             <embed
+                *ngIf="resourceSrc"
                 style="width: inherit; height: inherit;"
-                [attr.src]="getFileSrc(document.path)"/>
+                [src]="resourceSrc"/>
         </div>
         <div
             class="document-preview-view__wrapper"
             *ngIf="isDocumentHTML()">
             <iframe
+                *ngIf="resourceSrc"
                 style="width: inherit; height: inherit; overflow-y: scroll;"
-                [src]="getFileSrc(document.path)">
+                [src]="resourceSrc">
             </iframe>
         </div>
     </div>

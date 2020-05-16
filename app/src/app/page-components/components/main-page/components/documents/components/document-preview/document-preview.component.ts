@@ -26,6 +26,7 @@ export class DocumentPreviewComponent implements OnChanges {
     };
     public document: Documents;
     public documentType: DocumentTypesEnum = null;
+    public resourceSrc = null;
 
     constructor(
         private dataSourceService: DataSourceService,
@@ -35,6 +36,7 @@ export class DocumentPreviewComponent implements OnChanges {
 
     public ngOnChanges(): void {
         if (_.get(this, 'userDocument.documentId')) {
+            this.resourceSrc = null;
             this.dataSourceService
                 .getDocumentById(this.userDocument.documentId.toString())
                 .subscribe(doc => {
@@ -44,6 +46,7 @@ export class DocumentPreviewComponent implements OnChanges {
                         .getDocumentTypeById(doc.documentType.toString())
                         .subscribe(type => {
                             this.documentType = type;
+                            this.resourceSrc = this.domSanitizer.bypassSecurityTrustResourceUrl(this.document.path);
                         });
             });
         }
@@ -96,10 +99,6 @@ export class DocumentPreviewComponent implements OnChanges {
         if (this.documentType) {
             return DocumentTypesEnum.HTML === this.documentType;
         }
-    }
-
-    public getFileSrc(src: string): SafeUrl {
-        return this.domSanitizer.bypassSecurityTrustResourceUrl(src);
     }
 
     private updatePermissions(permissions: PermissionsEnum[]): void {
