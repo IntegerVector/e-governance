@@ -1,7 +1,6 @@
 import * as _ from 'lodash';
 
 import * as dbDocuments from '../../modules/db-modules/db-documents';
-import { sendUnexpectedError, sendError, sendErrorInvalidPermissions } from '../../modules/error-handler';
 import { RequestTypesEnum } from '../../types/enums/request-type.enum';
 import { BaseRequest } from '../../types/base-request';
 import { checkUser } from '../../modules/security-modules/check-user';
@@ -9,6 +8,7 @@ import { checkPermissions } from '../../modules/security-modules/permissions-che
 import { PermissionsEnum } from '../../types/enums/permissions.enum';
 import { UsersDocuments } from '../../types/dto/users-documents-dto';
 import { checkIfDocumentDeleted } from '../../modules/validation-modules/validate-deleted';
+import { sendError, sendErrorInvalidPermissions, sendUnexpectedError } from '../../modules/validation-modules/error-handler';
 
 export async function action(type: RequestTypesEnum, req: any, res: any) {
     if (type === RequestTypesEnum.get) {

@@ -73,6 +73,15 @@ export class MainPageAcademicVacationComponent implements OnInit {
 
     public submit(): void {
         console.log(this.formData);
+        this.dataSourceService.requestVacation({
+            fromDate: this.formData.dateFrom,
+            toDate: this.formData.dateTo,
+            reasons: this.formData.reason,
+            reasonsDescription: this.formData.reasonDescription,
+            userCourceNumber: this.formData.courceNumber,
+            userGroup: this.formData.group,
+            userId: this.user.userId.toString()
+        }).subscribe();
     }
 
     public validate(): boolean {

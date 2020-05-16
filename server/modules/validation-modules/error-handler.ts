@@ -1,5 +1,9 @@
-import { RequestTypesEnum } from '../types/enums/request-type.enum';
-import { NOT_FOUND_CODE, CLIENT_INVALID_USER_ID, CLIENT_NOT_AUTHORIZED_TIP, CLIENT_INVALID_TOKEN, CLIENT_UNEXPECTED_ERROR, CLIENT_UNEXPECTED_ERROR_TIP, CLIENT_INVALID_PERMISSION } from '../constants/errors';
+import { RequestTypesEnum } from '../../types/enums/request-type.enum';
+import {
+    CLIENT_UNEXPECTED_ERROR,
+    CLIENT_UNEXPECTED_ERROR_TIP,
+    CLIENT_INVALID_PERMISSION
+} from '../../constants/errors';
 
 export async function sendError(type: RequestTypesEnum, req: any, res: any) {
     const body = {

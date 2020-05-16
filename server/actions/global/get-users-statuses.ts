@@ -1,5 +1,5 @@
 import * as dbGetter from '../../modules/db-modules/db-data-getters';
-import { sendUnexpectedError } from '../../modules/error-handler';
+import { sendUnexpectedError } from '../../modules/validation-modules/error-handler';
 import { BaseRequest } from '../../types/base-request';
 import { UserStatus } from '../../types/dto/user-status-dto';
 import { RequestTypesEnum } from '../../types/enums/request-type.enum';

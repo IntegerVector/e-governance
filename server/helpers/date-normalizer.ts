@@ -19,3 +19,9 @@ export function normalize(date: string): string {
 export function getDate(date: Date): string {
     return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
 }
+
+export function toLocalDate(date: string): string {
+    const newDate = new Date(date);
+
+    return `${newDate.getDate()}.${newDate.getMonth() + 1}.${newDate.getFullYear()}`;
+}

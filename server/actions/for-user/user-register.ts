@@ -1,5 +1,4 @@
 import * as dbUsers from '../../modules/db-modules/db-users'; 
-import { sendUnexpectedError, sendError, sendErrorInvalidPermissions } from '../../modules/error-handler';
 import { RequestTypesEnum } from '../../types/enums/request-type.enum';
 import { UserDTO } from '../../types/dto/user-dto';
 import { checkUser } from '../../modules/security-modules/check-user';
@@ -7,6 +6,7 @@ import { checkPermissions } from '../../modules/security-modules/permissions-che
 import { PermissionsEnum } from '../../types/enums/permissions.enum';
 import { isUserLoginUnic } from '../../modules/validation-modules/validate-existent';
 import { CLIENT_LOGIN_NOT_UNIC } from '../../constants/errors';
+import { sendError, sendErrorInvalidPermissions, sendUnexpectedError } from '../../modules/validation-modules/error-handler';
 
 export async function action(type: RequestTypesEnum, req: any, res: any) {
     if (type === RequestTypesEnum.post) {

@@ -20,7 +20,8 @@ import {
     getUserActiveDocumentsUrl,
     getUserInactiveDocumentsUrl,
     deleteFileByIdUrl,
-    signADocumentUrl
+    signADocumentUrl,
+    requestVacationUrl
 } from './constants/urls';
 import { UserDTO, User } from '../../types/dto/user-dto';
 import { BaseRequest } from '../../types/base-request';
@@ -40,6 +41,7 @@ import { ErrorObjectInterface } from '../../types/interfaces/error0bject.interfa
 import { Documents } from '../../types/dto/documents-dto';
 import { DocumentTypesEnum } from '../../types/enums/document-types.enum';
 import { UsersDocuments } from '../../types/dto/users-documents-dto';
+import { AcademicVacationParamsInterface } from '../../types/interfaces/academic-vacation-params.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -144,6 +146,10 @@ export class DataSourceService {
         const requestData = { usersDocumentsId };
 
         return this.post(signADocumentUrl, requestData);
+    }
+
+    public requestVacation(options: AcademicVacationParamsInterface): Observable<boolean> {
+        return this.post(requestVacationUrl, options);
     }
 
     public getUsersTypes(): Observable<UserType[]> {

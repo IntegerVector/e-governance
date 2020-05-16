@@ -8,6 +8,7 @@ import { checkPermissions } from '../../modules/security-modules/permissions-che
 import { PermissionsEnum } from '../../types/enums/permissions.enum';
 import { UsersDocuments } from '../../types/dto/users-documents-dto';
 import { checkIfDocumentDeleted } from '../../modules/validation-modules/validate-deleted';
+import { requestAcademicVacation } from '../../modules/academic-vacation';
 import { sendError, sendUnexpectedError } from '../../modules/validation-modules/error-handler';
 
 export async function action(type: RequestTypesEnum, req: any, res: any) {
@@ -20,23 +21,28 @@ export async function action(type: RequestTypesEnum, req: any, res: any) {
                 return;
             }
 
-            const id = req.body.data.usersDocumentsId;
-            const result = await dbDocuments.signADoc(id);
+            const result = await requestAcademicVacation(req.body.data);
 
-            if (!result) {
-                sendUnexpectedError(type, req, res);
-                return;
-            }
+            console.dir(result);
+            // const userDataId = req.body.data.userDataId;
+            // const documents = await dbDocuments.getUserDocuments(userDataId);
 
-            const responce: BaseRequest<boolean> = {
-                type,
-                error: null,
-                userId: req.body.userId,
-                userToken: req.body.userToken,
-                data: true
-            };
+            // const validDocsPromises = _.map(documents, async document => {
+            //     const isDeleted = await checkIfDocumentDeleted(document.documentId);
+            //     return isDeleted ? null: document;
+            // });
+
+            // const validDocs = _.omitBy(await Promise.all(validDocsPromises), _.isNull);
+
+            // const responce: BaseRequest<UsersDocuments[]> = {
+            //     type,
+            //     error: null,
+            //     userId: req.body.userId,
+            //     userToken: req.body.userToken,
+            //     data: _.filter(validDocs, document => !document.needsActions)
+            // };
             
-            res.send(responce);
+            res.send(true);
         }
         catch(err) {
             sendUnexpectedError(type, req, res);

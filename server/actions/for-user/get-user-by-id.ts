@@ -1,5 +1,5 @@
 import * as dbUsers from '../../modules/db-modules/db-users'; 
-import { sendUnexpectedError, sendError, sendErrorInvalidPermissions } from '../../modules/error-handler';
+import { sendUnexpectedError, sendError, sendErrorInvalidPermissions } from '../../modules/validation-modules/error-handler';
 import { RequestTypesEnum } from '../../types/enums/request-type.enum';
 import { UserDTO } from '../../types/dto/user-dto';
 import { checkUser } from '../../modules/security-modules/check-user';

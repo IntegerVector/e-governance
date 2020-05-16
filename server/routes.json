@@ -78,5 +78,10 @@
         "type": "post",
         "url": "/sign-a-document",
         "action": "sign-a-document"
+    },
+    {
+        "type": "post",
+        "url": "/request-vacation",
+        "action": "request-vacation"
     }
 ]

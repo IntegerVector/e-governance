@@ -1,8 +1,8 @@
 import * as dbGetter from '../../modules/db-modules/db-data-getters';
-import { sendUnexpectedError } from '../../modules/error-handler';
 import { BaseRequest } from '../../types/base-request';
 import { UserType } from '../../types/dto/user-type-dto';
 import { RequestTypesEnum } from '../../types/enums/request-type.enum';
+import { sendUnexpectedError } from '../../modules/validation-modules/error-handler';
 
 
 export async function action(type: RequestTypesEnum, req: any, res: any) {
