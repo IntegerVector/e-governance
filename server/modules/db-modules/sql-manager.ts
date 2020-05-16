@@ -500,6 +500,45 @@ class SQLManager {
         });
     }
 
+    public addDocument(userId: string, name: string, path: string, type: DocumentTypesEnum): Promise<string> {
+        return new Promise(async (resolver, reject) => {
+            const types = await this.getDocumentTypes();
+            const typeObj = _.find(types, _type => {
+                return _type.typeName === type;
+            });
+            const typeId = _.get(typeObj, 'documentTypeId');
+
+            const request = `insert into Documents (name, path, documentType, sys_AddedBy, sys_AddedDate, sys_UpdatedDate, sys_UpdatedBy, sys_DeletedBy, sys_DeletedDate) values ("${name}", "${path}", "${typeId}", "${userId}", "${getDate(new Date())}", NULL, NULL, NULL, NULL);`;
+            try {
+                await this.query(request);
+                const getIdRequest = `select documentId from Documents where name="${name}" and path="${path}" and documentType="${typeId}";`;
+                const documentId = await this.query(getIdRequest);
+                resolver(_.get(documentId, '[0].documentId'));
+            }
+            catch(err) {
+                reject(null);
+            }
+        });
+    }
+
+    public addUsersDocuments(
+        userDataId: string,
+        documentId: string,
+        needsActions: boolean
+    ): Promise<boolean> {
+        return new Promise(async (resolve, reject) => {
+            const request = `insert into UsersDocuments (userDataId, documentId, needsActions) values ("${userDataId}", "${documentId}", ${needsActions? 1 : 0});`;
+            
+            try {
+                await this.query(request);
+                resolve(true);
+            }
+            catch(err) {
+                resolve(false);
+            }
+        });
+    }
+
     public async query(sqlQuery: string): Promise<any[]> {
         return new Promise((resolve, reject) => {
             this.connection.query(sqlQuery, (err: string, result: object[]) => {

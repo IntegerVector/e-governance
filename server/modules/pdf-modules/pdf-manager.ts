@@ -25,12 +25,12 @@ export async function createPDF(template: string, data: any, user: User): Promis
     };
 
     const fileName = getFileName();
-    const path = resolve(DOCUMENTS_FILES_PATH, fileName);
+    const path = resolve(ROOT + DOCUMENTS_FILES_PATH, fileName + '.pdf');
 
     const document = {
         html: template,
         data,
-        path: './out.pdf'
+        path
     };
 
     return pdf.create(document, params);

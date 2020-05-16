@@ -7,6 +7,8 @@ import { DEFAULT_USER_ID } from 'src/app/shared/constants/shared.constants';
 import { User } from 'src/app/shared/types/dto/user-dto';
 import { VacationReasons } from './types/vacation-reasons.enum';
 import { getDate } from 'src/app/shared/helpers/date-normalizer';
+import { NotificationsService } from '../../../notification/services/notifications.service';
+import { NotificationType } from '../../../notification/types/notification-type.enum';
 
 @Component({
     selector: 'app-academic-vacation',
@@ -54,7 +56,8 @@ export class MainPageAcademicVacationComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private dataSourceService: DataSourceService
+        private dataSourceService: DataSourceService,
+        private notificationsService: NotificationsService
     ) {}
 
     public ngOnInit(): void {
@@ -81,7 +84,13 @@ export class MainPageAcademicVacationComponent implements OnInit {
             userCourceNumber: this.formData.courceNumber,
             userGroup: this.formData.group,
             userId: this.user.userId.toString()
-        }).subscribe();
+        }).subscribe(result => {
+            if (result) {
+                this.notificationsService.push('Success! Added to Waiting documents', NotificationType.Info);
+            } else {
+                this.notificationsService.push('Unexpected Error', NotificationType.Error);
+            }
+        });
     }
 
     public validate(): boolean {

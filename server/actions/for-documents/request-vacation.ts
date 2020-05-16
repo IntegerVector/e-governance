@@ -1,15 +1,15 @@
 import * as _ from 'lodash';
 
-import * as dbDocuments from '../../modules/db-modules/db-documents';
 import { RequestTypesEnum } from '../../types/enums/request-type.enum';
-import { BaseRequest } from '../../types/base-request';
 import { checkUser } from '../../modules/security-modules/check-user';
-import { checkPermissions } from '../../modules/security-modules/permissions-check';
-import { PermissionsEnum } from '../../types/enums/permissions.enum';
-import { UsersDocuments } from '../../types/dto/users-documents-dto';
-import { checkIfDocumentDeleted } from '../../modules/validation-modules/validate-deleted';
 import { requestAcademicVacation } from '../../modules/academic-vacation';
 import { sendError, sendUnexpectedError } from '../../modules/validation-modules/error-handler';
+import { DOCUMENTS_FILES_PATH } from '../../constants/constants';
+import { SQLManagerSingleton } from '../../modules/db-modules/sql-manager';
+import { DocumentTypesEnum } from '../../types/enums/document-types.enum';
+import { BaseRequest } from '../../types/base-request';
+
+const sql = SQLManagerSingleton.getInstance();
 
 export async function action(type: RequestTypesEnum, req: any, res: any) {
     if (type === RequestTypesEnum.post) {
@@ -23,26 +23,31 @@ export async function action(type: RequestTypesEnum, req: any, res: any) {
 
             const result = await requestAcademicVacation(req.body.data);
 
-            console.dir(result);
-            // const userDataId = req.body.data.userDataId;
-            // const documents = await dbDocuments.getUserDocuments(userDataId);
+            const fileName = _.get(result, 'filename').match(/\/\w+\.pdf/i)[0];
+            const filePath = DOCUMENTS_FILES_PATH + fileName;
 
-            // const validDocsPromises = _.map(documents, async document => {
-            //     const isDeleted = await checkIfDocumentDeleted(document.documentId);
-            //     return isDeleted ? null: document;
-            // });
+            const documentId = await sql.addDocument(
+                req.body.data.userId,
+                'Academic Vacation Request',
+                filePath,
+                DocumentTypesEnum.PDF
+            );
 
-            // const validDocs = _.omitBy(await Promise.all(validDocsPromises), _.isNull);
+            const user = await sql.getUserById(req.body.data.userId);
+            const targetUser = await sql.getUserById('11');
 
-            // const responce: BaseRequest<UsersDocuments[]> = {
-            //     type,
-            //     error: null,
-            //     userId: req.body.userId,
-            //     userToken: req.body.userToken,
-            //     data: _.filter(validDocs, document => !document.needsActions)
-            // };
-            
-            res.send(true);
+            await sql.addUsersDocuments(user.userDataId.toString(), documentId, true);
+            await sql.addUsersDocuments(targetUser.userDataId.toString(), documentId, true);
+
+            const responce: BaseRequest<boolean> = {
+                type,
+                userId: req.body.userId,
+                userToken: req.body.userToken,
+                error: null,
+                data: true
+            }
+
+            res.send(responce);
         }
         catch(err) {
             sendUnexpectedError(type, req, res);
