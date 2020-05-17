@@ -77,14 +77,18 @@ export class DocumentPreviewComponent implements OnChanges {
     }
 
     public signADoc(usersDocumentsId: string): void {
-        this.dataSourceService
-            .signADocument(usersDocumentsId)
-            .subscribe(result => {
-                this.notificationsService.push(
-                    result ? 'Success' : 'Error occures',
-                    result ? NotificationType.Success : NotificationType.Error
-                );
-        });
+        const answer = confirm('Confirm that you want to sign this document');
+
+        if (answer) {
+            this.dataSourceService
+                .signADocument(usersDocumentsId)
+                .subscribe(result => {
+                    this.notificationsService.push(
+                        result ? 'Success' : 'Error occures',
+                        result ? NotificationType.Success : NotificationType.Error
+                    );
+            });
+        }
     }
 
     public isNotSigned(): boolean {
