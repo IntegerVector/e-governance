@@ -64,12 +64,16 @@ export class DocumentPreviewComponent implements OnChanges {
     }
 
     public deleteFile(fileId: string): void {
-        this.dataSourceService.deleteDocument(fileId).subscribe(result => {
-            this.notificationsService.push(
-                result ? 'Success' : 'Error occures',
-                result ? NotificationType.Success : NotificationType.Error
-            );
-        });
+        const answer = confirm('Are you sure? this document will be deleted!');
+
+        if (answer) {
+            this.dataSourceService.deleteDocument(fileId).subscribe(result => {
+                this.notificationsService.push(
+                    result ? 'Success' : 'Error occures',
+                    result ? NotificationType.Success : NotificationType.Error
+                );
+            });
+        }
     }
 
     public signADoc(usersDocumentsId: string): void {

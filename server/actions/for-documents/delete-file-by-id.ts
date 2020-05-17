@@ -18,12 +18,6 @@ export async function action(type: RequestTypesEnum, req: any, res: any) {
                 return;
             }
 
-            const isPermitted = await checkPermissions(req.body.userId, [PermissionsEnum.DeleteDocs]);
-            if (!isPermitted) {
-                sendErrorInvalidPermissions(type, req, res);
-                return;
-            }
-
             const documentId = req.body.data.documentId;
 
             const isAlreadyDeleted = await checkIfDocumentDeleted(documentId);
