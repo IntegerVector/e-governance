@@ -10,45 +10,11 @@ import { DEFAULT_USER_ID } from 'src/app/shared/constants/shared.constants';
 export class MainPageComponent implements OnInit {
     public userId: string;
 
-    public links = [
-        {
-            routerLink: '/main/about',
-            getQueryParams: this.getQueryParams.bind(this),
-            title: 'About',
-            childs: []
-        },
-        {
-            routerLink: '/main/waiting-documents',
-            getQueryParams: this.getQueryParams.bind(this),
-            title: 'Waiting documents',
-            childs: []
-        },
-        {
-            routerLink: '/main/complited-documents',
-            getQueryParams: this.getQueryParams.bind(this),
-            title: 'Complited documents',
-            childs: []
-        },
-        {
-            routerLink: null,
-            getQueryParams: () => null,
-            title: null,
-            childs: [
-                {
-                    routerLink: '/main/academic-vacation',
-                    getQueryParams: this.getQueryParams.bind(this),
-                    title: 'Academic Vacation'
-                },
-                {
-                    routerLink: '/main/about',
-                    getQueryParams: this.getQueryParams.bind(this),
-                    title: 'Get average mark'
-                }
-            ]
-        }
-    ];
+    public links;
 
-    constructor(private route: ActivatedRoute) {}
+    constructor(private route: ActivatedRoute) {
+        this.setGuestLinks();
+    }
 
     public ngOnInit(): void {
         this.route.data.subscribe(({ urlParams }) => {
@@ -108,11 +74,6 @@ export class MainPageComponent implements OnInit {
                         routerLink: '/main/academic-vacation',
                         getQueryParams: this.getQueryParams.bind(this),
                         title: 'Academic Vacation'
-                    },
-                    {
-                        routerLink: '/main/about',
-                        getQueryParams: this.getQueryParams.bind(this),
-                        title: 'Get average mark'
                     }
                 ]
             }
