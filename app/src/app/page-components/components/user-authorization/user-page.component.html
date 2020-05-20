@@ -59,7 +59,7 @@
     *ngIf="mode !== 'logIn'"
     class="user-page-section">
     <div class="user-page-quick-actions">
-        <div>
+        <div *ngIf="mode === 'viewAndUpdate'">
             <button
                 class="btn btn-danger"
                 title="Log out from your account"
